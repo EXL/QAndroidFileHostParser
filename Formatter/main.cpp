@@ -10,7 +10,6 @@ int main(int argc, char *argv[])
     Q_UNUSED(argv);
 
     QVector<QString> in;
-    QVector<QString> out;
 
     QFile fileIn("SW-Log.txt");
     QFile fileOut("SW-log-formatted.txt");
@@ -62,6 +61,9 @@ int main(int argc, char *argv[])
             name = dlink = link = "";
         }
     }
+
+    fileIn.close();
+    fileOut.close();
 
     return 0;
 }
