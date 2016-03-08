@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
     QString name;
     QString link;
     QString dlink;
+    QString md5;
     QString sep = ";";
     int counter = 0;
     for (int i = 0; i < in.size(); ++i) {
@@ -47,6 +48,11 @@ int main(int argc, char *argv[])
             link = link.remove("Link: ").trimmed();
         }
 
+        if (in[i].startsWith("MD5: ")) {
+            md5 = in[i];
+            md5 = md5.remove("MD5: ").trimmed();
+        }
+
         if (in[i].startsWith("http")) {
             dlink += in[i] + sep;
         }
@@ -57,8 +63,8 @@ int main(int argc, char *argv[])
 
         if (counter == 3) {
             counter = 0;
-            outStream << name + sep + dlink + link + "\n";
-            name = dlink = link = "";
+            outStream << name + sep + dlink + link + sep + md5 + "\n";
+            name = dlink = link = md5 = "";
         }
     }
 

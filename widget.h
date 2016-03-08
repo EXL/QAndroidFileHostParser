@@ -28,6 +28,7 @@ private:
     void fillTableLinks(const QStringList &stackLinks);
     int getPageCount() const;
     void tableDirectLinks(const QString &links);
+    void md5totable(const QString &md5);
 
 private:
     Ui::Widget *ui;

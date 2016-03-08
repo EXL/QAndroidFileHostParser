@@ -35,7 +35,7 @@ Widget::Widget(QWidget *parent) :
     mainFrame = ui->webView->page()->mainFrame();
 
     ui->tableWidget->setRowCount(100);
-    ui->tableWidget->setColumnCount(3);
+    ui->tableWidget->setColumnCount(4);
 
     setWindowState(Qt::WindowMaximized);
 
@@ -203,6 +203,13 @@ void Widget::tableDirectLinks(const QString &links)
     //qDebug() << linkss;
 }
 
+void Widget::md5totable(const QString &md5)
+{
+    //QString buffer = md5;
+    //buffer.remove(QRegExp("<[^>]*>"));
+    ui->tableWidget->setItem(fileCNT + (pgtCNT - 1) * stackSize, 3, new QTableWidgetItem(md5));
+}
+
 void Widget::timerOff()
 {
     qDebug() << "LOLOLOLLOLLOLOL";
@@ -226,9 +233,33 @@ void Widget::timerOff()
         );
     QVariant jsRet = mainFrame->evaluateJavaScript(clickJsCode);
 
-    qDebug() << jsRet.toStringList()[0];
+    //qDebug() << jsRet.toStringList()[0];
 
     tableDirectLinks(jsRet.toStringList()[0]);
+
+    const char* clickJAsCode = MULTI_LINE_STRING(
+                function checkJs()
+                {
+                    var stackLinks = [];
+                    var allSpans = document.getElementsByTagName("code");
+                    for (theSpan in allSpans)
+                    {
+                        var link = allSpans[theSpan].innerHTML;
+                        if (link)
+                        {
+                            stackLinks.push(link);
+//                            console.log(link);
+                        }
+                    }
+                    return stackLinks;
+                }
+                checkJs();
+        );
+    QVariant jsRetA = mainFrame->evaluateJavaScript(clickJAsCode);
+
+    qDebug() << "-------->" << jsRetA.toStringList();
+
+    md5totable(jsRetA.toStringList()[0]);
 
     timer_1->stop();
     fileCNT++;
@@ -248,6 +279,7 @@ void Widget::timerOff()
         {
             out << "Name: " << ui->tableWidget->item(i, 0)->text() << "\n";
             out << "Link: " << ui->tableWidget->item(i, 1)->text() << "\n";
+            out << "MD5: " << ui->tableWidget->item(i, 3)->text() << "\n";
             out << "Direct Links:\n" << ui->tableWidget->item(i, 2)->text() << "\n\n\n";
         }
         textLog->close();

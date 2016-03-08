@@ -1,2 +1,2 @@
 #!/bin/sh
-grep "Name:" SW-Log-added.txt | sed -e "s/Name:\ //g" > SW-names.txt
+grep "Name:" SW-Log.txt | sed -e "s/Name:\ //g" > SW-names.txt

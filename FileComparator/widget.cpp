@@ -175,7 +175,7 @@ void Worker::run()
 
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < M; ++j) {
-            if (lines1.at(i) == lines2.at(j)) {
+            if (lines1.at(i).toUpper() == lines2.at(j).toUpper()) {
                 continue;
             } else {
                 inner_cnt++;
