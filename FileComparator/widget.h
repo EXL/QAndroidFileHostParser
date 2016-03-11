@@ -27,9 +27,11 @@ private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
     void on_pushButton_3_clicked();
+    void on_pushButton_4_clicked();
 
 public slots:
     void setOutPutText(const QString& text);
+    void setOutPutTextIden(const QString& text);
     void nowDone(int a, int b);
     void progress(int percent);
 
@@ -38,8 +40,10 @@ private:
 
 private:
     QString getFileName();
+    bool checkFiles();
     void openTextFile(const QString fileName, bool qFirst);
 
+private:
     Worker *worker;
 };
 
@@ -54,12 +58,14 @@ public:
 public:
     QString firstFile;
     QString secondFile;
+    bool registr;
 
 private:
     void run();
 
 signals:
     void toOutPut(const QString&);
+    void toOutPutIdentical(const QString &);
     void done(int a, int b);
     void toProgressBar(int percent);
 };

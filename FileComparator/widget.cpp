@@ -15,6 +15,7 @@ Widget::Widget(QWidget *parent) :
     worker = new Worker();
 
     connect(worker, SIGNAL(toOutPut(QString)), this, SLOT(setOutPutText(QString)));
+    connect(worker, SIGNAL(toOutPutIdentical(QString)), this, SLOT(setOutPutTextIden(QString)));
     connect(worker, SIGNAL(done(int,int)), this, SLOT(nowDone(int,int)));
     connect(worker, SIGNAL(toProgressBar(int)), this, SLOT(progress(int)));
 }
@@ -27,14 +28,15 @@ Widget::~Widget()
 
 void Widget::on_pushButton_3_clicked()
 {
-    if (ui->plainTextEdit->toPlainText().isEmpty() ||
-           ui->plainTextEdit_2->toPlainText().isEmpty()) {
-        QMessageBox::critical(this, tr("Error!"), tr("Please select files!"));
+    if (!checkFiles()) {
         return;
     }
 
     ui->textEdit->clear();
+    ui->textEdit_2->clear();
     ui->pushButton_3->setEnabled(false);
+    ui->pushButton_4->setEnabled(false);
+    ui->checkBox->setEnabled(false);
     ui->progressBar->setValue(0);
     ui->label->setText("");
     ui->label_4->setText("");
@@ -44,6 +46,7 @@ void Widget::on_pushButton_3_clicked()
     worker->secondFile = ui->plainTextEdit_2->toPlainText();
 
     // Start
+    worker->registr = ui->checkBox->isChecked();
     worker->start(QThread::IdlePriority);
 }
 
@@ -52,17 +55,44 @@ void Widget::setOutPutText(const QString &text)
     ui->textEdit->append(text);
 }
 
+void Widget::setOutPutTextIden(const QString &text)
+{
+    ui->textEdit_2->append(text);
+}
+
 void Widget::nowDone(int a, int b)
 {
     ui->label_4->setText(QString("%1 unique strings, %2 identical strings").arg(a).arg(b));
     ui->label->setText(tr("Done!"));
     ui->progressBar->setValue(100);
     ui->pushButton_3->setEnabled(true);
+    ui->pushButton_4->setEnabled(true);
+    ui->checkBox->setEnabled(true);
 }
 
 void Widget::progress(int percent)
 {
     ui->progressBar->setValue(percent);
+}
+
+void Widget::on_pushButton_4_clicked()
+{
+    if (!checkFiles()) {
+        return;
+    }
+
+    QString name1 = ui->label_2->text();
+    QString name2 = ui->label_3->text();
+
+    QString te1 = ui->plainTextEdit->toPlainText();
+    QString te2 = ui->plainTextEdit_2->toPlainText();
+
+    ui->label_2->setText(name2);
+    ui->label_3->setText(name1);
+    ui->plainTextEdit->clear();
+    ui->plainTextEdit_2->clear();
+    ui->plainTextEdit->appendPlainText(te2);
+    ui->plainTextEdit_2->appendPlainText(te1);
 }
 
 void Widget::on_pushButton_2_clicked()
@@ -94,7 +124,17 @@ QString Widget::getFileName()
 //    if (fileDialog.exec()) {
 //        selectedFiles = fileDialog.selectedFiles();
 //    }
-//    return (selectedFiles.size() == 1) ? selectedFiles.at(0) : NULL;
+    //    return (selectedFiles.size() == 1) ? selectedFiles.at(0) : NULL;
+}
+
+bool Widget::checkFiles()
+{
+    if (ui->plainTextEdit->toPlainText().isEmpty() ||
+           ui->plainTextEdit_2->toPlainText().isEmpty()) {
+        QMessageBox::critical(this, tr("Error!"), tr("Please select files!"));
+        return false;
+    }
+    return true;
 }
 
 void Widget::openTextFile(const QString fileName, bool qFirst)
@@ -175,7 +215,14 @@ void Worker::run()
 
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < M; ++j) {
-            if (lines1.at(i).toUpper() == lines2.at(j).toUpper()) {
+            bool bR;
+            if (registr) {
+                bR = lines1.at(i).toUpper() == lines2.at(j).toUpper();
+            } else {
+                bR = lines1.at(i) == lines2.at(j);
+            }
+
+            if (bR) {
                 continue;
             } else {
                 inner_cnt++;
@@ -186,6 +233,7 @@ void Worker::run()
             emit toOutPut(lines1.at(i));
             u_cnt++;
         } else {
+            emit toOutPutIdentical(lines1.at(i));
             i_cnt++;
         }
 

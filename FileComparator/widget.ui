@@ -95,13 +95,31 @@
      <item>
       <widget class="QGroupBox" name="groupBox_3">
        <property name="title">
-        <string>Uniq Strings</string>
+        <string>Uniq / Identical Strings</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QCheckBox" name="checkBox">
+            <property name="text">
+             <string>Register Check</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_4">
+            <property name="text">
+             <string>Swap Files &lt;-&gt;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
          <widget class="QPushButton" name="pushButton_3">
           <property name="text">
-           <string>Get Uniq</string>
+           <string>Get Uniq / Identical</string>
           </property>
          </widget>
         </item>
@@ -121,6 +139,18 @@
           </property>
           <property name="lineWrapMode">
            <enum>QTextEdit::NoWrap</enum>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="textEdit_2">
+          <property name="font">
+           <font>
+            <family>Courier New</family>
+           </font>
           </property>
           <property name="readOnly">
            <bool>true</bool>
