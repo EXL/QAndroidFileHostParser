@@ -18,11 +18,12 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    pageCount = 0;
+    pageCount = filesCount = 0;
     fileCNT = 0;
     pgtCNT = 1;
     stackSize = 0;
-    directLink = false;
+    directLink = lastPage = false;
+    filesOnPage = 18;
 
     textLog = new QFile(this);
     textLog->setFileName("SW-Log.txt");
@@ -36,6 +37,9 @@ Widget::Widget(QWidget *parent) :
 
     ui->tableWidget->setRowCount(100);
     ui->tableWidget->setColumnCount(4);
+    QStringList labels;
+    labels << "Name" << "Link" << "Direct Links" << "MD5 chksm";
+    ui->tableWidget->setHorizontalHeaderLabels(labels);
 
     setWindowState(Qt::WindowMaximized);
 
@@ -56,13 +60,14 @@ void Widget::webPageLoaded(bool)
 
     if (!directLink) {
         pageCount = getPageCount();
-        qDebug() << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: " << pageCount;
-        ui->tableWidget->setRowCount(pageCount * 18);
+        filesCount = getFilesCount();
+        qDebug() << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: " << filesCount << pageCount;
+        ui->tableWidget->setRowCount(filesCount);
     }
 
     ui->label_2->setText("Getting links...");
 
-    if (pageCount && !directLink) {
+    if (pageCount && filesCount && !directLink) {
         const char* theJavaScriptCodeToInject = MULTI_LINE_STRING(
                 function checkForMailButton()
                 {
@@ -128,13 +133,13 @@ void Widget::fillTableLinks(const QStringList &stackLinks)
         link.remove("<a href=\"");
         link = link.left(23);
 
-        ui->tableWidget->setItem(i + (pgtCNT - 1) * stackSize, 0, new QTableWidgetItem(name));
-        ui->tableWidget->setItem(i + (pgtCNT - 1) * stackSize, 1, new QTableWidgetItem("https://androidfilehost.com" + link));
+        ui->tableWidget->setItem(i + getArg(), 0, new QTableWidgetItem(name));
+        ui->tableWidget->setItem(i + getArg(), 1, new QTableWidgetItem("https://androidfilehost.com" + link));
     }
 
     directLink = true;
 
-    ui->lineEdit->setText(ui->tableWidget->item(fileCNT + (pgtCNT - 1) * stackSize, 1)->text());
+    ui->lineEdit->setText(ui->tableWidget->item(fileCNT + getArg(), 1)->text());
     goToURL();
 }
 
@@ -186,6 +191,51 @@ int Widget::getPageCount() const
     return pgCnt;
 }
 
+int Widget::getFilesCount() const
+{
+    const char* theJavaScriptCodeToInject = MULTI_LINE_STRING(
+                function checkForMailButton()
+                {
+                    var stackLinks = [];
+                    var allSpans = document.getElementsByClassName("navbar-brand");
+                    for (theSpan in allSpans)
+                    {
+                        var link = allSpans[theSpan].innerHTML;
+                        if (link)
+                        {
+                            stackLinks.push(link);
+                            console.log(link);
+                        }
+                    }
+                    return stackLinks;
+                }
+                checkForMailButton();
+            );
+
+    QVariant jsReturn = mainFrame->evaluateJavaScript(theJavaScriptCodeToInject);
+
+    QString s = jsReturn.toStringList()[1].replace("files", "").trimmed();
+
+    return s.toInt();
+}
+
+void Widget::flushToFile(int begin, int end)
+{
+    if (!(textLog->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))) {
+        qDebug() << "Error open file!";
+    }
+
+    QTextStream out(textLog);
+    for(int i = begin; i < end; ++i)
+    {
+        out << "Name: " << ui->tableWidget->item(i, 0)->text() << "\n";
+        out << "Link: " << ui->tableWidget->item(i, 1)->text() << "\n";
+        out << "MD5: " << ui->tableWidget->item(i, 3)->text() << "\n";
+        out << "Direct Links:\n" << ui->tableWidget->item(i, 2)->text() << "\n\n\n";
+    }
+    textLog->close();
+}
+
 void Widget::tableDirectLinks(const QString &links)
 {
     QString dlinks = links;
@@ -199,7 +249,7 @@ void Widget::tableDirectLinks(const QString &links)
         buffer += linkss[i].left(r) + ".zip\n";
     }
 
-    ui->tableWidget->setItem(fileCNT + (pgtCNT - 1) * stackSize, 2, new QTableWidgetItem(buffer));
+    ui->tableWidget->setItem(fileCNT + getArg(), 2, new QTableWidgetItem(buffer));
     //qDebug() << linkss;
 }
 
@@ -207,7 +257,18 @@ void Widget::md5totable(const QString &md5)
 {
     //QString buffer = md5;
     //buffer.remove(QRegExp("<[^>]*>"));
-    ui->tableWidget->setItem(fileCNT + (pgtCNT - 1) * stackSize, 3, new QTableWidgetItem(md5));
+    ui->tableWidget->setItem(fileCNT + getArg(), 3, new QTableWidgetItem(md5));
+}
+
+int Widget::getArg() const
+{
+    if (!lastPage) {
+        return (pgtCNT - 1) * stackSize;
+    } else {
+        int lastPagesFilesCount = filesCount % filesOnPage;
+        int allFilesOnFullPage = filesCount - lastPagesFilesCount;
+        return allFilesOnFullPage;
+    }
 }
 
 void Widget::timerOff()
@@ -265,24 +326,12 @@ void Widget::timerOff()
     fileCNT++;
 
     if (fileCNT != stackSize) {
-        ui->lineEdit->setText(ui->tableWidget->item(fileCNT + (pgtCNT - 1) * stackSize, 1)->text());
+        ui->lineEdit->setText(ui->tableWidget->item(fileCNT + getArg(), 1)->text());
         goToURL();
     } else {
         directLink = false;
 
-        if (!(textLog->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))) {
-            qDebug() << "Error open file!";
-        }
-
-        QTextStream out(textLog);
-        for(int i = (pgtCNT - 1) * stackSize; i < fileCNT + (pgtCNT - 1) * stackSize; ++i)
-        {
-            out << "Name: " << ui->tableWidget->item(i, 0)->text() << "\n";
-            out << "Link: " << ui->tableWidget->item(i, 1)->text() << "\n";
-            out << "MD5: " << ui->tableWidget->item(i, 3)->text() << "\n";
-            out << "Direct Links:\n" << ui->tableWidget->item(i, 2)->text() << "\n\n\n";
-        }
-        textLog->close();
+        flushToFile(getArg(), fileCNT + getArg());
 
         fileCNT = 0;
 
@@ -291,7 +340,12 @@ void Widget::timerOff()
             //pgtCNT = 42;
             ui->lineEdit->setText(QString("https://www.androidfilehost.com/?w=search&s=.xml.zip&type=files&page=%1").arg(pgtCNT));
             goToURL();
-        } else {
+        } else if (pgtCNT == pageCount - 1) { // Last Page
+            pgtCNT++;
+            lastPage = true;
+            ui->lineEdit->setText(QString("https://www.androidfilehost.com/?w=search&s=.xml.zip&type=files&page=%1").arg(pgtCNT));
+            goToURL();
+        } else { // All
             ui->label_2->setText("All Done!");
         }
     }

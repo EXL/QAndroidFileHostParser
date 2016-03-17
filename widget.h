@@ -27,8 +27,11 @@ private slots:
 private:
     void fillTableLinks(const QStringList &stackLinks);
     int getPageCount() const;
+    int getFilesCount() const;
+    void flushToFile(int begin, int end);
     void tableDirectLinks(const QString &links);
     void md5totable(const QString &md5);
+    int getArg() const;
 
 private:
     Ui::Widget *ui;
@@ -42,9 +45,11 @@ private:
 private:
     int pageCount;
     bool directLink;
-
+    bool lastPage;
     int pgtCNT;
     int fileCNT;
+    int filesCount;
     int stackSize;
+    int filesOnPage;
 };
 #endif // WIDGET_H
