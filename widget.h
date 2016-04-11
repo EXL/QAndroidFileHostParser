@@ -21,17 +21,9 @@ public:
 
 private slots:
     void webPageLoaded(bool);
-    void goToURL();
-    void timerOff();
 
-private:
-    void fillTableLinks(const QStringList &stackLinks);
-    int getPageCount() const;
-    int getFilesCount() const;
-    void flushToFile(int begin, int end);
-    void tableDirectLinks(const QString &links);
-    void md5totable(const QString &md5);
-    int getArg() const;
+public slots:
+    void goToURL();
 
 private:
     Ui::Widget *ui;
@@ -39,17 +31,6 @@ private:
 private:
     WebPage *webPage;
     QWebFrame *mainFrame;
-    QTimer *timer_1;
-    QFile *textLog;
-
-private:
-    int pageCount;
-    bool directLink;
-    bool lastPage;
-    int pgtCNT;
-    int fileCNT;
-    int filesCount;
-    int stackSize;
-    int filesOnPage;
+    //QTimer *timer_1;
 };
 #endif // WIDGET_H

@@ -19,65 +19,59 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>URL:</string>
+        <string>Clients</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLineEdit" name="lineEdit">
        <property name="text">
-        <string>https://www.androidfilehost.com/?w=search&amp;s=.xml.zip&amp;type=files</string>
+        <string>192.168.1.1</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QWebView" name="webView">
+     <property name="url">
+      <url>
+       <string>about:blank</string>
+      </url>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>Test Auth</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>Go!</string>
+        <string>WifiOn</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="spinBox">
-       <property name="minimum">
-        <number>1</number>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>WifiOff</string>
        </property>
-       <property name="value">
-        <number>20</number>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="text">
+        <string>Clients</string>
        </property>
       </widget>
      </item>
     </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QWebView" name="webView">
-       <property name="url">
-        <url>
-         <string>about:blank</string>
-        </url>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QTableWidget" name="tableWidget"/>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QProgressBar" name="progressBar">
-     <property name="value">
-      <number>0</number>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Ready.</string>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>
