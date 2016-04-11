@@ -5,7 +5,22 @@
 
 #include <QWidget>
 #include <QTimer>
-#include <QFile>
+
+enum PageState {
+    EUndef,
+    EAuth,
+    EClients,
+    EWifi_S,
+    EWifi_SON,
+    EWifi_SOFF
+};
+
+enum WifiState {
+    EWifiOn,
+    EWifiOff,
+    EWifiState,
+    EWifiUndef
+};
 
 namespace Ui {
 class Widget;
@@ -22,8 +37,18 @@ public:
 private slots:
     void webPageLoaded(bool);
 
+private slots:
+    void getAuth();
+    void toAuth();
+
 public slots:
-    void goToURL();
+    void getCountOfClients();
+    void getWifiStat();
+    void wifiOn();
+    void wifiOff();
+
+    void timerOff();
+    void timerExitApp();
 
 private:
     Ui::Widget *ui;
@@ -31,6 +56,19 @@ private:
 private:
     WebPage *webPage;
     QWebFrame *mainFrame;
-    //QTimer *timer_1;
+    QTimer *timer;
+    QTimer *timerExit;
+
+private:
+    PageState m_state;
+    WifiState m_wifi_button_state;
+
+private:
+    void timerExitStart();
+    int getJsClientsCode() const;
+    bool parseWifiStat();
+    void jsWifiOn();
+    void jsWifiOff();
+
 };
 #endif // WIDGET_H

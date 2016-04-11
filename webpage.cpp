@@ -12,6 +12,6 @@ void WebPage::javaScriptConsoleMessage(const QString &message, int lineNumber, c
 {
     Q_UNUSED(lineNumber);
     Q_UNUSED(sourceID);
-    qDebug() << "[JS]:" << message;
+    // qDebug() << "[JS]:" << message;
 }
 
