@@ -24,6 +24,7 @@ Widget::Widget(QWidget *parent) :
 
     m_state = EUndef;
     m_wifi_button_state = EWifiUndef;
+    exitcode = (-1);
 
     mainFrame = ui->webView->page()->mainFrame();
 
@@ -51,30 +52,34 @@ Widget::~Widget()
 void Widget::webPageLoaded(bool)
 {
     //qDebug() << "Page Loaded!" << m_state;
+    int cnt = 0;
+    int w_ON = 0;
 
     switch (m_state) {
     case EClients:
-        fprintf(stdout, "%d\n", getJsClientsCode());
-        timerExitStart();
+        cnt = getJsClientsCode();
+        fprintf(stdout, "%d\n", cnt);
+        timerExitStart(cnt);
         break;
     case EAuth:
         toAuth();
         break;
     case EWifi_S:
-        fprintf(stdout, "%d\n", parseWifiStat() ? 1 : 0);
-        timerExitStart();
+        w_ON = parseWifiStat() ? 1 : 0;
+        fprintf(stdout, "%d\n", w_ON);
+        timerExitStart(w_ON);
         break;
     case EWifi_SON:
         fprintf(stdout, "Wifi...");
         jsWifiOn();
         fprintf(stdout, "on.\n");
-        timerExitStart();
+        timerExitStart(0);
         break;
     case EWifi_SOFF:
         fprintf(stdout, "Wifi...");
         jsWifiOff();
         fprintf(stdout, "off.\n");
-        timerExitStart();
+        timerExitStart(0);
         break;
     default:
         break;
@@ -125,8 +130,9 @@ void Widget::timerExitApp()
     qApp->exit();
 }
 
-void Widget::timerExitStart()
+void Widget::timerExitStart(int errCode)
 {
+    exitcode = errCode;
     timerExit->start(DELAY_EXIT_SEC);
 }
 

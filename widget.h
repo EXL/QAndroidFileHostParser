@@ -62,9 +62,10 @@ private:
 private:
     PageState m_state;
     WifiState m_wifi_button_state;
+    int exitcode;
 
 private:
-    void timerExitStart();
+    void timerExitStart(int errCode);
     int getJsClientsCode() const;
     bool parseWifiStat();
     void jsWifiOn();

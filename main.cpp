@@ -7,8 +7,8 @@
 
 void toQuit()
 {
-    qApp->exit(1);
-    exit(1);
+    qApp->exit(-1);
+    exit(-1);
 }
 
 void showHelp()
