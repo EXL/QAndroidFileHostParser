@@ -16,8 +16,8 @@
 
 #define MULTI_LINE_STRING(a) #a
 
-#define DELAY_EXIT_SEC 1 * 1000
-#define DELAY_PAGE_SEC 2 * 1000
+#define DELAY_EXIT_SEC 2 * 1000
+#define DELAY_PAGE_SEC 3 * 1000
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -98,6 +98,12 @@ void Widget::getWifiStat()
     getAuth();
 }
 
+void Widget::getWifiDStat()
+{
+    m_wifi_button_state = EWifiDState;
+    getAuth();
+}
+
 void Widget::wifiOn()
 {
     m_wifi_button_state = EWifiOn;
@@ -122,6 +128,8 @@ void Widget::timerOff()
     case EWifiOff:
         m_state = EWifi_SOFF;
         break;
+    case EWifiDState:
+        m_state = EWifi_DS;
     default:
         break;
     }
@@ -203,6 +211,7 @@ void Widget::toAuth()
     case EWifiState:
     case EWifiOn:
     case EWifiOff:
+    case EWifiDState:
         timer->start(DELAY_PAGE_SEC);
         break;
     default:

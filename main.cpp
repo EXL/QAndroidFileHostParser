@@ -39,6 +39,8 @@ int main(int argc, char *argv[])
             w.getCountOfClients();
         } else if (args[1] == "wstat") {
             w.getWifiStat();
+        } else if (args[1] == "dstat") {
+            w.getWifiDStat();
         } else if (args[1] == "won") {
             w.wifiOn();
         } else if (args[1] == "woff") {

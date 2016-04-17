@@ -12,13 +12,15 @@ enum PageState {
     EClients,
     EWifi_S,
     EWifi_SON,
-    EWifi_SOFF
+    EWifi_SOFF,
+    EWifi_DS
 };
 
 enum WifiState {
     EWifiOn,
     EWifiOff,
     EWifiState,
+    EWifiDState,
     EWifiUndef
 };
 
@@ -44,6 +46,7 @@ private slots:
 public slots:
     void getCountOfClients();
     void getWifiStat();
+    void getWifiDStat();
     void wifiOn();
     void wifiOff();
 
