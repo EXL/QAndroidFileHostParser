@@ -4,19 +4,19 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui webkit
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkit webkitwidgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
 TARGET = mifi
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        widget.cpp \
-    webpage.cpp
+SOURCES +=  main.cpp \
+            widget.cpp \
+            webpage.cpp
 
 HEADERS  += widget.h \
-    webpage.h
+            webpage.h
 
 FORMS    += widget.ui

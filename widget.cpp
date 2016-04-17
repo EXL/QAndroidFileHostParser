@@ -3,8 +3,14 @@
 
 #include <QUrl>
 #include <QDebug>
-#include <QWebFrame>
 #include <QApplication>
+
+#include <QtGlobal>
+#if QT_VERSION >= 0x050000
+    #include <QWebFrame>
+#else
+    #include <QtWebKit/QWebFrame>
+#endif
 
 #include <cstdio>
 
