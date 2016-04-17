@@ -1,7 +1,12 @@
 #ifndef WEBPAGE_H
 #define WEBPAGE_H
 
-#include <QWebPage>
+#include <QtGlobal>
+#if QT_VERSION >= 0x050000
+    #include <QWebPage>
+#else
+    #include <QtWebKit/QWebPage>
+#endif
 
 class WebPage : public QWebPage
 {

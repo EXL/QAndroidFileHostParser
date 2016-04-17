@@ -3,10 +3,16 @@
 
 #include <QUrl>
 #include <QDebug>
-#include <QWebFrame>
 #include <QRegExp>
 #include <QMessageBox>
 #include <QFileDialog>
+
+#include <QtGlobal>
+#if QT_VERSION >= 0x050000
+    #include <QWebFrame>
+#else
+    #include <QtWebKit/QWebFrame>
+#endif
 
 #include <algorithm>
 
@@ -350,36 +356,3 @@ void Widget::timerOff()
         }
     }
 }
-
-//void Worker::run()
-//{
-//    if (!wgt->itemAt(0,0)->text().isEmpty())
-//    {
-//        QString fileName = "tex.txt";
-
-//        QFile file(fileName);
-//        if (!(file.open(QIODevice::WriteOnly | QIODevice::Text))) {
-//            QMessageBox::critical(prt, tr("Error"), tr("Error saving file!"));
-//            return;
-//        }
-
-//        /* Create TextStream */
-//        QTextStream out(&file);
-
-//        /* Generate txt file */
-//        for(int i = 0; i < wgt->rowCount(); ++i)
-//        {
-//            out << "Name: " << wgt->item(i, 0)->text() << "\n";
-//            out << "Link: " << wgt->item(i, 1)->text() << "\n";
-//            out << "Direct Links:\n" << wgt->item(i, 2)->text() << "\n\n\n";
-//        }
-
-//        file.close();
-//        QMessageBox::information(prt, tr("Succes!"), tr("Written %1 files!").arg(wgt->rowCount()));
-//    }
-//    else
-//    {
-//        QMessageBox::critical(prt, tr("Error"), tr("Empty DB!"));
-//        return;
-//    }
-//}
