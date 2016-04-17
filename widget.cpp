@@ -87,6 +87,10 @@ void Widget::webPageLoaded(bool)
         fprintf(stdout, "off.\n");
         timerExitStart(0);
         break;
+    case EWifi_DS:
+        fprintf(stdout, "%s\n", parseWifiDStat().toStdString().c_str());
+        timerExitStart(w_ON);
+        break;
     default:
         break;
     }
@@ -134,7 +138,11 @@ void Widget::timerOff()
         break;
     }
 
-    ui->webView->load(QUrl("http://my.jetpack/wifi/"));
+    if (m_state == EWifi_DS) {
+        ui->webView->load(QUrl("http://my.jetpack/diagnostics/"));
+    } else {
+        ui->webView->load(QUrl("http://my.jetpack/wifi/"));
+    }
     timer->stop();
 }
 
@@ -234,6 +242,45 @@ int Widget::getJsClientsCode() const
     //qDebug() << jsReturn.toString();
 
     return jsReturn.toString().toInt();
+}
+
+QString Widget::parseWifiDStat() const
+{
+    // Network operator:    document.getElementById("internetStatusNetworkOperator").innerHTML.trim()
+    // Status:              document.getElementById("internetStatus3G").innerHTML.trim()
+    // RSSI (1x):           document.getElementById("internetStatus3G1xRSSI").innerHTML.trim()
+    // RSSI (EVDO):         document.getElementById("internetStatus3GEVDORSSI").innerHTML.trim()
+    // Technology:          document.getElementById("internetStatus3GTechnology").innerHTML.trim()
+    // Ec/Io:               document.getElementById("internetStatus3gECIo").innerHTML.trim()
+    // SID:                 document.getElementById("internetStatus3GSID").innerHTML.trim()
+
+    const char* theJavaScriptCodeToInject = MULTI_LINE_STRING(
+            function checkDStat()
+            {
+                var no = document.getElementById("internetStatusNetworkOperator").innerHTML.trim();
+                var stat = document.getElementById("internetStatus3G").innerHTML.trim();
+                var rss1 = document.getElementById("internetStatus3G1xRSSI").innerHTML.trim();
+                var rss2 = document.getElementById("internetStatus3GEVDORSSI").innerHTML.trim();
+                var tech = document.getElementById("internetStatus3GTechnology").innerHTML.trim();
+                var ecio = document.getElementById("internetStatus3gECIo").innerHTML.trim();
+                var sid = document.getElementById("internetStatus3GSID").innerHTML.trim();
+
+//                var answer =    "Network operator: \t" + no + "\n" +
+//                                "Status: \t\t" + stat + "\n" +
+//                                "RSSI (1x): \t\t" + rss1 + "\n" +
+//                                "RSSI (EVDO): \t\t" + rss2 + "\n" +
+//                                "Technology: \t\t" + tech + "\n" +
+//                                "Ec/Io: \t\t\t" + ecio + "\n" +
+//                                "SID: \t\t\t" + sid;
+
+                var answer = stat + "," + rss1 + "," + rss2 + "," + tech + "," + ecio;
+
+                return answer;
+            }
+            checkDStat();
+        );
+    QVariant jsReturn = mainFrame->evaluateJavaScript(theJavaScriptCodeToInject);
+    return jsReturn.toString();
 }
 
 bool Widget::parseWifiStat()

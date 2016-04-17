@@ -16,6 +16,7 @@ void showHelp()
     std::cerr << "Example:\n\t"
              << "mifi cl - Get count of clients\n\t"
              << "mifi wstat - Get wifi status (1 - on, 0 - off)\n\t"
+             << "mifi 3g - Get detailed wifi status\n\t"
              << "mifi won - Wifi On\n\t"
              << "mifi woff - Wifi Off\n\t"
              << "mifi help - This help text."
@@ -39,7 +40,7 @@ int main(int argc, char *argv[])
             w.getCountOfClients();
         } else if (args[1] == "wstat") {
             w.getWifiStat();
-        } else if (args[1] == "dstat") {
+        } else if (args[1] == "3g") {
             w.getWifiDStat();
         } else if (args[1] == "won") {
             w.wifiOn();

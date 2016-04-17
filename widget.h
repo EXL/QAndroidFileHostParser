@@ -5,6 +5,7 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QString>
 
 enum PageState {
     EUndef,
@@ -70,6 +71,7 @@ private:
 private:
     void timerExitStart(int errCode);
     int getJsClientsCode() const;
+    QString parseWifiDStat() const;
     bool parseWifiStat();
     void jsWifiOn();
     void jsWifiOff();
