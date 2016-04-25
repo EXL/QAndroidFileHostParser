@@ -40,6 +40,7 @@ Widget::Widget(QWidget *parent) :
     setWindowState(Qt::WindowMaximized);
 
     connect(mainFrame, SIGNAL(loadFinished(bool)), this, SLOT(webPageLoaded(bool)));
+
 //    connect(ui->pushButton_3, SIGNAL(clicked(bool)), this, SLOT(getAuth()));
 //    connect(ui->pushButton_4, SIGNAL(clicked(bool)), this, SLOT(getCountOfClients()));
 //    connect(ui->pushButton_5, SIGNAL(clicked(bool)), this, SLOT(getWifiStat()));
@@ -57,7 +58,6 @@ Widget::~Widget()
 
 void Widget::webPageLoaded(bool)
 {
-    //qDebug() << "Page Loaded!" << m_state;
     int cnt = 0;
     int w_ON = 0;
 
@@ -184,9 +184,6 @@ void Widget::toAuth()
         );
     jsReturn = mainFrame->evaluateJavaScript(needAuth);
 
-//    qDebug() << jsReturn.toString();
-//    qDebug() << jsReturn.toString().indexOf("logged");
-
     if (!(jsReturn.toString().indexOf("logged") > 0)) {
         const char* theJavaScriptCodeToInject = MULTI_LINE_STRING(
                 function checkAuth()
@@ -208,11 +205,7 @@ void Widget::toAuth()
                     clickButton();
                 );
             mainFrame->evaluateJavaScript(clickToLoginButton);
-        } else {
-           // qDebug() << "Error: toAuth 1";
         }
-    } else {
-       // qDebug() << "Error: Auth already complete!";
     }
 
     switch (m_wifi_button_state) {
@@ -238,8 +231,6 @@ int Widget::getJsClientsCode() const
             checkClients();
         );
     QVariant jsReturn = mainFrame->evaluateJavaScript(theJavaScriptCodeToInject);
-
-    //qDebug() << jsReturn.toString();
 
     return jsReturn.toString().toInt();
 }
@@ -294,9 +285,6 @@ bool Widget::parseWifiStat()
             checkedWifi();
         );
     QVariant jsReturn = mainFrame->evaluateJavaScript(theJavaScriptCodeToInject);
-
-    // qDebug() << jsReturn.toBool();
-
     return jsReturn.toBool();
 }
 
