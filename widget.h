@@ -30,7 +30,7 @@ private:
     int getFilesCount() const;
     void flushToFile(int begin, int end);
     void tableDirectLinks(const QString &links);
-    void md5totable(const QString &md5);
+    void md5ToTable(const QString &md5);
     int getArg() const;
 
 private:
@@ -39,7 +39,7 @@ private:
 private:
     WebPage *webPage;
     QWebFrame *mainFrame;
-    QTimer *timer_1;
+    QTimer *timer;
     QFile *textLog;
 
 private:

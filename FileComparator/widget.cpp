@@ -115,16 +115,8 @@ void Widget::on_pushButton_clicked()
 
 QString Widget::getFileName()
 {
-
     return QFileDialog::getOpenFileName(this,
                                         tr("Open Text File"));
-//    QStringList selectedFiles;
-//    QFileDialog fileDialog;
-//    fileDialog.setFileMode(QFileDialog::AnyFile);
-//    if (fileDialog.exec()) {
-//        selectedFiles = fileDialog.selectedFiles();
-//    }
-    //    return (selectedFiles.size() == 1) ? selectedFiles.at(0) : NULL;
 }
 
 bool Widget::checkFiles()
@@ -150,10 +142,7 @@ void Widget::openTextFile(const QString fileName, bool qFirst)
 
         if (qFirst) {
             ui->label_2->setText(fileInfo.fileName());
-
-            //while (!(textStream.atEnd())) {
             ui->plainTextEdit->appendPlainText(textStream.readAll());
-            //}
             if (ui->plainTextEdit_2->toPlainText().isEmpty()) {
                 ui->label->setText(tr("2: Please Select Second Text File"));
             }

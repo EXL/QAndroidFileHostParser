@@ -37,7 +37,7 @@ Widget::Widget(QWidget *parent) :
     webPage = new WebPage(this);
     ui->webView->setPage(webPage);
 
-    timer_1 = new QTimer(this);
+    timer = new QTimer(this);
 
     mainFrame = ui->webView->page()->mainFrame();
 
@@ -49,10 +49,12 @@ Widget::Widget(QWidget *parent) :
 
     setWindowState(Qt::WindowMaximized);
 
+    ui->webView->setDisabled(true);
+
     connect(mainFrame, SIGNAL(loadFinished(bool)), this, SLOT(webPageLoaded(bool)));
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(goToURL()));
     connect(ui->webView, SIGNAL(loadProgress(int)), ui->progressBar, SLOT(setValue(int)));
-    connect(timer_1, SIGNAL(timeout()), this, SLOT(timerOff()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(timerOff()));
 }
 
 Widget::~Widget()
@@ -67,15 +69,15 @@ void Widget::webPageLoaded(bool)
     if (!directLink) {
         pageCount = getPageCount();
         filesCount = getFilesCount();
-        qDebug() << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: " << filesCount << pageCount;
+        qDebug() << "Files: " << filesCount << "Pages: " << pageCount;
         ui->tableWidget->setRowCount(filesCount);
     }
 
-    ui->label_2->setText("Getting links...");
+    ui->label_2->setText(tr("Getting links..."));
 
     if (pageCount && filesCount && !directLink) {
         const char* theJavaScriptCodeToInject = MULTI_LINE_STRING(
-                function checkForMailButton()
+                function gettingLinks()
                 {
                     var stackLinks = [];
                     var allSpans = document.getElementsByClassName("list-group-item-heading");
@@ -86,12 +88,11 @@ void Widget::webPageLoaded(bool)
                         {
                             link = link.replace("<i class=\"fa fa-file-archive-o\"></i> ", "");
                             stackLinks.push(link);
-                            console.log(link);
                         }
                     }
                     return stackLinks;
                 }
-                checkForMailButton();
+                gettingLinks();
             );
         QVariant jsReturn = mainFrame->evaluateJavaScript(theJavaScriptCodeToInject);
 
@@ -100,22 +101,14 @@ void Widget::webPageLoaded(bool)
 
     if (directLink) {
         const char* clickJsCode = MULTI_LINE_STRING(
-//                function sleeping(ms) {
-//                    ms += new Date().getTime();
-//                    while (new Date() < ms){}
-//                }
-
-                function clickJsCode()
+                function clickMirrorButton()
                 {
                     document.getElementById('loadMirror').click();
-//                    console.log("Sleeep!");
-//                    sleeping(10000);
-//                    console.log(document.getElementById('mirrors'));
                 }
-                clickJsCode();
+                clickMirrorButton();
             );
-        QVariant jsRet = mainFrame->evaluateJavaScript(clickJsCode);
-        timer_1->start(ui->spinBox->value() * 1000);
+        mainFrame->evaluateJavaScript(clickJsCode);
+        timer->start(ui->spinBox->value() * 1000);
     }
 }
 
@@ -154,7 +147,7 @@ int Widget::getPageCount() const
     ui->label_2->setText("Pages count is...");
 
     const char* theJavaScriptCodeToInject = MULTI_LINE_STRING(
-                function checkForMailButton()
+                function getPagesCount()
                 {
                     var stackLinks = [];
                     var allSpans = document.getElementsByClassName("pagination navbar-right");
@@ -164,12 +157,11 @@ int Widget::getPageCount() const
                         if (link)
                         {
                             stackLinks.push(link);
-                            console.log(link);
                         }
                     }
                     return stackLinks;
                 }
-                checkForMailButton();
+                getPagesCount();
             );
 
     QVariant jsReturn = mainFrame->evaluateJavaScript(theJavaScriptCodeToInject);
@@ -200,7 +192,7 @@ int Widget::getPageCount() const
 int Widget::getFilesCount() const
 {
     const char* theJavaScriptCodeToInject = MULTI_LINE_STRING(
-                function checkForMailButton()
+                function getFilesNum()
                 {
                     var stackLinks = [];
                     var allSpans = document.getElementsByClassName("navbar-brand");
@@ -210,12 +202,11 @@ int Widget::getFilesCount() const
                         if (link)
                         {
                             stackLinks.push(link);
-                            console.log(link);
                         }
                     }
                     return stackLinks;
                 }
-                checkForMailButton();
+                getFilesNum();
             );
 
     QVariant jsReturn = mainFrame->evaluateJavaScript(theJavaScriptCodeToInject);
@@ -248,21 +239,18 @@ void Widget::tableDirectLinks(const QString &links)
     QString buffer = "";
     dlinks = dlinks.trimmed();
 
-    QStringList linkss = dlinks.split("<a href=\"");
-    linkss.removeAt(0);
-    for (int i = 0; i < linkss.length(); ++i) {
-        int r = linkss[i].indexOf(".zip");
-        buffer += linkss[i].left(r) + ".zip\n";
+    QStringList linksList = dlinks.split("<a href=\"");
+    linksList.removeAt(0);
+    for (int i = 0; i < linksList.length(); ++i) {
+        int r = linksList[i].indexOf(".zip");
+        buffer += linksList[i].left(r) + ".zip\n";
     }
 
     ui->tableWidget->setItem(fileCNT + getArg(), 2, new QTableWidgetItem(buffer));
-    //qDebug() << linkss;
 }
 
-void Widget::md5totable(const QString &md5)
+void Widget::md5ToTable(const QString &md5)
 {
-    //QString buffer = md5;
-    //buffer.remove(QRegExp("<[^>]*>"));
     ui->tableWidget->setItem(fileCNT + getArg(), 3, new QTableWidgetItem(md5));
 }
 
@@ -279,9 +267,9 @@ int Widget::getArg() const
 
 void Widget::timerOff()
 {
-    qDebug() << "LOLOLOLLOLLOLOL";
-    const char* clickJsCode = MULTI_LINE_STRING(
-                function checkForMailButton()
+    // Get Direct Links
+    const char* clickJsCode_1 = MULTI_LINE_STRING(
+                function getDirectLinks()
                 {
                     var stackLinks = [];
                     var allSpans = document.getElementsByClassName("list-group");
@@ -291,21 +279,18 @@ void Widget::timerOff()
                         if (link)
                         {
                             stackLinks.push(link);
-                            console.log(link);
                         }
                     }
                     return stackLinks;
                 }
-                checkForMailButton();
+                getDirectLinks();
         );
-    QVariant jsRet = mainFrame->evaluateJavaScript(clickJsCode);
+    QVariant jsRet_1 = mainFrame->evaluateJavaScript(clickJsCode_1);
+    tableDirectLinks(jsRet_1.toStringList()[0]);
 
-    //qDebug() << jsRet.toStringList()[0];
-
-    tableDirectLinks(jsRet.toStringList()[0]);
-
-    const char* clickJAsCode = MULTI_LINE_STRING(
-                function checkJs()
+    // Get MD5 checksums
+    const char* clickJsCode_2 = MULTI_LINE_STRING(
+                function getMd5List()
                 {
                     var stackLinks = [];
                     var allSpans = document.getElementsByTagName("code");
@@ -315,20 +300,16 @@ void Widget::timerOff()
                         if (link)
                         {
                             stackLinks.push(link);
-//                            console.log(link);
                         }
                     }
                     return stackLinks;
                 }
-                checkJs();
+                getMd5List();
         );
-    QVariant jsRetA = mainFrame->evaluateJavaScript(clickJAsCode);
+    QVariant jsRet_2 = mainFrame->evaluateJavaScript(clickJsCode_2);
+    md5ToTable(jsRet_2.toStringList()[0]);
 
-    qDebug() << "-------->" << jsRetA.toStringList();
-
-    md5totable(jsRetA.toStringList()[0]);
-
-    timer_1->stop();
+    timer->stop();
     fileCNT++;
 
     if (fileCNT != stackSize) {
@@ -336,14 +317,10 @@ void Widget::timerOff()
         goToURL();
     } else {
         directLink = false;
-
         flushToFile(getArg(), fileCNT + getArg());
-
         fileCNT = 0;
-
         if (pgtCNT < pageCount - 1) {
             pgtCNT++;
-            //pgtCNT = 42;
             ui->lineEdit->setText(QString("https://www.androidfilehost.com/?w=search&s=.xml.zip&type=files&page=%1").arg(pgtCNT));
             goToURL();
         } else if (pgtCNT == pageCount - 1) { // Last Page

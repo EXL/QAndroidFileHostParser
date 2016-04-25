@@ -12,11 +12,11 @@ TARGET = QAndroidFileHostParser
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        widget.cpp \
-    webpage.cpp
+SOURCES +=  main.cpp \
+            widget.cpp \
+            webpage.cpp
 
 HEADERS  += widget.h \
-    webpage.h
+            webpage.h
 
 FORMS    += widget.ui

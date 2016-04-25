@@ -1,10 +1,12 @@
 QAndroidFileHostParser
 ==========
 
-![Windows 7 screen](https://raw.github.com/EXL/QAndroidFileHostParser/master/Screens/screen.jpg)
+Utilities for parsing smartphones firmware list for firmware.center site.
 
-![Windows 7 screen #2](https://raw.github.com/EXL/QAndroidFileHostParser/master/Screens/screen1.jpg)
+Draft version. Need OpenSSL libs (ssleay32.dll and libeay32.dll) for correct work.
 
-Utility for parsing smartphones firmware list for firmware.center site.
+### QAndroidFileHostParser
+![Windows 7 QAndroidFileHostParser](https://raw.github.com/EXL/QAndroidFileHostParser/master/Screens/QAndroidFileHostParser.jpg)
 
-Draft version.
+### FileComparator
+![Windows 7 FileComparator](https://raw.github.com/EXL/QAndroidFileHostParser/master/Screens/FileComparator.jpg)
