@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Text File Comarator by EXL for BOXA</string>
+   <string>Text File Comparator by EXL for BOXA</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
