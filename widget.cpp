@@ -130,7 +130,8 @@ void Widget::fillTableLinks(const QStringList &stackLinks)
 
         QString link = string;
         link.remove("<a href=\"");
-        link = link.left(23);
+        int del = link.indexOf("\">");
+        link = link.left(del);
 
         ui->tableWidget->setItem(i + getArg(), 0, new QTableWidgetItem(name));
         ui->tableWidget->setItem(i + getArg(), 1, new QTableWidgetItem("https://androidfilehost.com" + link));
