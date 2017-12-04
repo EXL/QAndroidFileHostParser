@@ -29,8 +29,9 @@ public class QAndroidFileHostParser extends Application {
         VBox window = (VBox) FXMLLoader.load(
                 QAndroidFileHostParser.class.getResource("/layouts/QAndroidFileHostParser.fxml"));
 
-        primaryStage.setTitle("QAndroidFileHostParser for BOXA");
+        primaryStage.setTitle("QAndroidFileHostParser for BOXA by EXL, 2017");
         primaryStage.setScene(new Scene(window));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

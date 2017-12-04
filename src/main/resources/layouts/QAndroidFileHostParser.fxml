@@ -6,12 +6,13 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<VBox prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.exlmoto.qafhp.Controller">
+<VBox prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.exlmoto.qafhp.GuiController">
     <HBox>
         <HBox alignment="CENTER_RIGHT" spacing="15.0" HBox.hgrow="ALWAYS" VBox.vgrow="NEVER">
             <Label text="Please Enter URL:" />
@@ -23,17 +24,37 @@
         </padding>
     </HBox>
     <SplitPane dividerPositions="0.17" focusTraversable="true" VBox.vgrow="ALWAYS">
-        <VBox>
-            <Label text="Settings:" />
+        <VBox maxWidth="180" minWidth="180">
+            <AnchorPane prefHeight="50.0">
+                <Label text="Settings:" AnchorPane.topAnchor="0.0" />
+                <HBox alignment="CENTER_RIGHT" spacing="5.0" AnchorPane.topAnchor="25.0">
+                    <Label text="Page Stop:">
+                        <font>
+                            <Font size="10.0" />
+                        </font>
+                    </Label>
+                    <TextField alignment="TOP_CENTER" promptText="Please Enter Stop Page Count" text="10" maxWidth="50">
+                        <font>
+                            <Font size="10.0" />
+                        </font>
+                    </TextField>
+                </HBox>
+                <Label text="Output log:" AnchorPane.topAnchor="480.0" />
+                <TextArea editable="false" prefHeight="223.0" prefWidth="176.0" text="Ready." AnchorPane.topAnchor="500.0">
+                    <font>
+                       <Font name="Monospaced Regular" size="10.0" />
+                    </font>
+                </TextArea>
+            </AnchorPane>
             <padding>
                 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
             </padding>
         </VBox>
-        <SplitPane dividerPositions="0.7" focusTraversable="true" orientation="VERTICAL">
-            <WebView prefHeight="400.0" prefWidth="200.0" />
+        <SplitPane dividerPositions="0.65" focusTraversable="true" orientation="VERTICAL">
+            <WebView maxWidth="845" minWidth="845" />
             <VBox spacing="5.0">
                 <Label text="Output report:" />
-                <TextArea text="&lt;empty&gt;" VBox.vgrow="ALWAYS">
+                <TextArea editable="false" text="&lt;empty&gt;" VBox.vgrow="ALWAYS">
                     <font>
                         <Font name="Monospaced Regular" size="12.0" />
                     </font>
