@@ -2,13 +2,29 @@ group 'ru.exlmoto.qafhp'
 version '1.0-PROTO'
 
 apply plugin: 'java'
+apply plugin: 'javafx-gradle-plugin'
 
 sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jfx {
+    mainClass = 'ru.exlmoto.qafhp.QAndroidFileHostParser'
+    vendor = 'EXL'
+}
+
+buildscript {
+    dependencies {
+        classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
+    }
+
+    repositories {
+        jcenter()
+    }
 }
