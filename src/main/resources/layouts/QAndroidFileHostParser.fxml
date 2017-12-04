@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+
+<VBox prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.exlmoto.qafhp.Controller">
+    <HBox>
+        <HBox alignment="CENTER_RIGHT" spacing="15.0" HBox.hgrow="ALWAYS" VBox.vgrow="NEVER">
+            <Label text="Please Enter URL:" />
+            <TextField promptText="Please Enter Start URL Here" text="https://www.androidfilehost.com/?w=search&amp;s=.xml.zip&amp;type=files" HBox.hgrow="ALWAYS" />
+            <Button id="buttonUrl" fx:id="goToUrl" text="Start!" />
+        </HBox>
+        <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+        </padding>
+    </HBox>
+    <SplitPane dividerPositions="0.17" focusTraversable="true" VBox.vgrow="ALWAYS">
+        <VBox>
+            <Label text="Settings:" />
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <SplitPane dividerPositions="0.7" focusTraversable="true" orientation="VERTICAL">
+            <WebView prefHeight="400.0" prefWidth="200.0" />
+            <VBox spacing="5.0">
+                <Label text="Output report:" />
+                <TextArea text="&lt;empty&gt;">
+                    <font>
+                        <Font name="Monospaced Regular" size="12.0" />
+                    </font>
+                </TextArea>
+                <padding>
+                    <Insets bottom="5.0" left="2.0" right="2.0" top="2.0" />
+                </padding>
+            </VBox>
+        </SplitPane>
+    </SplitPane>
+</VBox>

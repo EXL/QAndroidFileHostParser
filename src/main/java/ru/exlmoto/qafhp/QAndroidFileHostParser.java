@@ -1,8 +1,10 @@
 package ru.exlmoto.qafhp;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -24,14 +26,12 @@ public class QAndroidFileHostParser extends Application {
         pageWalker.startWalk();
 
         // Create Window
-        StackPane rootWidget = new StackPane();
-        rootWidget.getChildren().add(webView);
+        VBox window = (VBox) FXMLLoader.load(
+                QAndroidFileHostParser.class.getResource("/layouts/QAndroidFileHostParser.fxml"));
 
         primaryStage.setTitle("QAndroidFileHostParser for BOXA");
-        primaryStage.setScene(new Scene(rootWidget, 800, 600));
+        primaryStage.setScene(new Scene(window));
         primaryStage.show();
-
-        pageWalker.sendPost();
     }
 
     public static void main(String[] args) {
