@@ -1,16 +1,17 @@
 package ru.exlmoto.qafhp;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Flashes {
     private int number = 0;
     private String name = "undefined";
     private String url = "undefined";
     private String md5 = "undefined";
-    private String directLinks = "undefined";
+    private List<String> directLinks = null;
 
-    public Flashes(int number, String name, String url, String md5, String directLinks) {
+    public Flashes(int number, String name, String url, String md5, List<String> directLinks) {
         this.number = number;
         this.name = name;
         this.url = url;
@@ -22,6 +23,7 @@ public class Flashes {
         this.number = number;
         this.name = name;
         this.url = url;
+        directLinks = new ArrayList<>();
     }
 
     public String getFid() {
@@ -59,11 +61,11 @@ public class Flashes {
         this.md5 = md5;
     }
 
-    public String getDirectLinks() {
+    public List<String> getDirectLinks() {
         return directLinks;
     }
 
-    public void setDirectLinks(String directLinks) {
+    public void setDirectLinks(List<String> directLinks) {
         this.directLinks = directLinks;
     }
 
@@ -77,9 +79,15 @@ public class Flashes {
 
     @Override
     public String toString() {
-        return "Name: " + name +
+        String reportString = "Name: " + name +
                 "Link: " + url + "\n" +
                 "MD5: " + md5 + "\n" +
-                "Direct Links:\n" + directLinks + "\n\n";
+                "Direct Links:\n";
+        StringBuilder sb = new StringBuilder();
+        for (String directLink : directLinks) {
+            sb.append(directLink).append("\n");
+        }
+        reportString += sb.toString() + "\n";
+        return reportString;
     }
 }

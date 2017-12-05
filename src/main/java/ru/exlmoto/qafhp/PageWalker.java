@@ -22,7 +22,7 @@ public class PageWalker {
     private List<Flashes> flashesArray = null;
 
     private void getDirectLinksWithPost(List<String> fids) {
-        postGetter = new PostGetter(guiController, fids);
+        postGetter = new PostGetter(guiController, fids, this);
         postGetter.startWork();
     }
 
@@ -95,9 +95,6 @@ public class PageWalker {
                 String[] sw = links[i].split(";");
                 flashesArray.add(new Flashes(i+1, sw[1], sw[0]));
             }
-            for (Flashes flash : flashesArray) {
-                guiController.toReport(flash.toString());
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -115,6 +112,10 @@ public class PageWalker {
         } catch (Exception e) {
             return -1;
         }
+    }
+
+    public List<Flashes> getFlashesArray() {
+        return flashesArray;
     }
 
     public void startWork() {

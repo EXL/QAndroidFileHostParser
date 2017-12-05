@@ -8,7 +8,7 @@ public class PageTemplate {
     public static int pageCount = 0;
     public static int pageStart = 1;
     public static int pageStop = 10;
-    public static int postDelay = 20;
+    public static int postDelay = 10;
     public static int conTimeout = 70;
     public static int pageCountAux = 0;
 

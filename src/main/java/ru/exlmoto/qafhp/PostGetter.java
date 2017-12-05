@@ -1,5 +1,6 @@
 package ru.exlmoto.qafhp;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javafx.concurrent.Task;
@@ -8,6 +9,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,6 +22,7 @@ public class PostGetter {
 
     private GuiController guiController = null;
     private List<String> fids = null;
+    private PageWalker pageWalker = null;
 
     private ExecutorService exec = Executors.newSingleThreadExecutor(r -> {
         Thread t = new Thread(r);
@@ -27,9 +30,10 @@ public class PostGetter {
         return t;
     });
 
-    public PostGetter(GuiController gui, List<String> fids) {
+    public PostGetter(GuiController gui, List<String> fids, PageWalker pageWalker) {
         this.guiController = gui;
         this.fids = fids;
+        this.pageWalker = pageWalker;
     }
 
     private Task<Void> createTask() {
@@ -41,11 +45,12 @@ public class PostGetter {
                 for (int i = 0; i < fids.size(); i++) {
                     Thread.sleep(PageTemplate.postDelay * 100);
                     String fid = fids.get(i);
-                    if (sendPost(fid)) {
+                    if (sendPost(fid, i)) {
                         guiController.toLog("Good " + (i+1) + ": " + fid);
                     } else {
                         guiController.toLog("Fail " + (i+1) + ": " + fid);
                     }
+                    guiController.toReport(pageWalker.getFlashesArray().get(i).toString());
                 }
                 guiController.toLog("=== End Part 2");
                 return null;
@@ -54,7 +59,7 @@ public class PostGetter {
     }
 
     // HTTP POST request
-    private boolean sendPost(String fid) throws Exception {
+    private boolean sendPost(String fid, int num) throws Exception {
         URL obj = new URL(PageTemplate.curlUrl);
         try {
             HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
@@ -93,9 +98,18 @@ public class PostGetter {
             ungzippedResponse.close();
 
             JSONObject jsonObject = new JSONObject(body);
-            guiController.toReport(body);
+            JSONArray jsonArray = jsonObject.getJSONArray("MIRRORS");
+            List<String> directLinks = new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                directLinks.add(jsonArray.getJSONObject(i).getString("url"));
+            }
+            pageWalker.getFlashesArray().get(num).setDirectLinks(directLinks);
+
             return true;
         } catch (Exception e) {
+            List<String> error = new ArrayList<>();
+            error.add("undefined");
+            pageWalker.getFlashesArray().get(num).setDirectLinks(error);
             guiController.toLog(e.toString());
             return false;
         }
@@ -106,3 +120,24 @@ public class PostGetter {
         exec.submit(task);
     }
 }
+
+//{
+//    "STATUS": "1",
+//    "CODE": "200",
+//    "MESSAGE": "success, #winning",
+//    "AUTO_START": "FALSE",
+//    "MIRRORS": [{
+//    "mid": "90",
+//    "name": "Quebec, Canada #1",
+//    "abbrev": "QC1",
+//    "address": "http:\/\/qc1.androidfilehost.com",
+//    "path": "",
+//    "mirror_status": "1",
+//    "selectable": "1",
+//    "archive": "1",
+//    "weight": "5",
+//    "temporary": "0",
+//    "type": "1",
+//    "url": "http:\/\/qc1.androidfilehost.com\/dl\/0YTR1wT3uLVyKto-mMqiZw\/1512744007\/23991606952606298\/CFC-fastboot_falcon_verizon_user_4.4.2_KXB20.9-1.10-1.20_22_release-keys.xml.zip"
+//    }]
+//}
