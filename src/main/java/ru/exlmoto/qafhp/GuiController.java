@@ -152,6 +152,9 @@ public class GuiController {
         spinnerPageStop.setDisable(disable);
         spinnerPageStart.setDisable(disable);
         spinnerPostDelay.setDisable(disable);
+        spinnerConTimeOut.setDisable(disable);
+        textFieldUa.setDisable(disable);
+        textFieldCookie.setDisable(disable);
         checkBoxMD5.setDisable(disable);
     }
 }

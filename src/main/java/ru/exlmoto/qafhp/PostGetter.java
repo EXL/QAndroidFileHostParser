@@ -38,12 +38,13 @@ public class PostGetter {
             @Override
             public Void call() throws Exception {
                 guiController.toLog("=== Start Part 2");
-                for (String fid : fids) {
+                for (int i = 0; i < fids.size(); i++) {
                     Thread.sleep(PageTemplate.postDelay * 100);
+                    String fid = fids.get(i);
                     if (sendPost(fid)) {
-                        guiController.toLog("Good: " + fid);
+                        guiController.toLog("Good " + (i+1) + ": " + fid);
                     } else {
-                        guiController.toLog("Fail: " + fid);
+                        guiController.toLog("Fail " + (i+1) + ": " + fid);
                     }
                 }
                 guiController.toLog("=== End Part 2");
@@ -69,7 +70,7 @@ public class PostGetter {
             con.setRequestProperty("Authority", PageTemplate.curlAuthority);
             con.setRequestProperty("X-Requested-With", PageTemplate.curlXreq);
             con.setRequestProperty("User-Agent", PageTemplate.curlUa);
-            con.setConnectTimeout(PageTemplate.conTimeout);
+            con.setConnectTimeout(PageTemplate.conTimeout * 100);
             con.setDoOutput(true);
 
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -95,6 +96,7 @@ public class PostGetter {
             guiController.toReport(body);
             return true;
         } catch (Exception e) {
+            guiController.toLog(e.toString());
             return false;
         }
     }
