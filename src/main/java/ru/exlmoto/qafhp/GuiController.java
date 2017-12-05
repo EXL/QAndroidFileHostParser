@@ -70,7 +70,6 @@ public class GuiController {
             pageWalker.startWork();
         } else {
             toggleButton.setText("Start!");
-            pageWalker.workerState = PageWalker.WorkerState.PAGE_C;
             PageTemplate.pageStart = 1;
             firstInsert = true;
             webEngine.getLoadWorker().cancel();
