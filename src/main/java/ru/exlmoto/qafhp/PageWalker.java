@@ -6,7 +6,6 @@ import javafx.concurrent.Worker;
 import javafx.concurrent.Worker.State;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
 
 public class PageWalker {
@@ -15,14 +14,20 @@ public class PageWalker {
     private GuiController guiController = null;
 
     public class JavaBridge {
+        private PageWalker pageWalker = null;
+
         public void log(String text) {
-            System.out.println(text);
+            pageWalker.guiController.toReport(text);
+        }
+
+        public JavaBridge(PageWalker pageWalker) {
+            this.pageWalker = pageWalker;
         }
     }
 
     enum WorkerState { PAGE_C, PAGE_S,  ITEM }
 
-    private WorkerState workerState = WorkerState.PAGE_C;
+    public WorkerState workerState = WorkerState.PAGE_C;
 
     public PageWalker(WebView webView, WebEngine webEngine, GuiController guiController) {
         this.webView = webView;
@@ -40,13 +45,14 @@ public class PageWalker {
                                 if (pageCount != -1) {
                                     guiController.toLog("Page Count... " + pageCount + ".");
                                     workerState = WorkerState.ITEM;
-                                    webEngine.load("https://androidfilehost.com/?fid=889964283620770242");
+                                    guiController.goToUrl(PageTemplate.testUrl);
                                 } else {
                                     guiController.toLog("Page Count... fail!");
                                 }
                                 break;
                             }
                             case ITEM: {
+                                guiController.toLog("Move to Items!");
                                 tryGetItemMirrors();
                                 break;
                             }
@@ -61,13 +67,13 @@ public class PageWalker {
     private void tryGetItemMirrors() {
         try {
             JSObject window = (JSObject) webEngine.executeScript("window");
-            JavaBridge bridge = new JavaBridge();
+            JavaBridge bridge = new JavaBridge(this);
             window.setMember("java", bridge);
             webEngine.executeScript("console.log = function(message)\n" +
                     "{\n" +
                     "    java.log(message);\n" +
                     "};");
-            JSObject postJQuery = (JSObject) webEngine.executeScript(PageTemplate.scriptJQueryPost);
+            webEngine.executeScript(PageTemplate.scriptJQueryPost);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,7 +93,7 @@ public class PageWalker {
     }
 
     public void startWork() {
-        webEngine.load(PageTemplate.startUrl);
+        guiController.goToUrl(PageTemplate.startUrl);
     }
 }
 

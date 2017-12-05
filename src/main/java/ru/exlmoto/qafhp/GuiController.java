@@ -29,20 +29,27 @@ public class GuiController {
     private CheckBox checkBoxDisableWeb = null;
 
     @FXML
+    private CheckBox checkBoxMD5 = null;
+
+    @FXML
+    private CheckBox checkBoxMirrors = null;
+
+    @FXML
     private WebView webView = null;
     private WebEngine webEngine = null;
 
     private PageWalker pageWalker = null;
 
+    private boolean firstInsert = true;
+
     @FXML
     private void initialize() {
         textFieldUrl.setText(PageTemplate.startUrl);
-        textAreaReport.setText("<empty>");
         spinnerPageStop.getEditor().textProperty().setValue(Integer.toString(PageTemplate.pageStop));
         spinnerPageItems.getEditor().textProperty().setValue(Integer.toString(PageTemplate.pageItems));
         webEngine = webView.getEngine();
         pageWalker = new PageWalker(webView, webEngine, this);
-        toLog("Ready.");
+        clearTextAreas();
     }
 
     @FXML
@@ -63,7 +70,10 @@ public class GuiController {
             pageWalker.startWork();
         } else {
             toggleButton.setText("Start!");
+            pageWalker.workerState = PageWalker.WorkerState.PAGE_C;
             webEngine.getLoadWorker().cancel();
+            textFieldUrl.setText(PageTemplate.startUrl);
+            clearTextAreas();
         }
     }
 
@@ -76,6 +86,26 @@ public class GuiController {
         }
     }
 
+    @FXML
+    private void disableMD5(ActionEvent event) {
+       PageTemplate.settingMd5 = ((CheckBox) event.getSource()).isSelected();
+    }
+
+    @FXML
+    private void disableMirrors(ActionEvent event) {
+        PageTemplate.settingMirrors = ((CheckBox) event.getSource()).isSelected();
+    }
+
+    public void goToUrl(String url) {
+        textFieldUrl.setText(url);
+        webEngine.load(url);
+    }
+
+    private void clearTextAreas() {
+        textAreaReport.setText("<empty>");
+        textAreaLog.setText("Ready." + "\n");
+    }
+
     public void toLog(String logText) {
         if (textAreaLog != null) {
             textAreaLog.appendText(logText + "\n");
@@ -84,6 +114,10 @@ public class GuiController {
 
     public void toReport(String line) {
         if (textAreaReport != null) {
+            if (firstInsert) {
+                textAreaReport.clear();
+                firstInsert = false;
+            }
             textAreaReport.appendText(line + "\n");
         }
     }
@@ -95,5 +129,7 @@ public class GuiController {
         textFieldUrl.setDisable(disable);
         spinnerPageItems.setDisable(disable);
         spinnerPageStop.setDisable(disable);
+        checkBoxMD5.setDisable(disable);
+        checkBoxMirrors.setDisable(disable);
     }
 }
