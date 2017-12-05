@@ -45,10 +45,11 @@ public class PageWalker {
                                 if (PageTemplate.pageCount != -1) {
                                     guiController.toLog("Page #" + PageTemplate.pageStart + " fully loaded.");
                                     PageTemplate.pageStart += 1;
-                                    tryGetFileLinks();
-                                    guiController.goToUrl(PageTemplate.startUrl + PageTemplate.pageStart);
                                     if (PageTemplate.pageStart > PageTemplate.pageStop) {
                                         workerState = WorkerState.ITEM;
+                                    } else {
+                                        guiController.goToUrl(PageTemplate.startUrl + PageTemplate.pageStart);
+                                        tryGetFileLinks();
                                     }
                                 } else {
                                     guiController.toLog("Page Count... fail!");

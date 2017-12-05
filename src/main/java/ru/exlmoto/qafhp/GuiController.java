@@ -72,6 +72,7 @@ public class GuiController {
             toggleButton.setText("Start!");
             pageWalker.workerState = PageWalker.WorkerState.PAGE_C;
             PageTemplate.pageStart = 1;
+            firstInsert = true;
             webEngine.getLoadWorker().cancel();
             textFieldUrl.setText(PageTemplate.startUrl);
             clearTextAreas();
