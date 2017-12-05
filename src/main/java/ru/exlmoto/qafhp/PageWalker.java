@@ -36,11 +36,12 @@ public class PageWalker {
                     tryGetFileLinks();
                     if (pageStack.isEmpty()) {
                         webEngine.getLoadWorker().stateProperty().removeListener(this);
-                        guiController.toLog("Getting SW Links done!");
+                        guiController.toLog("=== Part 1 end!");
                         List<String> fids = new ArrayList<>();
                         for (Flashes aFlashesArray : flashesArray) {
                             fids.add(aFlashesArray.getFid());
                         }
+                        guiController.toLog("Getting SW Links done!\nGet Post Direct links... " + fids.size());
                         getDirectLinksWithPost(fids);
                     } else {
                         guiController.goToUrl(pageStack.pop());
@@ -71,7 +72,9 @@ public class PageWalker {
                             String link = PageTemplate.startUrl + "&page=" + i;
                             links.add(link);
                         }
-                        guiController.toLog("Generating links... " + PageTemplate.pageCountAux);
+                        guiController.toLog("Generating links... " + PageTemplate.pageCountAux + ".");
+                        guiController.toLog("=== Start Part 1");
+                        PageTemplate.pageCountAux = PageTemplate.pageStart;
                         webEngine.getLoadWorker().stateProperty().removeListener(this);
                         loadPagesConsecutively(links);
                     } else {
@@ -93,9 +96,6 @@ public class PageWalker {
                 flashesArray.add(new Flashes(i+1, sw[1], sw[0]));
             }
             for (Flashes flash : flashesArray) {
-                if (PageTemplate.settingMirrors) {
-                    //tryGetItemMirrors(flash.getFid());
-                }
                 guiController.toReport(flash.toString());
             }
         } catch (Exception e) {

@@ -26,13 +26,16 @@ public class GuiController {
     private Spinner spinnerPageItems = null;
 
     @FXML
+    private Spinner spinnerPostDelay = null;
+
+    @FXML
+    private Spinner spinnerPageStart = null;
+
+    @FXML
     private CheckBox checkBoxDisableWeb = null;
 
     @FXML
     private CheckBox checkBoxMD5 = null;
-
-    @FXML
-    private CheckBox checkBoxMirrors = null;
 
     @FXML
     private WebView webView = null;
@@ -45,8 +48,10 @@ public class GuiController {
     @FXML
     private void initialize() {
         textFieldUrl.setText(PageTemplate.startUrl);
+        spinnerPageStart.getEditor().textProperty().setValue(Integer.toString(PageTemplate.pageStart));
         spinnerPageStop.getEditor().textProperty().setValue(Integer.toString(PageTemplate.pageStop));
         spinnerPageItems.getEditor().textProperty().setValue(Integer.toString(PageTemplate.pageItems));
+        spinnerPostDelay.getEditor().textProperty().setValue(Integer.toString(PageTemplate.postDelay));
         webEngine = webView.getEngine();
         pageWalker = new PageWalker(webView, webEngine, this);
         clearTextAreas();
@@ -61,12 +66,18 @@ public class GuiController {
             PageTemplate.startUrl = textFieldUrl.getText();
             PageTemplate.pageItems = Integer.valueOf(spinnerPageItems.getEditor().getText());
             PageTemplate.pageStop = Integer.valueOf(spinnerPageStop.getEditor().getText());
+            PageTemplate.pageStart = Integer.valueOf(spinnerPageStart.getEditor().getText());
+            PageTemplate.postDelay = Integer.valueOf(spinnerPostDelay.getEditor().getText());
 
             toggleButton.setText("Stop!");
+
             textAreaReport.requestFocus();
-            toLog("Start working...");
-            toLog("Page Stop: " + spinnerPageStop.getEditor().getText());
-            toLog("Page Items: " + spinnerPageItems.getEditor().getText());
+            toLog("=== Parameters:");
+            toLog("Page Start: " + PageTemplate.pageStart);
+            toLog("Page Stop: " + PageTemplate.pageStop);
+            toLog("Page Items: " + PageTemplate.pageItems);
+            toLog("Post Delay: " + PageTemplate.postDelay);
+            toLog("=== Start working...");
             pageWalker.startWork();
         } else {
             toggleButton.setText("Start!");
@@ -90,11 +101,6 @@ public class GuiController {
     @FXML
     private void disableMD5(ActionEvent event) {
        PageTemplate.settingMd5 = ((CheckBox) event.getSource()).isSelected();
-    }
-
-    @FXML
-    private void disableMirrors(ActionEvent event) {
-        PageTemplate.settingMirrors = ((CheckBox) event.getSource()).isSelected();
     }
 
     public void goToUrl(String url) {
@@ -130,7 +136,8 @@ public class GuiController {
         textFieldUrl.setDisable(disable);
         spinnerPageItems.setDisable(disable);
         spinnerPageStop.setDisable(disable);
+        spinnerPageStart.setDisable(disable);
+        spinnerPostDelay.setDisable(disable);
         checkBoxMD5.setDisable(disable);
-        checkBoxMirrors.setDisable(disable);
     }
 }

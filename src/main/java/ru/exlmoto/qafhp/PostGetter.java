@@ -35,8 +35,8 @@ public class PostGetter {
         return new Task<Void>() {
             @Override
             public Void call() throws Exception {
-                for (int count=1; count<=5; count++) {
-                    Thread.sleep(1000);
+                for (int count=0; count<2; count++) {
+                    Thread.sleep(PageTemplate.postDelay);
                     sendPost("889964283620770242");
                 }
                 return null;

@@ -44,37 +44,52 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                    <Label text="Page Stop:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label text="Page Start:" GridPane.columnIndex="0" GridPane.rowIndex="0">
                         <font>
                             <Font size="11.0" />
                         </font>
                     </Label>
-                    <Spinner fx:id="spinnerPageStop" editable="true" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Spinner fx:id="spinnerPageStart" editable="true" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                         <valueFactory>
-                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="10000" min="0" />
+                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="10000" min="1" />
                         </valueFactory>
                     </Spinner>
-                    <Label text="Items on Page:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label text="Page Stop:" GridPane.columnIndex="0" GridPane.rowIndex="1">
                         <font>
                             <Font size="11.0" />
                         </font>
                     </Label>
-                    <Spinner fx:id="spinnerPageItems" editable="true" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Spinner fx:id="spinnerPageStop" editable="true" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                         <valueFactory>
-                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="0" />
+                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="10000" min="1" />
                         </valueFactory>
                     </Spinner>
-                    <CheckBox fx:id="checkBoxDisableWeb" onAction="#disableWebView" mnemonicParsing="false" selected="true" text="WebView Off" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <Label text="Items on Page:" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                        <font>
+                            <Font size="11.0" />
+                        </font>
+                    </Label>
+                    <Spinner fx:id="spinnerPageItems" editable="true" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <valueFactory>
+                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="1" />
+                        </valueFactory>
+                    </Spinner>
+                    <Label text="POST Delay:" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                        <font>
+                            <Font size="11.0" />
+                        </font>
+                    </Label>
+                    <Spinner fx:id="spinnerPostDelay" editable="true" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <valueFactory>
+                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="100000" min="1" />
+                        </valueFactory>
+                    </Spinner>
+                    <CheckBox fx:id="checkBoxDisableWeb" onAction="#disableWebView" mnemonicParsing="false" selected="true" text="WebView Off" GridPane.columnIndex="0" GridPane.rowIndex="4">
                         <font>
                             <Font size="10.0" />
                         </font>
                     </CheckBox>
-                    <CheckBox fx:id="checkBoxMD5" onAction="#disableMD5" mnemonicParsing="false" selected="true" text="Get MD5" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                        <font>
-                            <Font size="10.0" />
-                        </font>
-                    </CheckBox>
-                    <CheckBox fx:id="checkBoxMirrors" onAction="#disableMirrors" mnemonicParsing="false" selected="true" text="Get Mirrors" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                    <CheckBox fx:id="checkBoxMD5" onAction="#disableMD5" mnemonicParsing="false" selected="true" text="Get MD5" GridPane.columnIndex="1" GridPane.rowIndex="4">
                         <font>
                             <Font size="10.0" />
                         </font>
