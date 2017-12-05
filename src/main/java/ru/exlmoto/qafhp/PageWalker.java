@@ -41,11 +41,15 @@ public class PageWalker {
                     case SUCCEEDED: {
                         switch (workerState) {
                             case PAGE_C: {
-                                int pageCount = tryGetPageCount();
-                                if (pageCount != -1) {
-                                    guiController.toLog("Page Count... " + pageCount + ".");
-                                    workerState = WorkerState.ITEM;
-                                    guiController.goToUrl(PageTemplate.testUrl);
+                                PageTemplate.pageCount = tryGetPageCount();
+                                if (PageTemplate.pageCount != -1) {
+                                    guiController.toLog("Page #" + PageTemplate.pageStart + " fully loaded.");
+                                    PageTemplate.pageStart += 1;
+                                    tryGetFileLinks();
+                                    guiController.goToUrl(PageTemplate.startUrl + PageTemplate.pageStart);
+                                    if (PageTemplate.pageStart > PageTemplate.pageStop) {
+                                        workerState = WorkerState.ITEM;
+                                    }
                                 } else {
                                     guiController.toLog("Page Count... fail!");
                                 }
@@ -62,6 +66,15 @@ public class PageWalker {
                 }
             }
         });
+    }
+
+    private void tryGetFileLinks() {
+        try {
+            JSObject linksArrayDirty = (JSObject) webEngine.executeScript(PageTemplate.scriptGetLinks);
+            guiController.toReport(linksArrayDirty.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void tryGetItemMirrors() {
@@ -93,7 +106,7 @@ public class PageWalker {
     }
 
     public void startWork() {
-        guiController.goToUrl(PageTemplate.startUrl);
+        guiController.goToUrl(PageTemplate.startUrl + "1");
     }
 }
 
