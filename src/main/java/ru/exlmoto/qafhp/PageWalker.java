@@ -36,12 +36,12 @@ public class PageWalker {
                     tryGetFileLinks();
                     if (pageStack.isEmpty()) {
                         webEngine.getLoadWorker().stateProperty().removeListener(this);
-                        guiController.toLog("=== Part 1 end!");
+                        guiController.toLog("=== End Part 1");
                         List<String> fids = new ArrayList<>();
                         for (Flashes aFlashesArray : flashesArray) {
                             fids.add(aFlashesArray.getFid());
                         }
-                        guiController.toLog("Getting SW Links done!\nGet Post Direct links... " + fids.size());
+                        guiController.toLog("Getting SW Links done!\nGet Post Direct links... " + fids.size() + ".");
                         getDirectLinksWithPost(fids);
                     } else {
                         guiController.goToUrl(pageStack.pop());
@@ -120,8 +120,6 @@ public class PageWalker {
     public void startWork() {
         guiController.goToUrl(PageTemplate.startUrl);
         webEngine.getLoadWorker().stateProperty().addListener(initialListener);
-//        postGetter = new PostGetter(guiController, null);
-//        postGetter.startWork();
     }
 }
 

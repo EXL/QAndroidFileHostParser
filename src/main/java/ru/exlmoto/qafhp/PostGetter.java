@@ -1,5 +1,7 @@
 package ru.exlmoto.qafhp;
 
+import org.json.JSONObject;
+
 import javafx.concurrent.Task;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -21,7 +23,7 @@ public class PostGetter {
 
     private ExecutorService exec = Executors.newSingleThreadExecutor(r -> {
         Thread t = new Thread(r);
-        t.setDaemon(true); // allows app to exit if tasks are running
+        t.setDaemon(true);
         return t;
     });
 
@@ -35,55 +37,66 @@ public class PostGetter {
         return new Task<Void>() {
             @Override
             public Void call() throws Exception {
-                for (int count=0; count<2; count++) {
-                    Thread.sleep(PageTemplate.postDelay);
-                    sendPost("889964283620770242");
+                guiController.toLog("=== Start Part 2");
+                for (String fid : fids) {
+                    Thread.sleep(PageTemplate.postDelay * 100);
+                    if (sendPost(fid)) {
+                        guiController.toLog("Good: " + fid);
+                    } else {
+                        guiController.toLog("Fail: " + fid);
+                    }
                 }
+                guiController.toLog("=== End Part 2");
                 return null;
             }
         };
     }
 
     // HTTP POST request
-    private void sendPost(String fid) throws Exception {
+    private boolean sendPost(String fid) throws Exception {
         URL obj = new URL(PageTemplate.curlUrl);
+        try {
+            HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Cookie", PageTemplate.curlCookie);
+            con.setRequestProperty("Origin", PageTemplate.justUrl);
+            con.setRequestProperty("Accept-Encoding", PageTemplate.curlAe);
+            con.setRequestProperty("Accept-Language", PageTemplate.curlAl);
+            con.setRequestProperty("Content-Type", PageTemplate.curlContentType);
+            con.setRequestProperty("X-Mod-Sbb-Ctype", PageTemplate.curlXmod);
+            con.setRequestProperty("Accept", PageTemplate.curlA);
+            con.setRequestProperty("Referer", PageTemplate.justUrl + "?fid=" + fid);
+            con.setRequestProperty("Authority", PageTemplate.curlAuthority);
+            con.setRequestProperty("X-Requested-With", PageTemplate.curlXreq);
+            con.setRequestProperty("User-Agent", PageTemplate.curlUa);
+            con.setConnectTimeout(PageTemplate.conTimeout);
+            con.setDoOutput(true);
 
-        HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("Cookie", PageTemplate.curlCookie);
-        con.setRequestProperty("Origin", PageTemplate.justUrl);
-        con.setRequestProperty("Accept-Encoding", PageTemplate.curlAe);
-        con.setRequestProperty("Accept-Language", PageTemplate.curlAl);
-        con.setRequestProperty("Content-Type", PageTemplate.curlContentType);
-        con.setRequestProperty("X-Mod-Sbb-Ctype", PageTemplate.curlXmod);
-        con.setRequestProperty("Accept", PageTemplate.curlA);
-        con.setRequestProperty("Referer", PageTemplate.justUrl + "?fid=" + fid);
-        con.setRequestProperty("Authority", PageTemplate.curlAuthority);
-        con.setRequestProperty("X-Requested-With", PageTemplate.curlXreq);
-        con.setRequestProperty("User-Agent", PageTemplate.curlUa);
-        con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(PageTemplate.curlData + fid);
+            wr.flush();
+            wr.close();
 
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(PageTemplate.curlData + fid);
-        wr.flush();
-        wr.close();
+            InputStream ungzippedResponse = new GZIPInputStream(con.getInputStream());
 
-        InputStream ungzippedResponse = new GZIPInputStream(con.getInputStream());
+            Reader reader = new InputStreamReader(ungzippedResponse, "UTF-8");
+            Writer writer = new StringWriter();
 
-        Reader reader = new InputStreamReader(ungzippedResponse, "UTF-8");
-        Writer writer = new StringWriter();
+            String body = null;
+            char[] buffer = new char[10240];
+            for (int length = 0; (length = reader.read(buffer)) > 0; ) {
+                writer.write(buffer, 0, length);
+            }
+            body = writer.toString();
+            reader.close();
+            ungzippedResponse.close();
 
-        String body = null;
-        char[] buffer = new char[10240];
-        for (int length = 0; (length = reader.read(buffer)) > 0;) {
-            writer.write(buffer, 0, length);
+            JSONObject jsonObject = new JSONObject(body);
+            guiController.toReport(body);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        body = writer.toString();
-        reader.close();
-        ungzippedResponse.close();
-
-        //print result
-        System.out.println(body);
     }
 
     public void startWork() {

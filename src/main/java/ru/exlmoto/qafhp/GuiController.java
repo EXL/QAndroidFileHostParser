@@ -32,10 +32,19 @@ public class GuiController {
     private Spinner spinnerPageStart = null;
 
     @FXML
+    private Spinner spinnerConTimeOut = null;
+
+    @FXML
     private CheckBox checkBoxDisableWeb = null;
 
     @FXML
     private CheckBox checkBoxMD5 = null;
+
+    @FXML
+    private TextField textFieldUa = null;
+
+    @FXML
+    private TextField textFieldCookie = null;
 
     @FXML
     private WebView webView = null;
@@ -52,6 +61,9 @@ public class GuiController {
         spinnerPageStop.getEditor().textProperty().setValue(Integer.toString(PageTemplate.pageStop));
         spinnerPageItems.getEditor().textProperty().setValue(Integer.toString(PageTemplate.pageItems));
         spinnerPostDelay.getEditor().textProperty().setValue(Integer.toString(PageTemplate.postDelay));
+        spinnerConTimeOut.getEditor().textProperty().setValue(Integer.toString(PageTemplate.conTimeout));
+        textFieldUa.setText(PageTemplate.curlUa);
+        textFieldCookie.setText(PageTemplate.curlCookie);
         webEngine = webView.getEngine();
         pageWalker = new PageWalker(webView, webEngine, this);
         clearTextAreas();
@@ -68,6 +80,8 @@ public class GuiController {
             PageTemplate.pageStop = Integer.valueOf(spinnerPageStop.getEditor().getText());
             PageTemplate.pageStart = Integer.valueOf(spinnerPageStart.getEditor().getText());
             PageTemplate.postDelay = Integer.valueOf(spinnerPostDelay.getEditor().getText());
+            PageTemplate.curlUa = textFieldUa.getText();
+            PageTemplate.curlCookie = textFieldCookie.getText();
 
             toggleButton.setText("Stop!");
 
@@ -76,7 +90,7 @@ public class GuiController {
             toLog("Page Start: " + PageTemplate.pageStart);
             toLog("Page Stop: " + PageTemplate.pageStop);
             toLog("Page Items: " + PageTemplate.pageItems);
-            toLog("Post Delay: " + PageTemplate.postDelay);
+            toLog("Post Delay: " + PageTemplate.postDelay * 100);
             toLog("=== Start working...");
             pageWalker.startWork();
         } else {
