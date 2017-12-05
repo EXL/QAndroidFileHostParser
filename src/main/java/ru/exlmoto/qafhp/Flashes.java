@@ -3,14 +3,14 @@ package ru.exlmoto.qafhp;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public class FlashClass {
+public class Flashes {
     private int number = 0;
     private String name = "undefined";
     private String url = "undefined";
     private String md5 = "undefined";
     private String directLinks = "undefined";
 
-    public FlashClass(int number, String name, String url, String md5, String directLinks) {
+    public Flashes(int number, String name, String url, String md5, String directLinks) {
         this.number = number;
         this.name = name;
         this.url = url;
@@ -18,7 +18,7 @@ public class FlashClass {
         this.directLinks = directLinks;
     }
 
-    public FlashClass(int number, String name, String url) {
+    public Flashes(int number, String name, String url) {
         this.number = number;
         this.name = name;
         this.url = url;

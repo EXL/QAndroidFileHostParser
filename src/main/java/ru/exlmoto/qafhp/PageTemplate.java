@@ -8,6 +8,8 @@ public class PageTemplate {
     public static int pageCount = 0;
     public static int pageStart = 1;
     public static int pageStop = 10;
+    public static int postDelay = 1000;
+    public static int pageCountAux = 0;
 
     public static boolean settingMd5 = true;
     public static boolean settingMirrors = true;

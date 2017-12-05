@@ -1,36 +1,29 @@
 package ru.exlmoto.qafhp;
 
-import java.io.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.zip.GZIPInputStream;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import netscape.javascript.JSObject;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class PageWalker {
     private WebView webView = null;
     private WebEngine webEngine = null;
     private GuiController guiController = null;
+    private PostGetter postGetter = null;
 
     private ChangeListener<State> initialListener = null;
     private ChangeListener<State> pageLinksListener = null;
 
-    private ArrayList<FlashClass> flashClassArray = null;
+    private List<Flashes> flashesArray = null;
 
     private void getDirectLinksWithPost(List<String> fids) {
-        LinkedList<String> fidsStack = new LinkedList<>(fids);
-
+        postGetter = new PostGetter(guiController, fids);
+        postGetter.startWork();
     }
 
     // https://stackoverflow.com/a/27496335
@@ -45,8 +38,8 @@ public class PageWalker {
                         webEngine.getLoadWorker().stateProperty().removeListener(this);
                         guiController.toLog("Getting SW Links done!");
                         List<String> fids = new ArrayList<>();
-                        for (FlashClass aFlashClassArray : flashClassArray) {
-                            fids.add(aFlashClassArray.getFid());
+                        for (Flashes aFlashesArray : flashesArray) {
+                            fids.add(aFlashesArray.getFid());
                         }
                         getDirectLinksWithPost(fids);
                     } else {
@@ -64,7 +57,7 @@ public class PageWalker {
         this.webEngine = webEngine;
         this.guiController = guiController;
 
-        flashClassArray = new ArrayList<>();
+        flashesArray = new ArrayList<>();
 
         initialListener = new ChangeListener<State>() {
             @Override
@@ -74,12 +67,11 @@ public class PageWalker {
                     if (tryGetPageCount() != -1) {
                         guiController.toLog("Get num of pages... " + PageTemplate.pageCount + ".");
                         List<String> links = new ArrayList<>();
-                        int count = 0;
-                        for (int i = PageTemplate.pageStart; i <= PageTemplate.pageStop; i++, count++) {
+                        for (int i = PageTemplate.pageStart; i <= PageTemplate.pageStop; i++, PageTemplate.pageCountAux++) {
                             String link = PageTemplate.startUrl + "&page=" + i;
                             links.add(link);
                         }
-                        guiController.toLog("Generating links... " + count);
+                        guiController.toLog("Generating links... " + PageTemplate.pageCountAux);
                         webEngine.getLoadWorker().stateProperty().removeListener(this);
                         loadPagesConsecutively(links);
                     } else {
@@ -92,14 +84,15 @@ public class PageWalker {
 
     private void tryGetFileLinks() {
         try {
-            guiController.toLog(PageTemplate.pageStart + "-- Page");
+            guiController.toLog("Page #" + PageTemplate.pageCountAux + " crawled!");
+            PageTemplate.pageCountAux += 1;
             String linksArrayDirty = (String) webEngine.executeScript(PageTemplate.scriptGetLinks);
             String[] links = linksArrayDirty.split("\\|");
             for (int i = 0; i < links.length; ++i) {
                 String[] sw = links[i].split(";");
-                flashClassArray.add(new FlashClass(i+1, sw[1], sw[0]));
+                flashesArray.add(new Flashes(i+1, sw[1], sw[0]));
             }
-            for (FlashClass flash : flashClassArray) {
+            for (Flashes flash : flashesArray) {
                 if (PageTemplate.settingMirrors) {
                     //tryGetItemMirrors(flash.getFid());
                 }
@@ -125,54 +118,10 @@ public class PageWalker {
     }
 
     public void startWork() {
-        //guiController.goToUrl(PageTemplate.startUrl);
-        //webEngine.getLoadWorker().stateProperty().addListener(initialListener);
-        try {
-            sendPost();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // HTTP POST request
-    private void sendPost() throws Exception {
-        URL obj = new URL(PageTemplate.curlUrl);
-        HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-
-        con.setRequestMethod("POST");
-        con.setRequestProperty("Cookie", PageTemplate.curlCookie);
-        con.setRequestProperty("Origin", PageTemplate.justUrl);
-        con.setRequestProperty("Accept-Encoding", PageTemplate.curlAe);
-        con.setRequestProperty("Accept-Language", PageTemplate.curlAl);
-        con.setRequestProperty("Content-Type", PageTemplate.curlContentType);
-        con.setRequestProperty("X-Mod-Sbb-Ctype", PageTemplate.curlXmod);
-        con.setRequestProperty("Accept", PageTemplate.curlA);
-        con.setRequestProperty("Referer", "https://androidfilehost.com/?fid=889964283620770242");
-        con.setRequestProperty("Authority", PageTemplate.curlAuthority);
-        con.setRequestProperty("X-Requested-With", PageTemplate.curlXreq);
-        con.setRequestProperty("User-Agent", PageTemplate.curlUa);
-
-        con.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(PageTemplate.curlData + "889964283620770242");
-        wr.flush();
-        wr.close();
-
-        InputStream ungzippedResponse = new GZIPInputStream(con.getInputStream());
-
-        Reader reader = new InputStreamReader(ungzippedResponse, "UTF-8");
-        Writer writer = new StringWriter();
-
-        String body = null;
-        char[] buffer = new char[10240];
-        for (int length = 0; (length = reader.read(buffer)) > 0;) {
-            writer.write(buffer, 0, length);
-        }
-        body = writer.toString();
-        reader.close();
-
-        //print result
-        System.out.println(body);
+        guiController.goToUrl(PageTemplate.startUrl);
+        webEngine.getLoadWorker().stateProperty().addListener(initialListener);
+//        postGetter = new PostGetter(guiController, null);
+//        postGetter.startWork();
     }
 }
 
