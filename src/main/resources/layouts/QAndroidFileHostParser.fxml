@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<VBox prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.exlmoto.qafhp.GuiController">
+<VBox prefHeight="710.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.exlmoto.qafhp.GuiController">
     <HBox>
         <HBox alignment="CENTER_RIGHT" spacing="15.0" HBox.hgrow="ALWAYS" VBox.vgrow="NEVER">
             <Label text="Please Enter URL:" />
@@ -88,7 +88,7 @@
                             <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="1" />
                         </valueFactory>
                     </Spinner>
-                    <Label text="Con. TimeOut:" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                    <Label text="Con. Timeout:" GridPane.columnIndex="0" GridPane.rowIndex="4">
                         <font>
                             <Font size="11.0" />
                         </font>
@@ -129,8 +129,8 @@
                         </font>
                     </TextField>
                 </GridPane>
-                <Label text="Output log:" AnchorPane.topAnchor="480.0" />
-                <TextArea fx:id="textAreaLog" editable="false" prefHeight="223.0" prefWidth="176.0" AnchorPane.topAnchor="500.0">
+                <Label text="Output log:" AnchorPane.topAnchor="396.0" />
+                <TextArea fx:id="textAreaLog" editable="false" prefHeight="223.0" prefWidth="176.0" AnchorPane.topAnchor="416.0">
                     <font>
                        <Font name="Monospaced Regular" size="10.0" />
                     </font>
@@ -141,10 +141,10 @@
             </padding>
         </VBox>
         <SplitPane dividerPositions="0.65" focusTraversable="true" orientation="VERTICAL">
-            <WebView fx:id="webView" maxWidth="845" minWidth="845" />
+            <WebView fx:id="webView" maxWidth="825.0" minWidth="825.0" />
             <VBox spacing="5.0">
                 <Label text="Output report:" />
-                <TextArea fx:id="textAreaReport" editable="false" VBox.vgrow="ALWAYS">
+                <TextArea fx:id="textAreaReport" editable="false" minHeight="223.0" maxWidth="825.0" VBox.vgrow="ALWAYS">
                     <font>
                         <Font name="Monospaced Regular" size="12.0" />
                     </font>

@@ -18,33 +18,53 @@ public class PageWalker {
 
     private ChangeListener<State> initialListener = null;
     private ChangeListener<State> pageLinksListener = null;
+    private ChangeListener<State> md5Listener = null;
 
     private List<Flashes> flashesArray = null;
+
+    enum PartState { Part1, Part3 };
 
     private void getDirectLinksWithPost(List<String> fids) {
         postGetter = new PostGetter(guiController, fids, this);
         postGetter.startWork();
     }
 
+    public void getMd5Hashes() {
+        List<String> links = new ArrayList<>();
+        for (Flashes aFlashesArray : flashesArray) {
+            links.add(aFlashesArray.getUrl());
+        }
+        loadPagesConsecutively(links, PartState.Part3);
+    }
+
     // https://stackoverflow.com/a/27496335
-    private void loadPagesConsecutively(List<String> pages) {
+    private void loadPagesConsecutively(List<String> pages, PartState part) {
         LinkedList<String> pageStack = new LinkedList<>(pages);
         pageLinksListener = new ChangeListener<State>() {
             @Override
             public void changed(ObservableValue<? extends State> obs, State oldState, State newState) {
                 if (newState == State.SUCCEEDED ) {
-                    tryGetFileLinks();
-                    if (pageStack.isEmpty()) {
-                        webEngine.getLoadWorker().stateProperty().removeListener(this);
-                        guiController.toLog("=== End Part 1");
-                        List<String> fids = new ArrayList<>();
-                        for (Flashes aFlashesArray : flashesArray) {
-                            fids.add(aFlashesArray.getFid());
+                    switch (part) {
+                        case Part1: {
+                            tryGetFileLinks();
+                            if (pageStack.isEmpty()) {
+                                webEngine.getLoadWorker().stateProperty().removeListener(this);
+                                guiController.toLog("=== End Part 1");
+                                List<String> fids = new ArrayList<>();
+                                for (Flashes aFlashesArray : flashesArray) {
+                                    fids.add(aFlashesArray.getFid());
+                                }
+                                guiController.toLog("Getting SW Links done!\nGet Post Direct links... " + fids.size() + ".");
+                                getDirectLinksWithPost(fids);
+                            } else {
+                                guiController.goToUrl(pageStack.pop());
+                            }
+                            break;
                         }
-                        guiController.toLog("Getting SW Links done!\nGet Post Direct links... " + fids.size() + ".");
-                        getDirectLinksWithPost(fids);
-                    } else {
-                        guiController.goToUrl(pageStack.pop());
+                        case Part3: {
+                            guiController.toReport("Here!");
+                            break;
+                        }
                     }
                 }
             }
@@ -76,7 +96,7 @@ public class PageWalker {
                         guiController.toLog("=== Start Part 1");
                         PageTemplate.pageCountAux = PageTemplate.pageStart;
                         webEngine.getLoadWorker().stateProperty().removeListener(this);
-                        loadPagesConsecutively(links);
+                        loadPagesConsecutively(links, PartState.Part1);
                     } else {
                         guiController.toLog("Get num of pages... fail!");
                     }

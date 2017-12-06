@@ -50,9 +50,15 @@ public class PostGetter {
                     } else {
                         guiController.toLog("Fail " + (i+1) + ": " + fid);
                     }
-                    guiController.toReport(pageWalker.getFlashesArray().get(i).toString());
+                    if (!PageTemplate.settingMd5) {
+                        guiController.toReport(pageWalker.getFlashesArray().get(i).toString());
+                    }
                 }
                 guiController.toLog("=== End Part 2");
+                if (PageTemplate.settingMd5) {
+                    guiController.toLog("Post Direct Links done!\nGet MD5 Hashes... " + fids.size() + ".");
+                    pageWalker.getMd5Hashes();
+                }
                 return null;
             }
         };
