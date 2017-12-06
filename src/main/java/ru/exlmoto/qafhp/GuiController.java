@@ -3,8 +3,14 @@ package ru.exlmoto.qafhp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GuiController {
     @FXML
@@ -67,6 +73,9 @@ public class GuiController {
     @FXML
     private WebView webView = null;
     private WebEngine webEngine = null;
+
+    @FXML
+    private VBox rootWidget = null;
 
     private PageWalker pageWalker = null;
 
@@ -140,7 +149,21 @@ public class GuiController {
 
     @FXML
     private void saveWork() {
-        toLog("save");
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(rootWidget.getScene().getWindow());
+        if (file != null) {
+            try {
+                FileWriter fileWriter = null;
+                fileWriter = new FileWriter(file);
+                fileWriter.write(textAreaReport.getText());
+                fileWriter.close();
+                toLog("Saving " + file.getName() + "... done!");
+            } catch (IOException ex) {
+                toLog(ex.toString());
+            }
+        }
     }
 
     @FXML

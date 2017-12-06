@@ -59,6 +59,7 @@ public class PostGetter {
                 guiController.disableAll(false);
                 guiController.setUrl(PageTemplate.startUrlAux);
                 guiController.getProgressBar().progressProperty().unbind();
+                guiController.getProgressBar().progressProperty().set(1.0);
                 pageWalker.getWebEngine().getLoadWorker().cancel();
                 return null;
             }
