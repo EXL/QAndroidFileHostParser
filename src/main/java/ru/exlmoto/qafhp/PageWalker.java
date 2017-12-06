@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
 import javafx.concurrent.Worker.State;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -17,52 +18,71 @@ public class PageWalker {
     private PostGetter postGetter = null;
 
     private ChangeListener<State> initialListener = null;
-    private ChangeListener<State> pageLinksListener = null;
-    private ChangeListener<State> md5Listener = null;
 
     private List<Flashes> flashesArray = null;
 
-    enum PartState { Part1, Part3 };
+    enum PartStates { PartLink, PartMd5 }
 
     private void getDirectLinksWithPost(List<String> fids) {
         postGetter = new PostGetter(guiController, fids, this);
         postGetter.startWork();
     }
 
-    public void getMd5Hashes() {
-        List<String> links = new ArrayList<>();
+    private List<String> getFids() {
+        List<String> fids = new ArrayList<>();
         for (Flashes aFlashesArray : flashesArray) {
-            links.add(aFlashesArray.getUrl());
+            fids.add(aFlashesArray.getFid());
         }
-        loadPagesConsecutively(links, PartState.Part3);
+        return fids;
     }
 
     // https://stackoverflow.com/a/27496335
-    private void loadPagesConsecutively(List<String> pages, PartState part) {
+    private void loadPagesConsecutively(List<String> pages, PartStates state) {
         LinkedList<String> pageStack = new LinkedList<>(pages);
-        pageLinksListener = new ChangeListener<State>() {
+        ChangeListener<State> pageLinksListener = new ChangeListener<State>() {
             @Override
             public void changed(ObservableValue<? extends State> obs, State oldState, State newState) {
-                if (newState == State.SUCCEEDED ) {
-                    switch (part) {
-                        case Part1: {
+                if (newState == State.SUCCEEDED) {
+                    switch (state) {
+                        case PartLink: {
                             tryGetFileLinks();
                             if (pageStack.isEmpty()) {
                                 webEngine.getLoadWorker().stateProperty().removeListener(this);
-                                guiController.toLog("=== End Part 1");
-                                List<String> fids = new ArrayList<>();
-                                for (Flashes aFlashesArray : flashesArray) {
-                                    fids.add(aFlashesArray.getFid());
+                                guiController.toLog("=== End LINKS");
+                                guiController.toLog("Getting SW Links done!");
+                                List<String> fids = getFids();
+                                if (PageTemplate.settingMd5) {
+                                    guiController.toLog("Get additional... " + fids.size() + ".");
+                                    guiController.toLog("=== Start MD5");
+                                    List<String> links = new ArrayList<>();
+                                    PageTemplate.fidsAux = fids.size();
+                                    for (Flashes aFlashesArray : flashesArray) {
+                                        links.add(aFlashesArray.getUrl());
+                                    }
+                                    loadPagesConsecutively(links, PartStates.PartMd5);
+                                } else {
+                                    guiController.toLog("Get Post Direct links... " + fids.size() + ".");
+                                    getDirectLinksWithPost(fids);
                                 }
-                                guiController.toLog("Getting SW Links done!\nGet Post Direct links... " + fids.size() + ".");
-                                getDirectLinksWithPost(fids);
                             } else {
                                 guiController.goToUrl(pageStack.pop());
                             }
                             break;
                         }
-                        case Part3: {
-                            guiController.toReport("Here!");
+                        case PartMd5: {
+                            if (tryGetAdditionalInfo(pageStack.size())) {
+                                if (pageStack.isEmpty()) {
+                                    webEngine.getLoadWorker().stateProperty().removeListener(this);
+                                    guiController.toLog("=== End MD5");
+                                    List<String> fids = getFids();
+                                    guiController.toLog("Get Post Direct links... " + fids.size() + ".");
+                                    getDirectLinksWithPost(fids);
+                                } else {
+                                    guiController.goToUrl(pageStack.pop());
+                                }
+                            } else {
+                                guiController.toLog("Get additional... fail!");
+                            }
                             break;
                         }
                     }
@@ -93,10 +113,10 @@ public class PageWalker {
                             links.add(link);
                         }
                         guiController.toLog("Generating links... " + PageTemplate.pageCountAux + ".");
-                        guiController.toLog("=== Start Part 1");
+                        guiController.toLog("=== Start LINKS");
                         PageTemplate.pageCountAux = PageTemplate.pageStart;
                         webEngine.getLoadWorker().stateProperty().removeListener(this);
-                        loadPagesConsecutively(links, PartState.Part1);
+                        loadPagesConsecutively(links, PartStates.PartLink);
                     } else {
                         guiController.toLog("Get num of pages... fail!");
                     }
@@ -134,12 +154,31 @@ public class PageWalker {
         }
     }
 
+    private boolean tryGetAdditionalInfo(int size) {
+        int i = PageTemplate.fidsAux - size - 1;
+        try {
+            String additionalArray = (String) webEngine.executeScript(PageTemplate.scriptGetAdditional);
+            String[] additional = additionalArray.split(";");
+            flashesArray.get(i).setSize(additional[0]);
+            flashesArray.get(i).setMd5(additional[1]);
+            flashesArray.get(i).setDate(additional[2]);
+            guiController.toLog("Addit. " + (i+1) + " " + additionalArray);
+            return true;
+        } catch (Exception e) {
+            guiController.toLog(e.toString());
+            return false;
+        }
+    }
+
     public List<Flashes> getFlashesArray() {
         return flashesArray;
     }
 
+    public WebEngine getWebEngine() {
+        return webEngine;
+    }
+
     public void startWork() {
-        guiController.goToUrl(PageTemplate.startUrl);
         webEngine.getLoadWorker().stateProperty().addListener(initialListener);
     }
 }

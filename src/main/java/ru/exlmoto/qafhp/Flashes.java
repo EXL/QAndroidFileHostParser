@@ -9,21 +9,16 @@ public class Flashes {
     private String name = "undefined";
     private String url = "undefined";
     private String md5 = "undefined";
+    private String date = "undefined";
+    private String size = "undefined";
     private List<String> directLinks = null;
-
-    public Flashes(int number, String name, String url, String md5, List<String> directLinks) {
-        this.number = number;
-        this.name = name;
-        this.url = url;
-        this.md5 = md5;
-        this.directLinks = directLinks;
-    }
 
     public Flashes(int number, String name, String url) {
         this.number = number;
         this.name = name;
         this.url = url;
         directLinks = new ArrayList<>();
+        directLinks.add("undefined");
     }
 
     public String getFid() {
@@ -66,6 +61,7 @@ public class Flashes {
     }
 
     public void setDirectLinks(List<String> directLinks) {
+        this.directLinks.clear();
         this.directLinks = directLinks;
     }
 
@@ -77,11 +73,29 @@ public class Flashes {
         this.url = url;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
     @Override
     public String toString() {
         String reportString = "Name: " + name +
                 "Link: " + url + "\n" +
                 "MD5: " + md5 + "\n" +
+                "Date: " + date + "\n" +
+                "Size: " + size + "\n" +
                 "Direct Links:\n";
         StringBuilder sb = new StringBuilder();
         for (String directLink : directLinks) {

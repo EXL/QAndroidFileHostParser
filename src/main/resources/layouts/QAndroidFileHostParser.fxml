@@ -103,7 +103,7 @@
                             <Font size="10.0" />
                         </font>
                     </CheckBox>
-                    <CheckBox fx:id="checkBoxMD5" mnemonicParsing="false" onAction="#disableMD5" selected="true" text="Get MD5" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                    <CheckBox fx:id="checkBoxMD5" mnemonicParsing="false" onAction="#disableMD5" selected="true" text="Additional" GridPane.columnIndex="1" GridPane.rowIndex="5">
                         <font>
                             <Font size="10.0" />
                         </font>

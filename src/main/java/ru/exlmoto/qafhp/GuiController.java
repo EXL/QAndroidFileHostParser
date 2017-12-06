@@ -62,6 +62,7 @@ public class GuiController {
         spinnerPageItems.getEditor().textProperty().setValue(Integer.toString(PageTemplate.pageItems));
         spinnerPostDelay.getEditor().textProperty().setValue(Integer.toString(PageTemplate.postDelay));
         spinnerConTimeOut.getEditor().textProperty().setValue(Integer.toString(PageTemplate.conTimeout));
+        checkBoxMD5.setSelected(PageTemplate.settingMd5);
         textFieldUa.setText(PageTemplate.curlUa);
         textFieldCookie.setText(PageTemplate.curlCookie);
         webEngine = webView.getEngine();
@@ -71,36 +72,33 @@ public class GuiController {
 
     @FXML
     private void startWork(ActionEvent event) {
-        Button toggleButton = ((Button) event.getSource());
-        boolean qToggleButtonState = toggleButton.getText().equals("Start!");
-        disableAll(qToggleButtonState);
-        if (qToggleButtonState) {
-            PageTemplate.startUrl = textFieldUrl.getText();
-            PageTemplate.pageItems = Integer.valueOf(spinnerPageItems.getEditor().getText());
-            PageTemplate.pageStop = Integer.valueOf(spinnerPageStop.getEditor().getText());
-            PageTemplate.pageStart = Integer.valueOf(spinnerPageStart.getEditor().getText());
-            PageTemplate.postDelay = Integer.valueOf(spinnerPostDelay.getEditor().getText());
-            PageTemplate.curlUa = textFieldUa.getText();
-            PageTemplate.curlCookie = textFieldCookie.getText();
+        clearTextAreas();
+        pageWalker.getFlashesArray().clear();
+        PageTemplate.startUrl = textFieldUrl.getText();
+        PageTemplate.pageItems = Integer.valueOf(spinnerPageItems.getEditor().getText());
+        PageTemplate.pageStop = Integer.valueOf(spinnerPageStop.getEditor().getText());
+        PageTemplate.pageStart = Integer.valueOf(spinnerPageStart.getEditor().getText());
+        PageTemplate.postDelay = Integer.valueOf(spinnerPostDelay.getEditor().getText());
+        PageTemplate.curlUa = textFieldUa.getText();
+        PageTemplate.curlCookie = textFieldCookie.getText();
+        PageTemplate.settingMd5 = checkBoxMD5.isSelected();
 
-            toggleButton.setText("Stop!");
+        disableAll(true);
+        textAreaReport.requestFocus();
 
-            textAreaReport.requestFocus();
-            toLog("=== Parameters:");
-            toLog("Page Start: " + PageTemplate.pageStart);
-            toLog("Page Stop: " + PageTemplate.pageStop);
-            toLog("Page Items: " + PageTemplate.pageItems);
-            toLog("Post Delay: " + PageTemplate.postDelay * 100);
-            toLog("=== Start working...");
-            pageWalker.startWork();
-        } else {
-            toggleButton.setText("Start!");
-            PageTemplate.pageCountAux = 0;
-            firstInsert = true;
-            webEngine.getLoadWorker().cancel();
-            textFieldUrl.setText(PageTemplate.startUrl);
-            clearTextAreas();
-        }
+        PageTemplate.pageCountAux = 0;
+        firstInsert = true;
+
+        toLog("=== Parameters:");
+        toLog("Page Start: " + PageTemplate.pageStart);
+        toLog("Page Stop: " + PageTemplate.pageStop);
+        toLog("Page Items: " + PageTemplate.pageItems);
+        toLog("Post Delay: " + PageTemplate.postDelay * 100);
+        toLog("Con. Timeout: " + PageTemplate.conTimeout * 100);
+        toLog("=== Start working...");
+
+        goToUrl(PageTemplate.startUrl);
+        pageWalker.startWork();
     }
 
     @FXML
@@ -117,8 +115,12 @@ public class GuiController {
        PageTemplate.settingMd5 = ((CheckBox) event.getSource()).isSelected();
     }
 
-    public void goToUrl(String url) {
+    public void setUrl(String url) {
         textFieldUrl.setText(url);
+    }
+
+    public void goToUrl(String url) {
+        setUrl(url);
         webEngine.load(url);
     }
 
@@ -143,10 +145,11 @@ public class GuiController {
         }
     }
 
-    private void disableAll(boolean disable) {
+    public void disableAll(boolean disable) {
         if (checkBoxDisableWeb.isSelected()) {
             webView.setDisable(disable);
         }
+        buttonStart.setDisable(disable);
         textFieldUrl.setDisable(disable);
         spinnerPageItems.setDisable(disable);
         spinnerPageStop.setDisable(disable);

@@ -1,6 +1,8 @@
 package ru.exlmoto.qafhp;
 
+import javafx.application.Platform;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javafx.concurrent.Task;
@@ -36,12 +38,12 @@ public class PostGetter {
         this.pageWalker = pageWalker;
     }
 
-    private Task<Void> createTask() {
+    private Task<Void> createPostTask() {
         final int taskNumber = taskCount.incrementAndGet();
         return new Task<Void>() {
             @Override
             public Void call() throws Exception {
-                guiController.toLog("=== Start Part 2");
+                guiController.toLog("=== Start POST");
                 for (int i = 0; i < fids.size(); i++) {
                     Thread.sleep(PageTemplate.postDelay * 100);
                     String fid = fids.get(i);
@@ -50,15 +52,13 @@ public class PostGetter {
                     } else {
                         guiController.toLog("Fail " + (i+1) + ": " + fid);
                     }
-                    if (!PageTemplate.settingMd5) {
-                        guiController.toReport(pageWalker.getFlashesArray().get(i).toString());
-                    }
+                    guiController.toReport(pageWalker.getFlashesArray().get(i).toString());
                 }
-                guiController.toLog("=== End Part 2");
-                if (PageTemplate.settingMd5) {
-                    guiController.toLog("Post Direct Links done!\nGet MD5 Hashes... " + fids.size() + ".");
-                    pageWalker.getMd5Hashes();
-                }
+                guiController.toLog("=== End POST");
+                guiController.toLog("=== All Done!");
+                guiController.disableAll(false);
+                guiController.setUrl(PageTemplate.startUrlAux);
+                pageWalker.getWebEngine().getLoadWorker().cancel();
                 return null;
             }
         };
@@ -66,6 +66,7 @@ public class PostGetter {
 
     // HTTP POST request
     private boolean sendPost(String fid, int num) throws Exception {
+        String body = "";
         URL obj = new URL(PageTemplate.curlUrl);
         try {
             HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
@@ -94,7 +95,6 @@ public class PostGetter {
             Reader reader = new InputStreamReader(ungzippedResponse, "UTF-8");
             Writer writer = new StringWriter();
 
-            String body = null;
             char[] buffer = new char[10240];
             for (int length = 0; (length = reader.read(buffer)) > 0; ) {
                 writer.write(buffer, 0, length);
@@ -110,20 +110,19 @@ public class PostGetter {
                 directLinks.add(jsonArray.getJSONObject(i).getString("url"));
             }
             pageWalker.getFlashesArray().get(num).setDirectLinks(directLinks);
-
             return true;
         } catch (Exception e) {
-            List<String> error = new ArrayList<>();
-            error.add("undefined");
-            pageWalker.getFlashesArray().get(num).setDirectLinks(error);
             guiController.toLog(e.toString());
             return false;
         }
     }
 
     public void startWork() {
-        Task<Void> task = createTask();
-        exec.submit(task);
+        try {
+            exec.submit(createPostTask());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

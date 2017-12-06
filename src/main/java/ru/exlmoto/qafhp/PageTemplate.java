@@ -3,22 +3,25 @@ package ru.exlmoto.qafhp;
 public class PageTemplate {
     public static String justUrl = "https://androidfilehost.com/";
     public static String startUrl = "https://www.androidfilehost.com/?w=search&s=.xml.zip&type=files";
+    public static String startUrlAux = "https://www.androidfilehost.com/?w=search&s=.xml.zip&type=files";
 
     public static int pageItems = 15;
     public static int pageCount = 0;
     public static int pageStart = 1;
     public static int pageStop = 10;
-    public static int postDelay = 10;
+    public static int postDelay = 15;
     public static int conTimeout = 70;
     public static int pageCountAux = 0;
+    public static int fidsAux = 0;
 
-    public static boolean settingMd5 = true;
+    public static boolean settingMd5 = false;
 
     public static String scriptGetCountOfFiles = "document.getElementsByClassName(\"search-result-stats\")[0].innerHTML.replace(/<[^>]*>/g, \"\").replace(\"&nbsp;\", \"\").replace(\"Files :\", \"\").trim();";
     public static String scriptGetLinks = "(function() { var a = \"\"; var b = document.getElementsByClassName(\"file-name\"); for (var i = 0; i < b.length; ++i) { var c = b[i].innerHTML.trim(); var d = c.length; var e = \"https://androidfilehost.com\" + c.slice(13, d.length).replace('\">', \";\").slice(0, -9) + \"\\n\"; a += e + \"|\"; } return a; })();";
+    public static String scriptGetAdditional = "document.getElementsByClassName(\"file-attr-value\")[1].innerHTML.replace(/<[^>]*>/g, \"\").slice(0, -4) + \";\" + document.getElementsByClassName(\"file-attr-value\")[2].innerHTML.replace(/<[^>]*>/g, \"\").slice(0, -3) + \";\" + document.getElementsByClassName(\"file-attr-value\")[3].innerHTML.replace(/<[^>]*>/g, \"\").slice(0, -11);";
 
     public static String curlUrl = "https://androidfilehost.com/libs/otf/mirrors.otf.php";
-    public static String curlCookie = "SPSI=d3ee3c5b08e9f7c0363b0f6d214c8359; spcsrf=c7c8173aeb64b2943d656346140b97fd; UTGv2=h4f27a64d92f66d34366afc377a36fc97778; afh=1f8b1724492de1d705b6de8435214a58; PRLST=Ch; adOtr=3eHcdbe05; _ga=GA1.2.1875487490.1512512424; _gid=GA1.2.1150363910.1512512424; _gat=1; _awl=2.92.3-434a3a6cb62bdc6b45fea121aa15b985-412d3539393742453442363342353145353139423131383231382d31-6763652d6575726f70652d7765737431";
+    public static String curlCookie = "afh=f11126e55637d5284173083cacaf34c7; i_72623ev9=75; SPSI=fa8d9c12161eca8d89238ffc2f253f7f; sbtsck=jav; _gat=1; spcsrf=16066cfd6bca89bcfbfc5b1d45922b45; PRLST=os; UTGv2=h4d9b133bb87689ecb9bcbe2fc8da3689475; _ga=GA1.2.1352175642.1512412104; _gid=GA1.2.1885976942.1512412104; adOtr=9dacf2I11; _awl=2.54.3-8c0464aa55acf2fd333f2a3c26d23032-412d3539393742453442363342353145353139423131383231382d31-6763652d6575726f70652d7765737431";
     public static String curlAe = "gzip, deflate, br";
     public static String curlAl = "en-US,en;q=0.9,ru;q=0.8";
     public static String curlContentType = "application/x-www-form-urlencoded; charset=UTF-8";
@@ -26,7 +29,7 @@ public class PageTemplate {
     public static String curlA = "*/*";
     public static String curlAuthority = "androidfilehost.com";
     public static String curlXreq = "XMLHttpRequest";
-    public static String curlUa = "Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0";
+    public static String curlUa = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.97 Safari/537.36 Vivaldi/1.94.1008.34";
     public static String curlData = "submit=submit&action=getdownloadmirrors&fid=";
 }
 
