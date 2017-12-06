@@ -47,6 +47,21 @@ public class GuiController {
     private TextField textFieldCookie = null;
 
     @FXML
+    private Button buttonSave = null;
+
+    @FXML
+    private Button buttonClear = null;
+
+    @FXML
+    private Button buttonAbout = null;
+
+    @FXML
+    private Button buttonCsv = null;
+
+    @FXML
+    private CheckBox checkBoxCSV = null;
+
+    @FXML
     private WebView webView = null;
     private WebEngine webEngine = null;
 
@@ -87,7 +102,6 @@ public class GuiController {
         textAreaReport.requestFocus();
 
         PageTemplate.pageCountAux = 0;
-        firstInsert = true;
 
         toLog("=== Parameters:");
         toLog("Page Start: " + PageTemplate.pageStart);
@@ -115,6 +129,26 @@ public class GuiController {
        PageTemplate.settingMd5 = ((CheckBox) event.getSource()).isSelected();
     }
 
+    @FXML
+    private void csvWork() {
+        toLog("cvsWork");
+    }
+
+    @FXML
+    private void saveWork() {
+        toLog("save");
+    }
+
+    @FXML
+    private void clearWork() {
+        clearTextAreas();
+    }
+
+    @FXML
+    private void aboutWork() {
+        toLog("about");
+    }
+
     public void setUrl(String url) {
         textFieldUrl.setText(url);
     }
@@ -125,6 +159,7 @@ public class GuiController {
     }
 
     private void clearTextAreas() {
+        firstInsert = true;
         textAreaReport.setText("<empty>");
         textAreaLog.setText("Ready." + "\n");
     }
@@ -159,5 +194,10 @@ public class GuiController {
         textFieldUa.setDisable(disable);
         textFieldCookie.setDisable(disable);
         checkBoxMD5.setDisable(disable);
+        buttonAbout.setDisable(disable);
+        buttonClear.setDisable(disable);
+        buttonCsv.setDisable(disable);
+        buttonSave.setDisable(disable);
+        checkBoxCSV.setDisable(disable);
     }
 }

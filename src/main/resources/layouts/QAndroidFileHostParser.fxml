@@ -47,6 +47,9 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <Label text="Page Start:" GridPane.columnIndex="0" GridPane.rowIndex="0">
                         <font>
@@ -128,6 +131,15 @@
                             <Font name="Monospaced Regular" size="11.0" />
                         </font>
                     </TextField>
+                    <Button fx:id="buttonCsv" mnemonicParsing="false" maxWidth="75.0" minWidth="75.0" onAction="#csvWork" text="To CSV!" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+                    <CheckBox fx:id="checkBoxCSV" mnemonicParsing="false" selected="true" text="MD5, etc." GridPane.columnIndex="1" GridPane.rowIndex="9">
+                        <font>
+                            <Font size="10.0" />
+                        </font>
+                    </CheckBox>
+                    <Button fx:id="buttonSave" mnemonicParsing="false" maxWidth="75.0" minWidth="75.0" onAction="#saveWork" text="Save..." GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                    <Button fx:id="buttonClear" mnemonicParsing="false" maxWidth="75.0" minWidth="75.0" onAction="#clearWork" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                    <Button fx:id="buttonAbout" mnemonicParsing="false" maxWidth="75.0" minWidth="75.0" onAction="#aboutWork" text="About..." GridPane.columnIndex="0" GridPane.rowIndex="10" />
                 </GridPane>
                 <Label text="Output log:" AnchorPane.topAnchor="396.0" />
                 <TextArea fx:id="textAreaLog" editable="false" prefHeight="223.0" prefWidth="176.0" AnchorPane.topAnchor="416.0">
