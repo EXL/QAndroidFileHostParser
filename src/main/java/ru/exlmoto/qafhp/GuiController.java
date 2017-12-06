@@ -185,6 +185,8 @@ public class GuiController {
             toolStage.initModality(Modality.WINDOW_MODAL);
             toolStage.initOwner(rootWidget.getScene().getWindow());
             toolStage.setScene(scene);
+            toolStage.setMinHeight(640.0);
+            toolStage.setMinWidth(800.0);
             toolStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
