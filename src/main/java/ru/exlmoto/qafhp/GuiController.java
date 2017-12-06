@@ -142,7 +142,7 @@ public class GuiController {
 
     @FXML
     private void disableMD5(ActionEvent event) {
-       PageTemplate.settingMd5 = ((CheckBox) event.getSource()).isSelected();
+        PageTemplate.settingMd5 = ((CheckBox) event.getSource()).isSelected();
     }
 
     @FXML

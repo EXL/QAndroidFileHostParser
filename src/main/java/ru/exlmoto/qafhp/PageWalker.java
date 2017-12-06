@@ -1,14 +1,14 @@
 package ru.exlmoto.qafhp;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class PageWalker {
     private WebView webView = null;
@@ -20,7 +20,37 @@ public class PageWalker {
 
     private List<Flashes> flashesArray = null;
 
-    enum PartStates { PartLink, PartMd5 }
+    public PageWalker(WebView webView, WebEngine webEngine, GuiController guiController) {
+        this.webView = webView;
+        this.webEngine = webEngine;
+        this.guiController = guiController;
+
+        flashesArray = new ArrayList<>();
+
+        initialListener = new ChangeListener<State>() {
+            @Override
+            public void changed(ObservableValue<? extends State> observable, State oldValue, State newValue) {
+                if (newValue == State.SUCCEEDED) {
+                    PageTemplate.pageCount = tryGetPageCount();
+                    if (tryGetPageCount() != -1) {
+                        guiController.toLog("Get num of pages... " + PageTemplate.pageCount + ".");
+                        List<String> links = new ArrayList<>();
+                        for (int i = PageTemplate.pageStart; i <= PageTemplate.pageStop; i++, PageTemplate.pageCountAux++) {
+                            String link = PageTemplate.startUrl + "&page=" + i;
+                            links.add(link);
+                        }
+                        guiController.toLog("Generating links... " + PageTemplate.pageCountAux + ".");
+                        guiController.toLog("=== Start LINKS");
+                        PageTemplate.pageCountAux = PageTemplate.pageStart;
+                        webEngine.getLoadWorker().stateProperty().removeListener(this);
+                        loadPagesConsecutively(links, PartStates.PartLink);
+                    } else {
+                        guiController.toLog("Get num of pages... fail!");
+                    }
+                }
+            }
+        };
+    }
 
     private void getDirectLinksWithPost(List<String> fids) {
         postGetter = new PostGetter(guiController, fids, this);
@@ -92,38 +122,6 @@ public class PageWalker {
         guiController.goToUrl(pageStack.pop());
     }
 
-    public PageWalker(WebView webView, WebEngine webEngine, GuiController guiController) {
-        this.webView = webView;
-        this.webEngine = webEngine;
-        this.guiController = guiController;
-
-        flashesArray = new ArrayList<>();
-
-        initialListener = new ChangeListener<State>() {
-            @Override
-            public void changed(ObservableValue<? extends State> observable, State oldValue, State newValue) {
-                if (newValue == State.SUCCEEDED) {
-                    PageTemplate.pageCount = tryGetPageCount();
-                    if (tryGetPageCount() != -1) {
-                        guiController.toLog("Get num of pages... " + PageTemplate.pageCount + ".");
-                        List<String> links = new ArrayList<>();
-                        for (int i = PageTemplate.pageStart; i <= PageTemplate.pageStop; i++, PageTemplate.pageCountAux++) {
-                            String link = PageTemplate.startUrl + "&page=" + i;
-                            links.add(link);
-                        }
-                        guiController.toLog("Generating links... " + PageTemplate.pageCountAux + ".");
-                        guiController.toLog("=== Start LINKS");
-                        PageTemplate.pageCountAux = PageTemplate.pageStart;
-                        webEngine.getLoadWorker().stateProperty().removeListener(this);
-                        loadPagesConsecutively(links, PartStates.PartLink);
-                    } else {
-                        guiController.toLog("Get num of pages... fail!");
-                    }
-                }
-            }
-        };
-    }
-
     private void tryGetFileLinks() {
         try {
             guiController.toLog("Page #" + PageTemplate.pageCountAux + " crawled!");
@@ -132,7 +130,7 @@ public class PageWalker {
             String[] links = linksArrayDirty.split("\\|");
             for (int i = 0; i < links.length; ++i) {
                 String[] sw = links[i].split(";");
-                flashesArray.add(new Flashes(i+1, sw[1], sw[0]));
+                flashesArray.add(new Flashes(i + 1, sw[1], sw[0]));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -161,7 +159,7 @@ public class PageWalker {
             flashesArray.get(i).setSize(additional[0]);
             flashesArray.get(i).setMd5(additional[1]);
             flashesArray.get(i).setDate(additional[2]);
-            guiController.toLog("Addit. " + (i+1) + " " + additionalArray);
+            guiController.toLog("Addit. " + (i + 1) + " " + additionalArray);
             return true;
         } catch (Exception e) {
             guiController.toLog(e.toString());
@@ -180,6 +178,8 @@ public class PageWalker {
     public void startWork() {
         webEngine.getLoadWorker().stateProperty().addListener(initialListener);
     }
+
+    enum PartStates {PartLink, PartMd5}
 }
 
 // $url = "/libs/otf/mirrors.otf.php"

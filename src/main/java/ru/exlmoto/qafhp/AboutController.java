@@ -15,11 +15,7 @@ public class AboutController {
 
     @FXML
     private void initialize() {
-        Platform.runLater(()->buttonClose.requestFocus());
-    }
-
-    public void setDialogStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
+        Platform.runLater(() -> buttonClose.requestFocus());
     }
 
     @FXML
@@ -46,5 +42,9 @@ public class AboutController {
 
     public void setqAndroidFileHostParser(QAndroidFileHostParser qAndroidFileHostParser) {
         this.qAndroidFileHostParser = qAndroidFileHostParser;
+    }
+
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
     }
 }

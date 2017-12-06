@@ -1,10 +1,9 @@
 package ru.exlmoto.qafhp;
 
-import javafx.scene.control.ProgressBar;
+import javafx.concurrent.Task;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import javafx.concurrent.Task;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -47,12 +46,12 @@ public class PostGetter {
                     Thread.sleep(PageTemplate.postDelay * 100);
                     String fid = fids.get(i);
                     if (sendPost(fid, i)) {
-                        guiController.toLog("Good " + (i+1) + ": " + fid);
+                        guiController.toLog("Good " + (i + 1) + ": " + fid);
                     } else {
-                        guiController.toLog("Fail " + (i+1) + ": " + fid);
+                        guiController.toLog("Fail " + (i + 1) + ": " + fid);
                     }
                     guiController.toReport(pageWalker.getFlashesArray().get(i).toString());
-                    updateProgress(i+1, fids.size());
+                    updateProgress(i + 1, fids.size());
                 }
                 guiController.toLog("=== End POST");
                 guiController.toLog("=== All Done!");
