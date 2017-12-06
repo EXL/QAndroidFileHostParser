@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -19,6 +20,7 @@ public class QAndroidFileHostParser extends Application {
         primaryStage.setHeight(710.0);
         primaryStage.setWidth(1024.0);
         primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image(QAndroidFileHostParser.class.getResourceAsStream("/icons/icon_sw.png")));
         primaryStage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);
