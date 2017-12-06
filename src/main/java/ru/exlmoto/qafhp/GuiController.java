@@ -62,6 +62,9 @@ public class GuiController {
     private CheckBox checkBoxCSV = null;
 
     @FXML
+    private ProgressBar progressBar = null;
+
+    @FXML
     private WebView webView = null;
     private WebEngine webEngine = null;
 
@@ -77,6 +80,7 @@ public class GuiController {
         spinnerPageItems.getEditor().textProperty().setValue(Integer.toString(PageTemplate.pageItems));
         spinnerPostDelay.getEditor().textProperty().setValue(Integer.toString(PageTemplate.postDelay));
         spinnerConTimeOut.getEditor().textProperty().setValue(Integer.toString(PageTemplate.conTimeout));
+
         checkBoxMD5.setSelected(PageTemplate.settingMd5);
         textFieldUa.setText(PageTemplate.curlUa);
         textFieldCookie.setText(PageTemplate.curlCookie);
@@ -100,8 +104,8 @@ public class GuiController {
 
         disableAll(true);
         textAreaReport.requestFocus();
-
         PageTemplate.pageCountAux = 0;
+        progressBar.progressProperty().bind(webEngine.getLoadWorker().progressProperty());
 
         toLog("=== Parameters:");
         toLog("Page Start: " + PageTemplate.pageStart);
@@ -168,6 +172,10 @@ public class GuiController {
         if (textAreaLog != null) {
             textAreaLog.appendText(logText + "\n");
         }
+    }
+
+    public ProgressBar getProgressBar() {
+        return progressBar;
     }
 
     public void toReport(String line) {

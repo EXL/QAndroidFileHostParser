@@ -1,8 +1,7 @@
 package ru.exlmoto.qafhp;
 
-import javafx.application.Platform;
+import javafx.scene.control.ProgressBar;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import javafx.concurrent.Task;
@@ -53,11 +52,13 @@ public class PostGetter {
                         guiController.toLog("Fail " + (i+1) + ": " + fid);
                     }
                     guiController.toReport(pageWalker.getFlashesArray().get(i).toString());
+                    updateProgress(i+1, fids.size());
                 }
                 guiController.toLog("=== End POST");
                 guiController.toLog("=== All Done!");
                 guiController.disableAll(false);
                 guiController.setUrl(PageTemplate.startUrlAux);
+                guiController.getProgressBar().progressProperty().unbind();
                 pageWalker.getWebEngine().getLoadWorker().cancel();
                 return null;
             }
@@ -119,7 +120,10 @@ public class PostGetter {
 
     public void startWork() {
         try {
-            exec.submit(createPostTask());
+            Task<Void> task = createPostTask();
+            guiController.getProgressBar().progressProperty().unbind();
+            guiController.getProgressBar().progressProperty().bind(task.progressProperty());
+            exec.submit(task);
         } catch (Exception e) {
             e.printStackTrace();
         }
