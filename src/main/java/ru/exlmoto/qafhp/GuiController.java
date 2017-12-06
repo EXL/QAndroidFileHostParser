@@ -146,11 +146,6 @@ public class GuiController {
     }
 
     @FXML
-    private void toolWork() {
-        toLog("toolWork");
-    }
-
-    @FXML
     private void saveWork() {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
@@ -175,6 +170,28 @@ public class GuiController {
     }
 
     @FXML
+    private void toolWork() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(QAndroidFileHostParser.class.getResource("/layouts/DialogTool.fxml"));
+            VBox page = loader.load();
+
+            Stage toolStage = new Stage();
+            Scene scene = new Scene(page);
+
+            ToolController toolController = loader.getController();
+
+            toolStage.setTitle("Text File Comparator");
+            toolStage.initModality(Modality.WINDOW_MODAL);
+            toolStage.initOwner(rootWidget.getScene().getWindow());
+            toolStage.setScene(scene);
+            toolStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void aboutWork() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -182,15 +199,15 @@ public class GuiController {
             AnchorPane page = loader.load();
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("About QAFHP");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(rootWidget.getScene().getWindow());
+            Scene scene = new Scene(page);
 
             AboutController aboutController = loader.getController();
             aboutController.setDialogStage(dialogStage);
             aboutController.setqAndroidFileHostParser(qAndroidFileHostParser);
 
-            Scene scene = new Scene(page);
+            dialogStage.setTitle("About QAFHP");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(rootWidget.getScene().getWindow());
             dialogStage.setScene(scene);
             dialogStage.setResizable(false);
             dialogStage.showAndWait();
