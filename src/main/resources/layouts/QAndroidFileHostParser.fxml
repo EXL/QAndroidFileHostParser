@@ -132,15 +132,10 @@
                             <Font name="Monospaced Regular" size="11.0" />
                         </font>
                     </TextField>
-                    <Button fx:id="buttonCsv" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#csvWork" text="To CSV!" GridPane.columnIndex="0" GridPane.rowIndex="9" />
-                    <CheckBox fx:id="checkBoxCSV" mnemonicParsing="false" selected="true" text="MD5, etc." GridPane.columnIndex="1" GridPane.rowIndex="9">
-                        <font>
-                            <Font size="10.0" />
-                        </font>
-                    </CheckBox>
+                    <Button fx:id="buttonTool" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#toolWork" text="Tool..." GridPane.columnIndex="0" GridPane.rowIndex="9" />
                     <Button fx:id="buttonSave" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#saveWork" text="Save..." GridPane.columnIndex="0" GridPane.rowIndex="8" />
                     <Button fx:id="buttonClear" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#clearWork" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                    <Button fx:id="buttonAbout" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#aboutWork" text="About..." GridPane.columnIndex="0" GridPane.rowIndex="10" />
+                    <Button fx:id="buttonAbout" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#aboutWork" text="About..." GridPane.columnIndex="1" GridPane.rowIndex="9" />
                 </GridPane>
                 <ProgressBar fx:id="progressBar" prefWidth="176.0" progress="0.0" AnchorPane.topAnchor="366.0" GridPane.columnIndex="1" />
                 <Label text="Output log:" AnchorPane.topAnchor="396.0" />

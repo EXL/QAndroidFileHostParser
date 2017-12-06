@@ -12,8 +12,12 @@ public class QAndroidFileHostParser extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Create Window
-        VBox form =  FXMLLoader.load(QAndroidFileHostParser.class.getResource("/layouts/QAndroidFileHostParser.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(QAndroidFileHostParser.class.getResource("/layouts/QAndroidFileHostParser.fxml"));
+        VBox form = loader.load();
+
+        GuiController guiController = loader.getController();
+        guiController.setqAndroidFileHostParser(this);
 
         primaryStage.setTitle("QAndroidFileHostParser for BOXA by EXL, 2017");
         primaryStage.setScene(new Scene(form));

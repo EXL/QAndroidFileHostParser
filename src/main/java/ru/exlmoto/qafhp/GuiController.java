@@ -2,11 +2,16 @@ package ru.exlmoto.qafhp;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -62,10 +67,7 @@ public class GuiController {
     private Button buttonAbout = null;
 
     @FXML
-    private Button buttonCsv = null;
-
-    @FXML
-    private CheckBox checkBoxCSV = null;
+    private Button buttonTool = null;
 
     @FXML
     private ProgressBar progressBar = null;
@@ -77,6 +79,7 @@ public class GuiController {
     @FXML
     private VBox rootWidget = null;
 
+    private QAndroidFileHostParser qAndroidFileHostParser = null;
     private PageWalker pageWalker = null;
 
     private boolean firstInsert = true;
@@ -143,8 +146,8 @@ public class GuiController {
     }
 
     @FXML
-    private void csvWork() {
-        toLog("cvsWork");
+    private void toolWork() {
+        toLog("toolWork");
     }
 
     @FXML
@@ -173,7 +176,27 @@ public class GuiController {
 
     @FXML
     private void aboutWork() {
-        toLog("about");
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(QAndroidFileHostParser.class.getResource("/layouts/DialogAbout.fxml"));
+            AnchorPane page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("About QAFHP");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(rootWidget.getScene().getWindow());
+
+            AboutController aboutController = loader.getController();
+            aboutController.setDialogStage(dialogStage);
+            aboutController.setqAndroidFileHostParser(qAndroidFileHostParser);
+
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            dialogStage.setResizable(false);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setUrl(String url) {
@@ -227,8 +250,11 @@ public class GuiController {
         checkBoxMD5.setDisable(disable);
         buttonAbout.setDisable(disable);
         buttonClear.setDisable(disable);
-        buttonCsv.setDisable(disable);
+        buttonTool.setDisable(disable);
         buttonSave.setDisable(disable);
-        checkBoxCSV.setDisable(disable);
+    }
+
+    public void setqAndroidFileHostParser(QAndroidFileHostParser qAndroidFileHostParser) {
+        this.qAndroidFileHostParser = qAndroidFileHostParser;
     }
 }
