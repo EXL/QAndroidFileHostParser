@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
@@ -186,6 +187,7 @@ public class GuiController {
             toolStage.initModality(Modality.WINDOW_MODAL);
             toolStage.initOwner(rootWidget.getScene().getWindow());
             toolStage.setScene(scene);
+            toolStage.getIcons().add(new Image(QAndroidFileHostParser.class.getResourceAsStream("/icons/icon_sw.png")));
             toolStage.setMinHeight(640.0);
             toolStage.setMinWidth(800.0);
             toolStage.showAndWait();
@@ -212,6 +214,7 @@ public class GuiController {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(rootWidget.getScene().getWindow());
             dialogStage.setScene(scene);
+            dialogStage.getIcons().add(new Image(QAndroidFileHostParser.class.getResourceAsStream("/icons/icon_sw.png")));
             dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (IOException e) {
