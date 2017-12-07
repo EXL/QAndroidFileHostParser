@@ -1,5 +1,6 @@
 package ru.exlmoto.qafhp;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 
 import org.json.JSONArray;
@@ -40,25 +41,26 @@ public class PostGetter {
         return new Task<Void>() {
             @Override
             public Void call() throws Exception {
-                guiController.toLog("=== Start POST");
+                Platform.runLater(() -> guiController.toLog("=== Start POST"));
                 for (int i = 0; i < fids.size(); i++) {
                     Thread.sleep(PageTemplate.postDelay * 100);
                     String fid = fids.get(i);
+                    int finalI = i;
                     if (sendPost(fid, i)) {
-                        guiController.toLog("Good " + (i + 1) + ": " + fid);
+                        Platform.runLater(() -> guiController.toLog("Good " + (finalI + 1) + ": " + fid));
                     } else {
-                        guiController.toLog("Fail " + (i + 1) + ": " + fid);
+                        Platform.runLater(() -> guiController.toLog("Fail " + (finalI + 1) + ": " + fid));
                     }
-                    guiController.toReport(pageWalker.getFlashesArray().get(i).toString());
+                    Platform.runLater(() -> guiController.toReport(pageWalker.getFlashesArray().get(finalI).toString()));
                     updateProgress(i + 1, fids.size());
                 }
-                guiController.toLog("=== End POST");
-                guiController.toLog("=== All Done!");
-                guiController.disableAll(false);
-                guiController.setUrl(PageTemplate.startUrlAux);
-                guiController.getProgressBar().progressProperty().unbind();
-                guiController.getProgressBar().progressProperty().set(1.0);
-                pageWalker.getWebEngine().getLoadWorker().cancel();
+                Platform.runLater(() -> guiController.toLog("=== End POST"));
+                Platform.runLater(() -> guiController.toLog("=== All Done!"));
+                Platform.runLater(() -> guiController.disableAll(false));
+                Platform.runLater(() -> guiController.setUrl(PageTemplate.startUrlAux));
+                Platform.runLater(() -> guiController.getProgressBar().progressProperty().unbind());
+                Platform.runLater(() -> guiController.getProgressBar().progressProperty().set(1.0));
+                Platform.runLater(() -> pageWalker.getWebEngine().getLoadWorker().cancel());
                 return null;
             }
         };
