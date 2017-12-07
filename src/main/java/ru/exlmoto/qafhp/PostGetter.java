@@ -54,13 +54,15 @@ public class PostGetter {
                     Platform.runLater(() -> guiController.toReport(pageWalker.getFlashesArray().get(finalI).toString()));
                     updateProgress(i + 1, fids.size());
                 }
-                Platform.runLater(() -> guiController.toLog("=== End POST"));
-                Platform.runLater(() -> guiController.toLog("=== All Done!"));
-                Platform.runLater(() -> guiController.disableAll(false));
-                Platform.runLater(() -> guiController.setUrl(PageTemplate.startUrlAux));
-                Platform.runLater(() -> guiController.getProgressBar().progressProperty().unbind());
-                Platform.runLater(() -> guiController.getProgressBar().progressProperty().set(1.0));
-                Platform.runLater(() -> pageWalker.getWebEngine().getLoadWorker().cancel());
+                Platform.runLater(() -> {
+                    guiController.toLog("=== End POST");
+                    guiController.toLog("=== All Done!");
+                    guiController.disableAll(false);
+                    guiController.setUrl(PageTemplate.startUrlAux);
+                    guiController.getProgressBar().progressProperty().unbind();
+                    guiController.getProgressBar().progressProperty().set(1.0);
+                    pageWalker.getWebEngine().getLoadWorker().cancel();
+                });
                 return null;
             }
         };
