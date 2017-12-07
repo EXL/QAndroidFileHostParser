@@ -55,9 +55,6 @@ public class GuiController {
     private TextField textFieldUa = null;
 
     @FXML
-    private TextField textFieldCookie = null;
-
-    @FXML
     private Button buttonSave = null;
 
     @FXML
@@ -68,6 +65,9 @@ public class GuiController {
 
     @FXML
     private Button buttonTool = null;
+
+    @FXML
+    private Button buttonPost = null;
 
     @FXML
     private ProgressBar progressBar = null;
@@ -95,7 +95,6 @@ public class GuiController {
 
         checkBoxMD5.setSelected(PageTemplate.settingMd5);
         textFieldUa.setText(PageTemplate.curlUa);
-        textFieldCookie.setText(PageTemplate.curlCookie);
         webEngine = webView.getEngine();
         pageWalker = new PageWalker(webView, webEngine, this);
         clearTextAreas();
@@ -111,7 +110,6 @@ public class GuiController {
         PageTemplate.pageStart = Integer.valueOf(spinnerPageStart.getEditor().getText());
         PageTemplate.postDelay = Integer.valueOf(spinnerPostDelay.getEditor().getText());
         PageTemplate.curlUa = textFieldUa.getText();
-        PageTemplate.curlCookie = textFieldCookie.getText();
         PageTemplate.settingMd5 = checkBoxMD5.isSelected();
 
         disableAll(true);
@@ -221,6 +219,11 @@ public class GuiController {
         }
     }
 
+    @FXML
+    private void toolPost() {
+        toLog("Not yet implemented.");
+    }
+
     public void setUrl(String url) {
         textFieldUrl.setText(url);
     }
@@ -268,12 +271,12 @@ public class GuiController {
         spinnerPostDelay.setDisable(disable);
         spinnerConTimeOut.setDisable(disable);
         textFieldUa.setDisable(disable);
-        textFieldCookie.setDisable(disable);
         checkBoxMD5.setDisable(disable);
         buttonAbout.setDisable(disable);
         buttonClear.setDisable(disable);
         buttonTool.setDisable(disable);
         buttonSave.setDisable(disable);
+        buttonPost.setDisable(disable);
     }
 
     public void setqAndroidFileHostParser(QAndroidFileHostParser qAndroidFileHostParser) {

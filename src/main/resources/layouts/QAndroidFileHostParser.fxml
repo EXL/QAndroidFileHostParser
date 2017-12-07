@@ -107,30 +107,21 @@
                             <Font size="10.0" />
                         </font>
                     </CheckBox>
-                    <Label text="Cookie:" GridPane.columnIndex="0" GridPane.rowIndex="6">
+                    <Label text="UA:" GridPane.columnIndex="0" GridPane.rowIndex="6">
                         <font>
                             <Font size="11.0" />
                         </font>
                     </Label>
-                    <TextField fx:id="textFieldCookie" maxWidth="75.0" promptText="Cookie Str" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                    <TextField fx:id="textFieldUa" maxWidth="75.0" promptText="UA Str" GridPane.columnIndex="1" GridPane.rowIndex="6">
                         <font>
                             <Font name="Monospaced Regular" size="11.0" />
                         </font>
                     </TextField>
-                    <Label text="UA:" GridPane.columnIndex="0" GridPane.rowIndex="7">
-                        <font>
-                            <Font size="11.0" />
-                        </font>
-                    </Label>
-                    <TextField fx:id="textFieldUa" maxWidth="75.0" promptText="UA Str" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                        <font>
-                            <Font name="Monospaced Regular" size="11.0" />
-                        </font>
-                    </TextField>
-                    <Button fx:id="buttonTool" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false" onAction="#toolWork" text="R. Tool..." GridPane.columnIndex="0" GridPane.rowIndex="9" />
-                    <Button fx:id="buttonSave" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false" onAction="#saveWork" text="Save..." GridPane.columnIndex="0" GridPane.rowIndex="8" />
-                    <Button fx:id="buttonClear" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#clearWork" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                    <Button fx:id="buttonAbout" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#aboutWork" text="About..." GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                    <Button fx:id="buttonTool" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false" onAction="#toolWork" text="C. Tool..." GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                    <Button fx:id="buttonPost" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#toolPost" text="T. Post..." GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                    <Button fx:id="buttonSave" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false" onAction="#saveWork" text="Save..." GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                    <Button fx:id="buttonClear" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#clearWork" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                    <Button fx:id="buttonAbout" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false" onAction="#aboutWork" text="About..." GridPane.columnIndex="0" GridPane.rowIndex="9" />
                 </GridPane>
                 <ProgressBar fx:id="progressBar" prefWidth="176.0" progress="0.0" AnchorPane.topAnchor="366.0" GridPane.columnIndex="1" />
                 <Label text="Output log:" AnchorPane.topAnchor="391.0">
