@@ -24,11 +24,12 @@
                 <Font size="14.0"/>
             </font>
         </Label>
-        <!-- Empty Label For Spacer !-->
+        <!-- Using empty labels for the spacers !-->
         <Label/>
         <Label text="Skeleton utility for" textAlignment="CENTER"/>
         <Label text="parsing various websites." textAlignment="CENTER"/>
         <Label text="Written especially for BOXA." textAlignment="CENTER"/>
+        <Label/>
         <Label text="© EXL, 2017" textAlignment="CENTER">
             <font>
                 <Font name="System Italic" size="13.0"/>
