@@ -12,7 +12,7 @@
       fx:controller="ru.exlmoto.qafhp.AboutController">
     <VBox alignment="BASELINE_CENTER" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
         <ImageView fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../icons/icon_sw.png"/>
+            <Image url="@../icons/icon_about.png"/>
         </ImageView>
         <Label text="QAndroidFileHostParser">
             <font>

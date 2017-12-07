@@ -15,6 +15,7 @@ dependencies {
 }
 
 jfx {
+    appName = 'QAndroidFileHostParser'
     mainClass = 'ru.exlmoto.qafhp.QAndroidFileHostParser'
     vendor = 'EXL'
 }
