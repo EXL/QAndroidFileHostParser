@@ -73,7 +73,9 @@ public class ToolController {
 
     @FXML
     private void workNames() {
-
+        String fullText = textAreaFileOne.getText();
+        textAreaFileOne.clear();
+        textAreaFileOne.appendText(getNamesHelper(fullText));
     }
 
     @FXML
@@ -211,6 +213,23 @@ public class ToolController {
         t.setDaemon(true);
         return t;
     });
+
+    private String getNamesHelper(String allString) {
+        List<String> stringList = new ArrayList<>();
+        Scanner scannerOne = new Scanner(allString);
+        while (scannerOne.hasNextLine()) {
+            String s = scannerOne.nextLine();
+            if (!s.isEmpty() && s.startsWith("Name:")) {
+                stringList.add(s.replaceAll("Name:", "").trim());
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String s : stringList) {
+            sb.append(s);
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 
     public void setTextAreaFileOne(String text) {
         textAreaFileOne.setText(text);

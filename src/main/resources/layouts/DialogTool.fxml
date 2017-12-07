@@ -10,33 +10,56 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Font?>
 <VBox prefHeight="550.0" prefWidth="907.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.exlmoto.qafhp.ToolController">
     <HBox fx:id="container" prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="ALWAYS">
         <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
             <Label text="File or Text #1" />
             <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
-                <Button mnemonicParsing="false" text="Open..." onAction="#openFileOne"/>
-                <Button mnemonicParsing="false" text="To CSV" onAction="#workCSV"/>
-                <Button mnemonicParsing="false" text="Only Names" onAction="#workNames"/>
+                <Button mnemonicParsing="false" onAction="#openFileOne" text="Open..." />
+                <Button mnemonicParsing="false" onAction="#workNames" text="Names" />
+                <Button mnemonicParsing="false" onAction="#workCSV" text="To CSV:" />
+                <TextField fx:id="textFieldCSV" promptText="CSV Tkn Str" text="Name,Direct Links">
+                    <font>
+                        <Font name="Monospaced Regular" size="11.0"/>
+                    </font>
+                </TextField>
             </HBox>
-            <TextArea fx:id="textAreaFileOne" VBox.vgrow="ALWAYS" />
+            <TextArea fx:id="textAreaFileOne" VBox.vgrow="ALWAYS">
+                <font>
+                    <Font name="Monospaced Regular" size="11.0"/>
+                </font>
+            </TextArea>
         </VBox>
         <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
             <Label text="File or Text #2" />
-            <Button mnemonicParsing="false" text="Open..." onAction="#openFileTwo"/>
-            <TextArea fx:id="textAreaFileTwo" VBox.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#openFileTwo" text="Open..." />
+            <TextArea fx:id="textAreaFileTwo" VBox.vgrow="ALWAYS">
+                <font>
+                    <Font name="Monospaced Regular" size="11.0"/>
+                </font>
+            </TextArea>
         </VBox>
         <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
             <Label text="Uniq / Identical Strings" />
             <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
                 <CheckBox fx:id="checkBoxMatchCase" mnemonicParsing="false" text="Case Match" />
-                <Button mnemonicParsing="false" text="Swap &lt;=&gt;" onAction="#workSwap" />
-                <Button mnemonicParsing="false" text="Start!" onAction="#workStart" />
+                <Button mnemonicParsing="false" onAction="#workSwap" text="Swap &lt;=&gt;" />
+                <Button mnemonicParsing="false" onAction="#workStart" text="Start!" />
             </HBox>
-            <Label fx:id="labelUniq"/>
+            <Label fx:id="labelUniq" />
             <SplitPane dividerPositions="0.5" orientation="VERTICAL" VBox.vgrow="ALWAYS">
-                <TextArea fx:id="textAreaUniq" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                <TextArea fx:id="textAreaIden" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                <TextArea fx:id="textAreaUniq" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                    <font>
+                        <Font name="Monospaced Regular" size="11.0"/>
+                    </font>
+                </TextArea>
+                <TextArea fx:id="textAreaIden" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                    <font>
+                        <Font name="Monospaced Regular" size="11.0"/>
+                    </font>
+                </TextArea>
             </SplitPane>
         </VBox>
     </HBox>
