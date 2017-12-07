@@ -129,9 +129,9 @@
                             <Font name="Monospaced Regular" size="11.0"/>
                         </font>
                     </TextField>
-                    <Button fx:id="buttonTool" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false"
-                            onAction="#toolWork" text="Tool..." GridPane.columnIndex="0" GridPane.rowIndex="9"/>
-                    <Button fx:id="buttonSave" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false"
+                    <Button fx:id="buttonTool" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false"
+                            onAction="#toolWork" text="Format..." GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+                    <Button fx:id="buttonSave" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false"
                             onAction="#saveWork" text="Save..." GridPane.columnIndex="0" GridPane.rowIndex="8"/>
                     <Button fx:id="buttonClear" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false"
                             onAction="#clearWork" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="8"/>

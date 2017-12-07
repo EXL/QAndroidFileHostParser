@@ -153,8 +153,7 @@ public class GuiController {
         File file = fileChooser.showSaveDialog(rootWidget.getScene().getWindow());
         if (file != null) {
             try {
-                FileWriter fileWriter = null;
-                fileWriter = new FileWriter(file);
+                FileWriter fileWriter = new FileWriter(file);
                 fileWriter.write(textAreaReport.getText());
                 fileWriter.close();
                 toLog("Saving " + file.getName() + "... done!");
@@ -180,6 +179,8 @@ public class GuiController {
             Scene scene = new Scene(page);
 
             ToolController toolController = loader.getController();
+            toolController.setTextAreaFileOne(textAreaReport.getText());
+            toolController.setScene(scene);
 
             toolStage.setTitle("Text File Comparator");
             toolStage.initModality(Modality.WINDOW_MODAL);

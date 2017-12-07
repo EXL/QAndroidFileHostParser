@@ -11,36 +11,37 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefHeight="550.0" prefWidth="907.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.exlmoto.qafhp.ToolController">
-    <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="ALWAYS">
+    <HBox fx:id="container" prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="ALWAYS">
         <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
-            <Label text="Label" />
+            <Label text="File or Text #1" />
             <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
-                <Button mnemonicParsing="false" text="Button" />
-                <Button mnemonicParsing="false" text="Button" />
-                <Button mnemonicParsing="false" text="Button" />
+                <Button mnemonicParsing="false" text="Open..." onAction="#openFileOne"/>
+                <Button mnemonicParsing="false" text="To CSV" onAction="#workCSV"/>
+                <Button mnemonicParsing="false" text="Only Names" onAction="#workNames"/>
             </HBox>
-            <TextArea VBox.vgrow="ALWAYS" />
+            <TextArea fx:id="textAreaFileOne" VBox.vgrow="ALWAYS" />
         </VBox>
         <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
-            <Label text="Label" />
-            <Button mnemonicParsing="false" text="Button" />
-            <TextArea VBox.vgrow="ALWAYS" />
+            <Label text="File or Text #2" />
+            <Button mnemonicParsing="false" text="Open..." onAction="#openFileTwo"/>
+            <TextArea fx:id="textAreaFileTwo" VBox.vgrow="ALWAYS" />
         </VBox>
         <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
-            <Label text="Label" />
+            <Label text="Uniq / Identical Strings" />
             <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
-                <CheckBox mnemonicParsing="false" text="CheckBox" />
-                <Button mnemonicParsing="false" text="Button" />
-                <Button mnemonicParsing="false" text="Button" />
+                <CheckBox fx:id="checkBoxMatchCase" mnemonicParsing="false" text="Case Match" />
+                <Button mnemonicParsing="false" text="Swap &lt;=&gt;" onAction="#workSwap" />
+                <Button mnemonicParsing="false" text="Start!" onAction="#workStart" />
             </HBox>
+            <Label fx:id="labelUniq"/>
             <SplitPane dividerPositions="0.5" orientation="VERTICAL" VBox.vgrow="ALWAYS">
-                <TextArea HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                <TextArea HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                <TextArea fx:id="textAreaUniq" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                <TextArea fx:id="textAreaIden" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
             </SplitPane>
         </VBox>
     </HBox>
-    <ProgressBar prefWidth="Infinity" progress="0.0" />
-    <Label text="Label" />
+    <ProgressBar fx:id="progressBarUniq" prefWidth="Infinity" progress="0.0" />
+    <Label fx:id="labelStatus" text="Ready." />
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>

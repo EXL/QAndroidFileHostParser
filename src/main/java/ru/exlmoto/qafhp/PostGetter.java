@@ -37,7 +37,6 @@ public class PostGetter {
     }
 
     private Task<Void> createPostTask() {
-        final int taskNumber = taskCount.incrementAndGet();
         return new Task<Void>() {
             @Override
             public Void call() throws Exception {
