@@ -3,11 +3,11 @@ QAndroidFileHostParser
 
 Utility and tools for parsing various websites. Written with using Java and the JavaFX framework.
 
-![Windows 10 QAndroidFileHostParser](images/JavaFX-QAndroidFileHostParser.jpg)
+![Windows 10 QAndroidFileHostParser](images/JavaFX-QAndroidFileHostParser.png)
 
 ### File and Text Comparator Tool
 
-![Windows 10 Comparator Tool](images/JavaFX-ComparatorTool.jpg)
+![Windows 10 Comparator Tool](images/JavaFX-ComparatorTool.png)
 
 This tool built-in program now (button "R. Tool ...").
 
