@@ -10,7 +10,11 @@
       xmlns="http://javafx.com/javafx/8.0.121" fx:controller="ru.exlmoto.qafhp.ToolController">
     <HBox fx:id="container" prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="ALWAYS">
         <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
-            <Label text="File or Text #1"/>
+            <Label text="File or Text #1">
+                <font>
+                    <Font name="System Bold"/>
+                </font>
+            </Label>
             <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
                 <Button mnemonicParsing="false" onAction="#openFileOne" text="Open..."/>
                 <Button mnemonicParsing="false" onAction="#workNames" text="Names"/>
@@ -28,7 +32,11 @@
             </TextArea>
         </VBox>
         <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
-            <Label text="File or Text #2"/>
+            <Label text="File or Text #2">
+                <font>
+                    <Font name="System Bold"/>
+                </font>
+            </Label>
             <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
                 <Button mnemonicParsing="false" onAction="#openFileTwo" text="Open..."/>
                 <Button mnemonicParsing="false" onAction="#saveFileTwo" text="Save..."/>
@@ -40,7 +48,11 @@
             </TextArea>
         </VBox>
         <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
-            <Label text="Uniq / Identical Strings"/>
+            <Label text="Uniq / Identical Strings">
+                <font>
+                    <Font name="System Bold"/>
+                </font>
+            </Label>
             <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
                 <CheckBox fx:id="checkBoxMatchCase" mnemonicParsing="false" text="Case Match"/>
                 <Button mnemonicParsing="false" onAction="#workSwap" text="Swap &lt;=&gt;"/>
@@ -64,6 +76,6 @@
     <ProgressBar fx:id="progressBarUniq" prefWidth="Infinity" progress="0.0"/>
     <Label fx:id="labelStatus" text="Ready."/>
     <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
     </padding>
 </VBox>

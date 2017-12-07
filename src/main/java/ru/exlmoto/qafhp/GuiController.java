@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -201,7 +200,7 @@ public class GuiController {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(QAndroidFileHostParser.class.getResource("/layouts/DialogAbout.fxml"));
-            AnchorPane page = loader.load();
+            VBox page = loader.load();
 
             Stage dialogStage = new Stage();
             Scene scene = new Scene(page);

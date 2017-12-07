@@ -6,8 +6,9 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../css/hatching.css" fx:id="rootWidget" prefHeight="720.0" prefWidth="1030.0"
-      xmlns="http://javafx.com/javafx/8.0.121" fx:controller="ru.exlmoto.qafhp.GuiController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="rootWidget" prefHeight="720.0" prefWidth="1030.0"
+      stylesheets="@../css/hatching.css" xmlns="http://javafx.com/javafx/8.0.112"
+      fx:controller="ru.exlmoto.qafhp.GuiController">
     <HBox fx:id="addressBar">
         <HBox alignment="CENTER_RIGHT" spacing="15.0" HBox.hgrow="ALWAYS" VBox.vgrow="NEVER">
             <Label text="Please Enter URL:"/>
@@ -18,10 +19,15 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
         </padding>
     </HBox>
-    <SplitPane fx:id="leftPane" stylesheets="@../css/hatching.css" dividerPositions="0.17" focusTraversable="true" VBox.vgrow="ALWAYS">
-        <VBox maxWidth="180" minWidth="180">
+    <SplitPane fx:id="leftPane" dividerPositions="0.2" focusTraversable="true" stylesheets="@../css/hatching.css"
+               VBox.vgrow="ALWAYS">
+        <VBox maxWidth="185" minWidth="185">
             <AnchorPane prefHeight="50.0">
-                <Label text="Settings:" AnchorPane.topAnchor="0.0"/>
+                <Label text="Settings:" AnchorPane.topAnchor="0.0">
+                    <font>
+                        <Font name="System Bold"/>
+                    </font>
+                </Label>
                 <GridPane alignment="CENTER_RIGHT" AnchorPane.topAnchor="25.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
@@ -140,7 +146,11 @@
                 </GridPane>
                 <ProgressBar fx:id="progressBar" prefWidth="176.0" progress="0.0" AnchorPane.topAnchor="366.0"
                              GridPane.columnIndex="1"/>
-                <Label text="Output log:" AnchorPane.topAnchor="396.0"/>
+                <Label text="Output log:" AnchorPane.topAnchor="396.0">
+                    <font>
+                        <Font name="System Bold"/>
+                    </font>
+                </Label>
                 <TextArea fx:id="textAreaLog" editable="false" prefHeight="223.0" prefWidth="176.0"
                           AnchorPane.topAnchor="414.0">
                     <font>
@@ -152,10 +162,15 @@
                 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
             </padding>
         </VBox>
-        <SplitPane fx:id="rightPane" stylesheets="@../css/hatching.css" dividerPositions="0.65" focusTraversable="true" orientation="VERTICAL">
+        <SplitPane fx:id="rightPane" dividerPositions="0.65" focusTraversable="true" orientation="VERTICAL"
+                   stylesheets="@../css/hatching.css">
             <WebView fx:id="webView" maxWidth="825.0" minWidth="825.0"/>
             <VBox spacing="5.0">
-                <Label text="Output report:"/>
+                <Label text="Output report:">
+                    <font>
+                        <Font name="System Bold"/>
+                    </font>
+                </Label>
                 <TextArea fx:id="textAreaReport" editable="false" maxWidth="825.0" minHeight="223.0"
                           VBox.vgrow="ALWAYS">
                     <font>
@@ -163,9 +178,12 @@
                     </font>
                 </TextArea>
                 <padding>
-                    <Insets bottom="5.0" left="2.0" right="2.0" top="2.0"/>
+                    <Insets bottom="5.0" left="7.0" right="5.0" top="2.0"/>
                 </padding>
             </VBox>
         </SplitPane>
     </SplitPane>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+    </padding>
 </VBox>
