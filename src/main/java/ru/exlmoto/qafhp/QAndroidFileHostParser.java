@@ -23,7 +23,7 @@ public class QAndroidFileHostParser extends Application {
         GuiController guiController = loader.getController();
         guiController.setqAndroidFileHostParser(this);
 
-        primaryStage.setTitle("QAndroidFileHostParser for BOXA by EXL, 2017");
+        primaryStage.setTitle("QAndroidFileHostParser");
         primaryStage.setScene(new Scene(form));
         primaryStage.setHeight(720.0);
         primaryStage.setWidth(1030.0);
