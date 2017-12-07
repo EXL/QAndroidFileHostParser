@@ -51,6 +51,9 @@ public class ToolController {
     private CheckBox checkBoxMatchCase = null;
 
     @FXML
+    private TextField textFieldCSV = null;
+
+    @FXML
     private void initialize() {
         Platform.runLater(() -> textAreaFileOne.requestFocus());
         alertError = new Alert(AlertType.ERROR, "Files are Empty!", ButtonType.CLOSE);
@@ -67,29 +70,46 @@ public class ToolController {
     }
 
     @FXML
-    private void workCSV() {
+    private void saveFileTwo() {
 
+    }
+
+    @FXML
+    private void workCSV() {
+        if (checkTextFieldsFail(true)) {
+            return;
+        }
+        String fullText = textAreaFileOne.getText();
+        textAreaFileTwo.clear();
+        textAreaFileTwo.setText(getStringCsvHelper(fullText, textFieldCSV.getText()));
+        labelStatus.setText("Done!");
     }
 
     @FXML
     private void workNames() {
+        if (checkTextFieldsFail(true)) {
+            return;
+        }
         String fullText = textAreaFileOne.getText();
-        textAreaFileOne.clear();
-        textAreaFileOne.appendText(getNamesHelper(fullText));
+        textAreaFileTwo.clear();
+        textAreaFileTwo.appendText(getStringNamesHelper(fullText));
+        labelStatus.setText("Done!");
     }
 
     @FXML
     private void workStart() {
-        if (checkTextFieldsFail()) {
+        if (checkTextFieldsFail(false)) {
             return;
         }
         textAreaIden.clear();
         textAreaUniq.clear();
         container.setDisable(true);
         try {
-            Task<Void> task = createUniqTask(textAreaFileOne.getText(), textAreaFileTwo.getText(), checkBoxMatchCase.isSelected());
+            Task<Void> task = createUniqTask(textAreaFileOne.getText(), textAreaFileTwo.getText(),
+                    checkBoxMatchCase.isSelected());
             progressBarUniq.progressProperty().unbind();
             progressBarUniq.progressProperty().bind(task.progressProperty());
+            labelStatus.setText("Working...");
             exec.submit(task);
         }catch (Exception e) {
             e.printStackTrace();
@@ -98,7 +118,7 @@ public class ToolController {
 
     @FXML
     private void workSwap() {
-        if (checkTextFieldsFail()) {
+        if (checkTextFieldsFail(false)) {
             return;
         }
         String oneText = textAreaFileOne.getText();
@@ -108,16 +128,18 @@ public class ToolController {
         textAreaFileTwo.appendText(oneText);
     }
 
-    private boolean checkTextFieldsFail() {
+    private boolean checkTextFieldsFail(boolean skipTwo) {
         if (textAreaFileOne.getText().trim().isEmpty()) {
             alertError.setContentText("Text Area #1 is Empty!");
             alertError.showAndWait();
             return true;
         }
-        if (textAreaFileTwo.getText().trim().isEmpty()) {
-            alertError.setContentText("Text Area #2 is Empty!");
-            alertError.showAndWait();
-            return true;
+        if (!skipTwo) {
+            if (textAreaFileTwo.getText().trim().isEmpty()) {
+                alertError.setContentText("Text Area #2 is Empty!");
+                alertError.showAndWait();
+                return true;
+            }
         }
         return false;
     }
@@ -202,6 +224,7 @@ public class ToolController {
                 int finalU_cnt = u_cnt;
                 int finalI_cnt = i_cnt;
                 Platform.runLater(() -> labelUniq.setText(finalU_cnt + " unique strings. " + finalI_cnt + " identical strings."));
+                Platform.runLater(() -> labelStatus.setText("Done!"));
                 Platform.runLater(() -> container.setDisable(false));
                 return null;
             }
@@ -214,11 +237,75 @@ public class ToolController {
         return t;
     });
 
-    private String getNamesHelper(String allString) {
+    private String removeCsvToken(String line, List<String> strings) {
+        for (String s : strings) {
+            if (line.startsWith("http") && strings.contains("http:")) {
+                return line;
+            } else if (line.startsWith(s)) {
+                return line.replace(s, "").trim();
+            }
+        }
+        return null;
+    }
+
+    private String getCsvToken(String line, List<String> strings) {
+        String[] lines = line.split("<delim>");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < lines.length; ++i) {
+            String s1 = removeCsvToken(lines[i], strings);
+            if (s1 != null) {
+                sb.append(s1);
+                sb.append(";");
+            }
+        }
+        String answer = sb.toString();
+        if (answer.endsWith(";")) {
+            return answer.substring(0, answer.length() - 1);
+        } else {
+            return answer;
+        }
+    }
+
+    private String getStringCsvHelper(String allString, String csvToken) {
+        String[] stringsCsv = csvToken.split(",");
+        List<String> stringListCsv = new ArrayList<>();
+        for (String str : stringsCsv) {
+            if (str.trim().endsWith(":")) {
+                stringListCsv.add(str.trim());
+            } else {
+                stringListCsv.add(str.trim() + ":");
+            }
+        }
         List<String> stringList = new ArrayList<>();
-        Scanner scannerOne = new Scanner(allString);
-        while (scannerOne.hasNextLine()) {
-            String s = scannerOne.nextLine();
+        Scanner scanner = new Scanner(allString);
+        int startBlock = 0;
+        StringBuilder squash = new StringBuilder();
+        while (scanner.hasNextLine()) {
+            String s = scanner.nextLine();
+            if (!s.trim().isEmpty()) {
+                squash.append(s.trim()).append("<delim>");
+            } else {
+                startBlock++;
+            }
+            if (startBlock >= 3) {
+                stringList.add(squash.toString());
+                startBlock = 0;
+                squash.setLength(0);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String s : stringList) {
+            sb.append(getCsvToken(s, stringListCsv));
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+    private String getStringNamesHelper(String allString) {
+        List<String> stringList = new ArrayList<>();
+        Scanner scanner = new Scanner(allString);
+        while (scanner.hasNextLine()) {
+            String s = scanner.nextLine();
             if (!s.isEmpty() && s.startsWith("Name:")) {
                 stringList.add(s.replaceAll("Name:", "").trim());
             }

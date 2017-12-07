@@ -101,7 +101,7 @@ public class Flashes {
         for (String directLink : directLinks) {
             sb.append(directLink).append("\n");
         }
-        reportString += sb.toString() + "\n";
+        reportString += sb.toString() + "\n\n";
         return reportString;
     }
 }

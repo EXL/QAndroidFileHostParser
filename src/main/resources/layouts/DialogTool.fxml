@@ -20,7 +20,7 @@
                 <Button mnemonicParsing="false" onAction="#openFileOne" text="Open..." />
                 <Button mnemonicParsing="false" onAction="#workNames" text="Names" />
                 <Button mnemonicParsing="false" onAction="#workCSV" text="To CSV:" />
-                <TextField fx:id="textFieldCSV" promptText="CSV Tkn Str" text="Name,Direct Links">
+                <TextField fx:id="textFieldCSV" promptText="CSV Tkn Str" text="Name,http">
                     <font>
                         <Font name="Monospaced Regular" size="11.0"/>
                     </font>
@@ -34,7 +34,10 @@
         </VBox>
         <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
             <Label text="File or Text #2" />
-            <Button mnemonicParsing="false" onAction="#openFileTwo" text="Open..." />
+            <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+                <Button mnemonicParsing="false" onAction="#openFileTwo" text="Open..." />
+                <Button mnemonicParsing="false" onAction="#saveFileTwo" text="Save..." />
+            </HBox>
             <TextArea fx:id="textAreaFileTwo" VBox.vgrow="ALWAYS">
                 <font>
                     <Font name="Monospaced Regular" size="11.0"/>
