@@ -5,15 +5,15 @@ Utility and tools for parsing various websites. Written with using Java and the 
 
 ![Windows 10 QAndroidFileHostParser](images/JavaFX-QAndroidFileHostParser.jpg)
 
-## Download
-
-You can download [7z](http://www.7-zip.org/)-bundle for MS Windows from the [releases](https://github.com/EXL/QAndroidFileHostParser/releases) section.
-
 ### File and Text Comparator Tool
 
 ![Windows 10 Comparator Tool](images/JavaFX-ComparatorTool.jpg)
 
 This tool built-in program now (button "R. Tool ...").
+
+## Download
+
+You can download [7z](http://www.7-zip.org/)-bundle for MS Windows from the [releases](https://github.com/EXL/QAndroidFileHostParser/releases) section.
 
 ## Build instructions
 
@@ -40,6 +40,6 @@ gradlew.bat jfxNative
 
 ## Another branches
 
-* Old utilities on the Qt 5 framework: [qt5_old](https://github.com/EXL/QAndroidFileHostParser/tree/qt5_old)
+* Old utilities on the Qt 5 framework: [qt5_old](https://github.com/EXL/QAndroidFileHostParser/tree/qt5_old).
 
-* Console utility Verizon Jetpack MiFi: [mifi5510](https://github.com/EXL/QAndroidFileHostParser/tree/mifi5510)
+* Console utility Verizon Jetpack MiFi: [mifi5510](https://github.com/EXL/QAndroidFileHostParser/tree/mifi5510).
