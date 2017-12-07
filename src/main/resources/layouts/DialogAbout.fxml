@@ -6,7 +6,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="368.0" prefWidth="289.0"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootAbout" stylesheets="@../css/hatching.css" prefHeight="368.0"
+            prefWidth="289.0"
             xmlns="http://javafx.com/javafx/8.0.121" fx:controller="ru.exlmoto.qafhp.AboutController">
     <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="109.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../icons/icon_sw.png"/>

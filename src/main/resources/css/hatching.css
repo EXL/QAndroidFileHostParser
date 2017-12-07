@@ -1,0 +1,8 @@
+#rootWidget, #rootAbout, #leftPane, #rightPane, #rootTool {
+    -fx-background-image: url("../icons/mini-hero-bg.png");
+    -fx-background-repeat: repeat;
+}
+
+#addressBar {
+    -fx-background-color: linear-gradient(from 2px 1px to 1px 2px, reflect, #e6e6e6 1%, #c1c1c2 1%);
+}

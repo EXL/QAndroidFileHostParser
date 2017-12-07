@@ -6,9 +6,9 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="rootWidget" prefHeight="720.0" prefWidth="1030.0"
+<VBox xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../css/hatching.css" fx:id="rootWidget" prefHeight="720.0" prefWidth="1030.0"
       xmlns="http://javafx.com/javafx/8.0.121" fx:controller="ru.exlmoto.qafhp.GuiController">
-    <HBox>
+    <HBox fx:id="addressBar">
         <HBox alignment="CENTER_RIGHT" spacing="15.0" HBox.hgrow="ALWAYS" VBox.vgrow="NEVER">
             <Label text="Please Enter URL:"/>
             <TextField fx:id="textFieldUrl" promptText="Please Enter Start URL Here" HBox.hgrow="ALWAYS"/>
@@ -18,7 +18,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
         </padding>
     </HBox>
-    <SplitPane dividerPositions="0.17" focusTraversable="true" VBox.vgrow="ALWAYS">
+    <SplitPane fx:id="leftPane" stylesheets="@../css/hatching.css" dividerPositions="0.17" focusTraversable="true" VBox.vgrow="ALWAYS">
         <VBox maxWidth="180" minWidth="180">
             <AnchorPane prefHeight="50.0">
                 <Label text="Settings:" AnchorPane.topAnchor="0.0"/>
@@ -152,7 +152,7 @@
                 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
             </padding>
         </VBox>
-        <SplitPane dividerPositions="0.65" focusTraversable="true" orientation="VERTICAL">
+        <SplitPane fx:id="rightPane" stylesheets="@../css/hatching.css" dividerPositions="0.65" focusTraversable="true" orientation="VERTICAL">
             <WebView fx:id="webView" maxWidth="825.0" minWidth="825.0"/>
             <VBox spacing="5.0">
                 <Label text="Output report:"/>
