@@ -25,7 +25,7 @@ public class QAndroidFileHostParser extends Application {
 
         primaryStage.setTitle("QAndroidFileHostParser");
         primaryStage.setScene(new Scene(form));
-        primaryStage.setHeight(720.0);
+        primaryStage.setHeight(725.0);
         primaryStage.setWidth(1030.0);
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image(QAndroidFileHostParser.class.getResourceAsStream("/icons/icon_sw.png")));

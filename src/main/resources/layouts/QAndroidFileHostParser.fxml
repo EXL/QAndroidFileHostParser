@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
 
-<VBox fx:id="rootWidget" prefHeight="720.0" prefWidth="1030.0" stylesheets="@../css/hatching.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.exlmoto.qafhp.GuiController">
+<VBox fx:id="rootWidget" prefHeight="725.0" prefWidth="1030.0" stylesheets="@../css/hatching.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.exlmoto.qafhp.GuiController">
     <HBox fx:id="addressBar">
         <HBox alignment="CENTER_RIGHT" spacing="15.0" HBox.hgrow="ALWAYS" VBox.vgrow="NEVER">
             <Label text="Please Enter URL:" textFill="WHITE">
@@ -133,12 +133,12 @@
                     <Button fx:id="buttonAbout" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#aboutWork" text="About..." GridPane.columnIndex="1" GridPane.rowIndex="9" />
                 </GridPane>
                 <ProgressBar fx:id="progressBar" prefWidth="176.0" progress="0.0" AnchorPane.topAnchor="366.0" GridPane.columnIndex="1" />
-                <Label text="Output log:" AnchorPane.topAnchor="396.0">
+                <Label text="Output log:" AnchorPane.topAnchor="391.0">
                     <font>
                         <Font name="System Bold" />
                     </font>
                 </Label>
-                <TextArea fx:id="textAreaLog" editable="false" prefHeight="223.0" prefWidth="176.0" AnchorPane.topAnchor="414.0">
+                <TextArea fx:id="textAreaLog" editable="false" prefHeight="223.0" prefWidth="176.0" AnchorPane.topAnchor="409.0">
                     <font>
                         <Font name="Monospaced Regular" size="11.0" />
                     </font>
@@ -156,7 +156,7 @@
                         <Font name="System Bold" />
                     </font>
                 </Label>
-                <TextArea fx:id="textAreaReport" editable="false" maxWidth="825.0" minHeight="223.0" VBox.vgrow="ALWAYS">
+                <TextArea fx:id="textAreaReport" editable="false" maxWidth="802.0" minHeight="223.0" VBox.vgrow="ALWAYS">
                     <font>
                         <Font name="Monospaced Regular" size="12.0" />
                     </font>
