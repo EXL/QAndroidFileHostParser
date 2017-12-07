@@ -8,13 +8,13 @@ public class PageTemplate {
     public static int pageItems = 15;
     public static int pageCount = 0;
     public static int pageStart = 1;
-    public static int pageStop = 10;
-    public static int postDelay = 15;
+    public static int pageStop = 2;
+    public static int postDelay = 45;
     public static int conTimeout = 70;
     public static int pageCountAux = 0;
     public static int fidsAux = 0;
 
-    public static boolean settingMd5 = false;
+    public static boolean settingMd5 = true;
 
     public static String scriptGetCountOfFiles = "document.getElementsByClassName(\"search-result-stats\")[0].innerHTML.replace(/<[^>]*>/g, \"\").replace(\"&nbsp;\", \"\").replace(\"Files :\", \"\").trim();";
     public static String scriptGetLinks = "(function() { var a = \"\"; var b = document.getElementsByClassName(\"file-name\"); for (var i = 0; i < b.length; ++i) { var c = b[i].innerHTML.trim(); var d = c.length; var e = \"https://androidfilehost.com\" + c.slice(13, d.length).replace('\">', \";\").slice(0, -9) + \"\\n\"; a += e + \"|\"; } return a; })();";
