@@ -24,19 +24,18 @@ For example, MS Windows:
 * Clone repository into deploy directory;
 
 ```bat
-cd C:\
-cd Dev\Deploy
+cd C:\Dev\Deploy\
 git clone https://github.com/EXL/QAndroidFileHostParser QAndroidFileHostParser
 ```
 
 * Build the fat (with all dependencies) JavaFX-bundle into deploy directory with Gradle Build Tool;
 
 ```bat
-cd Dev\Deploy\QAndroidFileHostParser/
+cd C:\Dev\Deploy\QAndroidFileHostParser\
 gradlew.bat jfxNative
 ```
 
-* Get cooked JAR-package from the `build/jfx/native/` directory.
+* Get cooked bundle from the `build\jfx\native\` directory.
 
 ## Another branches
 
