@@ -47,8 +47,9 @@ public class PostGetter {
                 for (int i = 0; i < fids.size(); i++) {
                     Thread.sleep(PageTemplate.postDelay * 100);
                     String fid = fids.get(i);
+                    String cookie = (cookies.isEmpty()) ? PageTemplate.curlCookie : cookies.get(i);
                     int finalI = i;
-                    if (sendPost(fid, cookies.get(i), i)) {
+                    if (sendPost(fid, cookie, i)) {
                         Platform.runLater(() -> guiController.toLog("Good " + (finalI + 1) + ": " + fid));
                     } else {
                         Platform.runLater(() -> guiController.toLog("Fail " + (finalI + 1) + ": " + fid));
