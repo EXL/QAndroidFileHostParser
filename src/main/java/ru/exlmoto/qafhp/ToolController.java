@@ -6,8 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -63,6 +65,8 @@ public class ToolController {
     private void initialize() {
         Platform.runLater(() -> textAreaFileOne.requestFocus());
         alertError = new Alert(AlertType.ERROR, "Files are Empty!", ButtonType.CLOSE);
+        ((Stage) alertError.getDialogPane().getScene().getWindow()).getIcons()
+                .add(new Image(QAndroidFileHostParser.class.getResourceAsStream("/icons/icon_sw.png")));
     }
 
     @FXML
