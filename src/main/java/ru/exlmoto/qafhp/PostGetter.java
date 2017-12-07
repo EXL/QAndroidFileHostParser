@@ -23,6 +23,7 @@ public class PostGetter {
 
     private GuiController guiController = null;
     private List<String> fids = null;
+    private List<String> cookies = null;
     private PageWalker pageWalker = null;
 
     private ExecutorService exec = Executors.newSingleThreadExecutor(r -> {
@@ -31,10 +32,11 @@ public class PostGetter {
         return t;
     });
 
-    public PostGetter(GuiController gui, List<String> fids, PageWalker pageWalker) {
+    public PostGetter(GuiController gui, List<String> fids, List<String> cookies, PageWalker pageWalker) {
         this.guiController = gui;
         this.fids = fids;
         this.pageWalker = pageWalker;
+        this.cookies = cookies;
     }
 
     private Task<Void> createPostTask() {
@@ -46,7 +48,7 @@ public class PostGetter {
                     Thread.sleep(PageTemplate.postDelay * 100);
                     String fid = fids.get(i);
                     int finalI = i;
-                    if (sendPost(fid, i)) {
+                    if (sendPost(fid, cookies.get(i), i)) {
                         Platform.runLater(() -> guiController.toLog("Good " + (finalI + 1) + ": " + fid));
                     } else {
                         Platform.runLater(() -> guiController.toLog("Fail " + (finalI + 1) + ": " + fid));
@@ -69,13 +71,13 @@ public class PostGetter {
     }
 
     // HTTP POST request
-    private boolean sendPost(String fid, int num) throws Exception {
+    private boolean sendPost(String fid, String cookie, int num) throws Exception {
         String body = "";
         URL obj = new URL(PageTemplate.curlUrl);
         try {
             HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
             con.setRequestMethod("POST");
-            con.setRequestProperty("Cookie", PageTemplate.curlCookie);
+            con.setRequestProperty("Cookie", cookie);
             con.setRequestProperty("Origin", PageTemplate.justUrl);
             con.setRequestProperty("Accept-Encoding", PageTemplate.curlAe);
             con.setRequestProperty("Accept-Language", PageTemplate.curlAl);

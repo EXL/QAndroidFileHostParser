@@ -19,6 +19,7 @@ public class PageWalker {
     private ChangeListener<State> initialListener = null;
 
     private List<Flashes> flashesArray = null;
+    private List<String> cookiesArray = null;
 
     public PageWalker(WebView webView, WebEngine webEngine, GuiController guiController) {
         this.webView = webView;
@@ -26,6 +27,7 @@ public class PageWalker {
         this.guiController = guiController;
 
         flashesArray = new ArrayList<>();
+        cookiesArray = new ArrayList<>();
 
         initialListener = new ChangeListener<State>() {
             @Override
@@ -53,7 +55,7 @@ public class PageWalker {
     }
 
     private void getDirectLinksWithPost(List<String> fids) {
-        postGetter = new PostGetter(guiController, fids, this);
+        postGetter = new PostGetter(guiController, fids, cookiesArray, this);
         postGetter.startWork();
     }
 
@@ -155,11 +157,14 @@ public class PageWalker {
         int i = PageTemplate.fidsAux - size - 1;
         try {
             String additionalArray = (String) webEngine.executeScript(PageTemplate.scriptGetAdditional);
+            String cookie = (String) webEngine.executeScript(PageTemplate.scriptGetCookie);
             String[] additional = additionalArray.split(";");
             flashesArray.get(i).setSize(additional[0]);
             flashesArray.get(i).setMd5(additional[1]);
             flashesArray.get(i).setDate(additional[2]);
-            guiController.toLog("Addit. " + (i + 1) + " " + additionalArray);
+            cookiesArray.add(cookie);
+            guiController.toLog("Addit. " + (i + 1) + " " + additionalArray +
+                    "\nCookie: " + cookie);
             return true;
         } catch (Exception e) {
             guiController.toLog(e.toString());
