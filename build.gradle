@@ -1,5 +1,4 @@
 group 'ru.exlmoto.qafhp'
-version '1.0-PROTO'
 
 apply plugin: 'java'
 apply plugin: 'javafx-gradle-plugin'
@@ -15,7 +14,6 @@ dependencies {
 }
 
 jfx {
-    appName = 'QAndroidFileHostParser'
     mainClass = 'ru.exlmoto.qafhp.QAndroidFileHostParser'
     vendor = 'EXL'
 }
