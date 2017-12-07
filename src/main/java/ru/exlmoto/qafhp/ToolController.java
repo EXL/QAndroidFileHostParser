@@ -16,7 +16,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ToolController {
     private Scene scene = null;
@@ -84,7 +85,10 @@ public class ToolController {
         textAreaUniq.clear();
         container.setDisable(true);
         try {
-            Platform.runLater(createUniqTask());
+            Task<Void> task = createUniqTask(textAreaFileOne.getText(), textAreaFileTwo.getText(), checkBoxMatchCase.isSelected());
+            progressBarUniq.progressProperty().unbind();
+            progressBarUniq.progressProperty().bind(task.progressProperty());
+            exec.submit(task);
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -131,17 +135,14 @@ public class ToolController {
         }
     }
 
-    private Task<Void> createUniqTask() {
+    private Task<Void> createUniqTask(String text1, String text2, boolean matchCase) {
         return new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                progressBarUniq.progressProperty().unbind();
-                progressBarUniq.progressProperty().bind(this.progressProperty());
-
                 List<String> stringListOne = new ArrayList<>();
                 List<String> stringListTwo = new ArrayList<>();
-                Scanner scannerOne = new Scanner(textAreaFileOne.getText());
-                Scanner scannerTwo = new Scanner(textAreaFileTwo.getText());
+                Scanner scannerOne = new Scanner(text1);
+                Scanner scannerTwo = new Scanner(text2);
                 while (scannerOne.hasNextLine()) {
                     String s = scannerOne.nextLine().trim();
                     if (!s.isEmpty()) {
@@ -171,7 +172,7 @@ public class ToolController {
                 for (String aStringListOne : stringListOne) {
                     for (String aStringListTwo : stringListTwo) {
                         boolean bR;
-                        if (checkBoxMatchCase.isSelected()) {
+                        if (matchCase) {
                             bR = aStringListOne.toUpperCase().equals(aStringListTwo.toUpperCase());
                         } else {
                             bR = aStringListOne.equals(aStringListTwo);
@@ -181,10 +182,10 @@ public class ToolController {
                         }
                     }
                     if (inner_cnt == M) {
-                        textAreaUniq.appendText(aStringListOne + "\n");
+                        Platform.runLater(() -> textAreaUniq.appendText(aStringListOne + "\n"));
                         u_cnt++;
                     } else {
-                        textAreaIden.appendText(aStringListOne + "\n");
+                        Platform.runLater(() -> textAreaIden.appendText(aStringListOne + "\n"));
                         i_cnt++;
                     }
                     inner_cnt2++;
@@ -196,12 +197,20 @@ public class ToolController {
                     inner_cnt = 0;
                 }
                 updateProgress(100, 100);
-                labelUniq.setText(u_cnt + " unique strings. " + i_cnt + " identical strings.");
-                container.setDisable(false);
+                int finalU_cnt = u_cnt;
+                int finalI_cnt = i_cnt;
+                Platform.runLater(() -> labelUniq.setText(finalU_cnt + " unique strings. " + finalI_cnt + " identical strings."));
+                Platform.runLater(() -> container.setDisable(false));
                 return null;
             }
         };
     }
+
+    private ExecutorService exec = Executors.newSingleThreadExecutor(r -> {
+        Thread t = new Thread(r);
+        t.setDaemon(true);
+        return t;
+    });
 
     public void setTextAreaFileOne(String text) {
         textAreaFileOne.setText(text);
