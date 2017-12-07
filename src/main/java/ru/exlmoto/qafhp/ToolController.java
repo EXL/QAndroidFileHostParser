@@ -5,11 +5,12 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
-import javafx.scene.control.Alert.AlertType;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -52,6 +53,11 @@ public class ToolController {
 
     @FXML
     private TextField textFieldCSV = null;
+    private ExecutorService exec = Executors.newSingleThreadExecutor(r -> {
+        Thread t = new Thread(r);
+        t.setDaemon(true);
+        return t;
+    });
 
     @FXML
     private void initialize() {
@@ -71,7 +77,20 @@ public class ToolController {
 
     @FXML
     private void saveFileTwo() {
-
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(scene.getWindow());
+        if (file != null) {
+            try {
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write(textAreaFileTwo.getText());
+                fileWriter.close();
+                labelStatus.setText("Saved!");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     @FXML
@@ -111,7 +130,7 @@ public class ToolController {
             progressBarUniq.progressProperty().bind(task.progressProperty());
             labelStatus.setText("Working...");
             exec.submit(task);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -231,12 +250,6 @@ public class ToolController {
         };
     }
 
-    private ExecutorService exec = Executors.newSingleThreadExecutor(r -> {
-        Thread t = new Thread(r);
-        t.setDaemon(true);
-        return t;
-    });
-
     private String removeCsvToken(String line, List<String> strings) {
         for (String s : strings) {
             if (line.startsWith("http") && strings.contains("http:")) {
@@ -251,8 +264,8 @@ public class ToolController {
     private String getCsvToken(String line, List<String> strings) {
         String[] lines = line.split("<delim>");
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < lines.length; ++i) {
-            String s1 = removeCsvToken(lines[i], strings);
+        for (String line1 : lines) {
+            String s1 = removeCsvToken(line1, strings);
             if (s1 != null) {
                 sb.append(s1);
                 sb.append(";");
