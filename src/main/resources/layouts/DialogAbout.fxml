@@ -1,43 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootAbout" stylesheets="@../css/hatching.css" prefHeight="368.0"
-            prefWidth="289.0"
-            xmlns="http://javafx.com/javafx/8.0.121" fx:controller="ru.exlmoto.qafhp.AboutController">
-    <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="109.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../icons/icon_sw.png"/>
-    </ImageView>
-    <Label layoutX="38.0" layoutY="111.0" text="QAndroidFileHostParser">
-        <font>
-            <Font size="18.0"/>
-        </font>
-    </Label>
-    <Label layoutX="102.0" layoutY="138.0" text="v1.0-PROTO">
-        <font>
-            <Font size="14.0"/>
-        </font>
-    </Label>
-    <Text layoutX="56.0" layoutY="175.0" lineSpacing="2.0"
-          text="Skeleton utility for&#13;parsing various websites.&#13;Written especially for BOXA."
-          textAlignment="CENTER"/>
-    <Text layoutX="15.0" layoutY="301.0" lineSpacing="2.0" text="Links:" textAlignment="CENTER"/>
-    <Hyperlink layoutX="10.0" layoutY="339.0" onAction="#openFc" text="firmware.center"/>
-    <Hyperlink layoutX="10.0" layoutY="320.0" onAction="#openEm" text="exlmoto.ru"/>
-    <Hyperlink layoutX="10.0" layoutY="302.0" onAction="#openGh" text="Source Code"/>
-    <Text layoutX="103.0" layoutY="249.0" lineSpacing="2.0" text="© EXL, 2017" textAlignment="CENTER">
-        <font>
-            <Font name="System Italic" size="13.0"/>
-        </font>
-    </Text>
-    <Text layoutX="106.0" layoutY="231.0" lineSpacing="2.0" text="License: MIT" textAlignment="CENTER">
-        <font>
-            <Font name="System Italic" size="13.0"/>
-        </font>
-    </Text>
-    <Button fx:id="buttonClose" layoutX="223.0" layoutY="331.0" mnemonicParsing="false" onAction="#close" text="Close"/>
-</AnchorPane>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="rootAbout" prefHeight="374.0" prefWidth="245.0"
+      stylesheets="@../css/hatching.css" xmlns="http://javafx.com/javafx/8.0.112"
+      fx:controller="ru.exlmoto.qafhp.AboutController">
+    <VBox alignment="BASELINE_CENTER" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+        <ImageView fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../icons/icon_sw.png"/>
+        </ImageView>
+        <Label text="QAndroidFileHostParser">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+        <Label text="v1.0-PROTO">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </Label>
+        <!-- Empty Label For Spacer !-->
+        <Label/>
+        <Label text="Skeleton utility for" textAlignment="CENTER"/>
+        <Label text="parsing various websites." textAlignment="CENTER"/>
+        <Label text="Written especially for BOXA." textAlignment="CENTER"/>
+        <Label text="© EXL, 2017" textAlignment="CENTER">
+            <font>
+                <Font name="System Italic" size="13.0"/>
+            </font>
+        </Label>
+        <Label text="License: MIT" textAlignment="CENTER">
+            <font>
+                <Font name="System Italic" size="13.0"/>
+            </font>
+        </Label>
+    </VBox>
+    <HBox HBox.hgrow="ALWAYS">
+        <VBox>
+            <Label text="Links:">
+                <padding>
+                    <Insets left="4.0"/>
+                </padding>
+            </Label>
+            <Hyperlink onAction="#openFc" text="firmware.center"/>
+            <Hyperlink onAction="#openEm" text="exlmoto.ru"/>
+            <Hyperlink onAction="#openGh" text="github.com"/>
+        </VBox>
+        <HBox alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
+            <Button fx:id="buttonClose" mnemonicParsing="false" onAction="#close" text="Close"/>
+        </HBox>
+    </HBox>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="25.0"/>
+    </padding>
+</VBox>
