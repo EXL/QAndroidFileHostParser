@@ -73,7 +73,6 @@ public class PostGetter {
 
     // HTTP POST request
     private boolean sendPost(String fid, String cookie, int num) throws Exception {
-        String body = "";
         URL obj = new URL(PageTemplate.curlUrl);
         try {
             HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
@@ -106,11 +105,10 @@ public class PostGetter {
             for (int length = 0; (length = reader.read(buffer)) > 0; ) {
                 writer.write(buffer, 0, length);
             }
-            body = writer.toString();
             reader.close();
             ungzippedResponse.close();
 
-            JSONObject jsonObject = new JSONObject(body);
+            JSONObject jsonObject = new JSONObject(writer.toString());
             JSONArray jsonArray = jsonObject.getJSONArray("MIRRORS");
             List<String> directLinks = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
