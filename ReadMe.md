@@ -5,7 +5,7 @@ Utility with tools for parsing various websites. Written with using Java and the
 
 ![Windows 10 QAndroidFileHostParser](images/QAndroidFileHostParser-JavaFX.png)
 
-This program has built-in such useful tools as:
+Built-in tools:
 
 ### Requests Tool
 
@@ -17,7 +17,7 @@ This tool can be used to send POST and GET requests to remote servers.
 
 ![Windows 10 Comparator Tool](images/ComparatorTool-JavaFX.png)
 
-This utility can be used to process text files, reports and CSV generations.
+This utility can be used to process text files, reports and generate CSV-tables.
 
 ## Download
 
@@ -27,7 +27,7 @@ You can download ready-to-run JavaFX-bundle packed with [7z file archiver](http:
 
 For example, MS Windows:
 
-* Install the latest [Java](https://www.java.com/download/);
+* Install the latest [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html);
 
 * Clone repository into deploy directory;
 
@@ -36,7 +36,7 @@ cd C:\Dev\Deploy\
 git clone https://github.com/EXL/QAndroidFileHostParser QAndroidFileHostParser
 ```
 
-* Build the fat (with all dependencies) JavaFX-bundle into deploy directory with Gradle Build Tool;
+* Build the fat (with all dependencies) JavaFX-bundle into deploy catalog with Gradle Build Tool;
 
 ```bat
 cd C:\Dev\Deploy\QAndroidFileHostParser\
