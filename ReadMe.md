@@ -1,19 +1,27 @@
 QAndroidFileHostParser
 ======================
 
-Utility and tools for parsing various websites. Written with using Java and the JavaFX framework.
+Utility with tools for parsing various websites. Written with using Java and the JavaFX framework.
 
-![Windows 10 QAndroidFileHostParser](images/JavaFX-QAndroidFileHostParser.png)
+![Windows 10 QAndroidFileHostParser](images/QAndroidFileHostParser-JavaFX.png)
+
+This program has built-in such useful tools as:
+
+### Requests Tool
+
+![Windows 10 Requests Tool](images/RequestsTool-JavaFX.png)
+
+This tool can be used to send POST and GET requests to remote servers.
 
 ### File and Text Comparator Tool
 
-![Windows 10 Comparator Tool](images/JavaFX-ComparatorTool.png)
+![Windows 10 Comparator Tool](images/ComparatorTool-JavaFX.png)
 
-This tool built-in program now (button "R. Tool ...").
+This utility can be used to process text files, reports and CSV generations.
 
 ## Download
 
-You can download [7z](http://www.7-zip.org/)-bundle for MS Windows from the [releases](https://github.com/EXL/QAndroidFileHostParser/releases) section.
+You can download ready-to-run JavaFX-bundle packed with [7z file archiver](http://www.7-zip.org/) for MS Windows from the [releases](https://github.com/EXL/QAndroidFileHostParser/releases) section.
 
 ## Build instructions
 
@@ -35,10 +43,10 @@ cd C:\Dev\Deploy\QAndroidFileHostParser\
 gradlew.bat jfxNative
 ```
 
-* Get cooked bundle from the `build\jfx\native\` directory.
+* Get cooked JavaFX-bundle from the `build\jfx\native\` directory.
 
-## Another branches
+## Another branches in this repository
 
-* Old utilities on the Qt 5 framework: [qt5_old](https://github.com/EXL/QAndroidFileHostParser/tree/qt5_old).
+* Old utilities written with using Qt 5 framework: [qt5_old](https://github.com/EXL/QAndroidFileHostParser/tree/qt5_old).
 
-* Console utility Verizon Jetpack MiFi: [mifi5510](https://github.com/EXL/QAndroidFileHostParser/tree/mifi5510).
+* Console utility for Verizon Jetpack MiFi: [mifi5510](https://github.com/EXL/QAndroidFileHostParser/tree/mifi5510).
