@@ -185,7 +185,7 @@ public class ToolController {
     private Task<Void> createUniqTask(String text1, String text2, boolean matchCase) {
         return new Task<Void>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 List<String> stringListOne = new ArrayList<>();
                 List<String> stringListTwo = new ArrayList<>();
                 Scanner scannerOne = new Scanner(text1);

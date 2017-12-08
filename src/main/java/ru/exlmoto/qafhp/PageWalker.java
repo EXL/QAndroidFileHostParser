@@ -10,16 +10,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PageWalker {
-    private WebEngine webEngine = null;
-    private GuiController guiController = null;
-    private PostGetter postGetter = null;
+    private WebEngine webEngine;
+    private GuiController guiController;
 
-    private ChangeListener<State> initialListener = null;
+    private ChangeListener<State> initialListener;
 
-    private List<Flashes> flashesArray = null;
-    private List<String> cookiesArray = null;
+    private List<Flashes> flashesArray;
+    private List<String> cookiesArray;
 
-    public PageWalker(WebEngine webEngine, GuiController guiController) {
+    PageWalker(WebEngine webEngine, GuiController guiController) {
         this.webEngine = webEngine;
         this.guiController = guiController;
 
@@ -52,7 +51,7 @@ public class PageWalker {
     }
 
     private void getDirectLinksWithPost(List<String> fids) {
-        postGetter = new PostGetter(guiController, fids, cookiesArray, this);
+        PostGetter postGetter = new PostGetter(guiController, fids, cookiesArray, this);
         postGetter.startWork();
     }
 
@@ -127,9 +126,9 @@ public class PageWalker {
             PageTemplate.pageCountAux += 1;
             String linksArrayDirty = (String) webEngine.executeScript(PageTemplate.scriptGetLinks);
             String[] links = linksArrayDirty.split("\\|");
-            for (int i = 0; i < links.length; ++i) {
-                String[] sw = links[i].split(";");
-                flashesArray.add(new Flashes(i + 1, sw[1], sw[0]));
+            for (String link : links) {
+                String[] sw = link.split(";");
+                flashesArray.add(new Flashes(sw[1], sw[0]));
             }
         } catch (Exception e) {
             e.printStackTrace();

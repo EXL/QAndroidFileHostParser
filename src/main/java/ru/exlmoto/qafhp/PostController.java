@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import javax.net.ssl.HttpsURLConnection;
-
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -120,7 +119,7 @@ public class PostController {
         try {
             HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
             con.setRequestMethod(requestMethod);
-            for (Map.Entry<String, String> entry : parsedArgs.entrySet()) {
+            for (Map.Entry<String, String> entry : properties.entrySet()) {
                 con.setRequestProperty(entry.getKey(), entry.getValue());
             }
             con.setConnectTimeout(connectionTimeout * 100);
@@ -136,7 +135,7 @@ public class PostController {
                 Reader reader = new InputStreamReader(ungzippedResponse, "UTF-8");
                 Writer writer = new StringWriter();
                 char[] buffer = new char[10240];
-                for (int length = 0; (length = reader.read(buffer)) > 0; ) {
+                for (int length; (length = reader.read(buffer)) > 0; ) {
                     writer.write(buffer, 0, length);
                 }
                 reader.close();

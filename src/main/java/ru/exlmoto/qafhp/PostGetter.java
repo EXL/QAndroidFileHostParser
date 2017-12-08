@@ -2,29 +2,24 @@ package ru.exlmoto.qafhp;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
-
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPInputStream;
 
 // https://stackoverflow.com/a/26611622
 public class PostGetter {
-    private AtomicInteger taskCount = new AtomicInteger(0);
-
-    private GuiController guiController = null;
-    private List<String> fids = null;
-    private List<String> cookies = null;
-    private PageWalker pageWalker = null;
+    private GuiController guiController;
+    private List<String> fids;
+    private List<String> cookies;
+    private PageWalker pageWalker;
 
     private ExecutorService exec = Executors.newSingleThreadExecutor(r -> {
         Thread t = new Thread(r);
@@ -32,7 +27,7 @@ public class PostGetter {
         return t;
     });
 
-    public PostGetter(GuiController gui, List<String> fids, List<String> cookies, PageWalker pageWalker) {
+    PostGetter(GuiController gui, List<String> fids, List<String> cookies, PageWalker pageWalker) {
         this.guiController = gui;
         this.fids = fids;
         this.pageWalker = pageWalker;
@@ -102,7 +97,7 @@ public class PostGetter {
             Writer writer = new StringWriter();
 
             char[] buffer = new char[10240];
-            for (int length = 0; (length = reader.read(buffer)) > 0; ) {
+            for (int length; (length = reader.read(buffer)) > 0; ) {
                 writer.write(buffer, 0, length);
             }
             reader.close();
