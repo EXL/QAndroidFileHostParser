@@ -246,7 +246,7 @@ public class ToolController {
                 updateProgress(100, 100);
                 int finalU_cnt = u_cnt;
                 int finalI_cnt = i_cnt;
-                Platform.runLater(() ->  {
+                Platform.runLater(() -> {
                     labelUniq.setText(finalU_cnt + " unique strings. " + finalI_cnt + " identical strings.");
                     labelStatus.setText("Done!");
                     container.setDisable(false);

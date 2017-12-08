@@ -141,12 +141,12 @@ public class GuiController {
         checkBoxMD5.setSelected(PageTemplate.settingMd5);
         textFieldUa.setText(PageTemplate.curlUa);
         webEngine = webView.getEngine();
-        pageWalker = new PageWalker(webView, webEngine, this);
+        pageWalker = new PageWalker(webEngine, this);
         clearTextAreas();
     }
 
     @FXML
-    private void startWork(ActionEvent event) {
+    private void startWork() {
         clearTextAreas();
         pageWalker.getFlashesArray().clear();
         PageTemplate.startUrl = textFieldUrl.getText();
@@ -304,6 +304,6 @@ public class GuiController {
     }
 
     public void setqAndroidFileHostParser(QAndroidFileHostParser qAndroidFileHostParser) {
-        this.qAndroidFileHostParser = qAndroidFileHostParser;
+        GuiController.qAndroidFileHostParser = qAndroidFileHostParser;
     }
 }

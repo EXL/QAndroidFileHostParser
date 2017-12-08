@@ -9,11 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class QAndroidFileHostParser extends Application {
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
@@ -34,5 +29,9 @@ public class QAndroidFileHostParser extends Application {
             System.exit(0);
         });
         primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

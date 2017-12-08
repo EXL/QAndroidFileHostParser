@@ -4,14 +4,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
 import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class PageWalker {
-    private WebView webView = null;
     private WebEngine webEngine = null;
     private GuiController guiController = null;
     private PostGetter postGetter = null;
@@ -21,8 +19,7 @@ public class PageWalker {
     private List<Flashes> flashesArray = null;
     private List<String> cookiesArray = null;
 
-    public PageWalker(WebView webView, WebEngine webEngine, GuiController guiController) {
-        this.webView = webView;
+    public PageWalker(WebEngine webEngine, GuiController guiController) {
         this.webEngine = webEngine;
         this.guiController = guiController;
 
