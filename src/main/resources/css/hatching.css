@@ -1,4 +1,4 @@
-#rootWidget, #rootAbout, #leftPane, #rightPane, #rootTool {
+#rootWidget, #rootAbout, #leftPane, #rightPane, #rootTool, #rootPost {
     -fx-background-image: url("../icons/bg_hatch.png");
     -fx-background-repeat: repeat;
 }

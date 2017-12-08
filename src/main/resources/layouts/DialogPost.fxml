@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ru.exlmoto.qafhp.PostController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112"
+      fx:controller="ru.exlmoto.qafhp.PostController" spacing="5.0" fx:id="rootPost" stylesheets="@../css/hatching.css">
+    <HBox alignment="CENTER_LEFT" spacing="5.0">
+        <Label text="Hint:"/>
+        <Button mnemonicParsing="false" onAction="#buttonSendReq" text="Send"/>
+        <Button mnemonicParsing="false" onAction="#buttonClearReq" text="Clear Req"/>
+        <Button mnemonicParsing="false" onAction="#buttonClearAns" text="Clear Ans"/>
+    </HBox>
+    <Label text="Your request:">
+        <font>
+            <Font name="System Bold"/>
+        </font>
+    </Label>
+    <TextArea fx:id="textAreaReq" prefHeight="200.0" prefWidth="200.0">
+        <font>
+            <Font name="Monospaced Regular" size="11.0"/>
+        </font>
+    </TextArea>
+    <Label text="Server answer:">
+        <font>
+            <Font name="System Bold"/>
+        </font>
+    </Label>
+    <TextArea fx:id="textAreaAns" prefHeight="200.0" prefWidth="200.0">
+        <font>
+            <Font name="Monospaced Regular" size="11.0"/>
+        </font>
+    </TextArea>
+    <Label fx:id="labelStatusBar" text="Ready."/>
+    <padding>
+        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+    </padding>
 </VBox>
