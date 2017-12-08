@@ -27,7 +27,8 @@
                 <Font name="System Bold"/>
             </font>
         </Label>
-        <Label text="Hint:"/>
+        <Label text="// Copy cURL request from: Inspect &gt; Network &gt; Copy as cURL (bash). Note that first arg is host url and latest arg is data."
+               textFill="#8d8d8d"/>
     </HBox>
     <TextArea fx:id="textAreaReq" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <font>
