@@ -5,6 +5,8 @@ apply plugin: 'javafx-gradle-plugin'
 
 sourceCompatibility = 1.8
 
+def entryPoint = 'ru.exlmoto.qafhp.QAndroidFileHostParser'
+
 repositories {
     jcenter()
 }
@@ -13,9 +15,30 @@ dependencies {
     compile group: 'org.json', name: 'json', version: '20090211'
 }
 
+// Create fat jar
+jar {
+    manifest {
+        attributes "Main-Class": entryPoint
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 jfx {
-    mainClass = 'ru.exlmoto.qafhp.QAndroidFileHostParser'
+    mainClass = entryPoint
+
+    // jfxJar
+    jfxMainAppJarName = "QAndroidFileHostParser.jar"
+    addPackagerJar = true
+    copyAdditionalAppResourcesToJar = true
+    skipCopyingDependencies = true
+    useLibFolderContentForManifestClasspath = false
+
+    // jfxNative
     vendor = 'EXL'
+    appName 'QAndroidFileHostParser'
+    nativeReleaseVersion = "1.0"
 }
 
 buildscript {
