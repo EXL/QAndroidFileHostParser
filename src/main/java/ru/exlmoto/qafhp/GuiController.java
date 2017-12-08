@@ -29,6 +29,7 @@ public class GuiController {
 
     @FXML
     private TextArea textAreaReport = null;
+    private static TextArea textAreaReportStatic = null;
 
     @FXML
     private Spinner spinnerPageStop = null;
@@ -79,10 +80,54 @@ public class GuiController {
     @FXML
     private VBox rootWidget = null;
 
-    private QAndroidFileHostParser qAndroidFileHostParser = null;
+    private static QAndroidFileHostParser qAndroidFileHostParser = null;
     private PageWalker pageWalker = null;
 
     private boolean firstInsert = true;
+
+    enum AppDialogs {
+        Tool {
+            @Override
+            public String getLayoutPath() {
+                return "/layouts/DialogTool.fxml";
+            }
+            @Override
+            public void setAdditionalParameters(FXMLLoader loader, Stage stage) {
+                ToolController toolController = loader.getController();
+                toolController.setTextAreaFileOne(textAreaReportStatic.getText());
+                toolController.setScene(stage.getScene());
+                stage.setTitle("Texts and File Comparator");
+                stage.setMinHeight(640.0);
+                stage.setMinWidth(800.0);
+            }
+        },
+        Post {
+            @Override
+            public String getLayoutPath() {
+                return "/layouts/DialogPost.fxml";
+            }
+            @Override
+            public void setAdditionalParameters(FXMLLoader loader, Stage stage) {
+                stage.setTitle("Send Post/Get Tool");
+            }
+        },
+        About {
+            @Override
+            public String getLayoutPath() {
+                return "/layouts/DialogAbout.fxml";
+            }
+            @Override
+            public void setAdditionalParameters(FXMLLoader loader, Stage stage) {
+                AboutController aboutController = loader.getController();
+                aboutController.setDialogStage(stage);
+                aboutController.setqAndroidFileHostParser(qAndroidFileHostParser);
+                stage.setTitle("About QAFHP");
+                stage.setResizable(false);
+            }
+        };
+        public abstract String getLayoutPath();
+        public abstract void setAdditionalParameters(FXMLLoader loader, Stage stage);
+    }
 
     @FXML
     private void initialize() {
@@ -92,7 +137,7 @@ public class GuiController {
         spinnerPageItems.getEditor().textProperty().setValue(Integer.toString(PageTemplate.pageItems));
         spinnerPostDelay.getEditor().textProperty().setValue(Integer.toString(PageTemplate.postDelay));
         spinnerConTimeOut.getEditor().textProperty().setValue(Integer.toString(PageTemplate.conTimeout));
-
+        textAreaReportStatic = textAreaReport;
         checkBoxMD5.setSelected(PageTemplate.settingMd5);
         textFieldUa.setText(PageTemplate.curlUa);
         webEngine = webView.getEngine();
@@ -168,60 +213,39 @@ public class GuiController {
 
     @FXML
     private void toolWork() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(QAndroidFileHostParser.class.getResource("/layouts/DialogTool.fxml"));
-            VBox page = loader.load();
-
-            Stage toolStage = new Stage();
-            Scene scene = new Scene(page);
-
-            ToolController toolController = loader.getController();
-            toolController.setTextAreaFileOne(textAreaReport.getText());
-            toolController.setScene(scene);
-
-            toolStage.setTitle("Text File Comparator");
-            toolStage.initModality(Modality.WINDOW_MODAL);
-            toolStage.initOwner(rootWidget.getScene().getWindow());
-            toolStage.setScene(scene);
-            toolStage.getIcons().add(new Image(QAndroidFileHostParser.class.getResourceAsStream("/icons/icon_sw.png")));
-            toolStage.setMinHeight(640.0);
-            toolStage.setMinWidth(800.0);
-            toolStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        showDialogHelper(AppDialogs.Tool);
     }
 
     @FXML
     private void aboutWork() {
+        showDialogHelper(AppDialogs.About);
+    }
+
+    @FXML
+    private void postWork() {
+        showDialogHelper(AppDialogs.Post);
+    }
+
+    private void showDialogHelper(AppDialogs dialog) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(QAndroidFileHostParser.class.getResource("/layouts/DialogAbout.fxml"));
+            loader.setLocation(QAndroidFileHostParser.class.getResource(dialog.getLayoutPath()));
             VBox page = loader.load();
 
             Stage dialogStage = new Stage();
             Scene scene = new Scene(page);
 
-            AboutController aboutController = loader.getController();
-            aboutController.setDialogStage(dialogStage);
-            aboutController.setqAndroidFileHostParser(qAndroidFileHostParser);
-
-            dialogStage.setTitle("About QAFHP");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(rootWidget.getScene().getWindow());
             dialogStage.setScene(scene);
             dialogStage.getIcons().add(new Image(QAndroidFileHostParser.class.getResourceAsStream("/icons/icon_sw.png")));
-            dialogStage.setResizable(false);
+
+            dialog.setAdditionalParameters(loader, dialogStage);
+
             dialogStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    private void toolPost() {
-        toLog("Not yet implemented.");
     }
 
     public void setUrl(String url) {

@@ -118,7 +118,7 @@
                         </font>
                     </TextField>
                     <Button fx:id="buttonTool" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false" onAction="#toolWork" text="C. Tool..." GridPane.columnIndex="0" GridPane.rowIndex="8" />
-                    <Button fx:id="buttonPost" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#toolPost" text="T. Post..." GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                    <Button fx:id="buttonPost" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#postWork" text="T. Post..." GridPane.columnIndex="1" GridPane.rowIndex="8" />
                     <Button fx:id="buttonSave" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false" onAction="#saveWork" text="Save..." GridPane.columnIndex="0" GridPane.rowIndex="7" />
                     <Button fx:id="buttonClear" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#clearWork" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                     <Button fx:id="buttonAbout" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false" onAction="#aboutWork" text="About..." GridPane.columnIndex="0" GridPane.rowIndex="9" />
