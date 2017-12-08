@@ -15,10 +15,10 @@ dependencies {
     compile group: 'org.json', name: 'json', version: '20090211'
 }
 
-// Create fat jar
+// Create the "fat" JAR-package with all dependencies
 jar {
     manifest {
-        attributes "Main-Class": entryPoint
+        attributes 'Main-Class': entryPoint
     }
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
@@ -29,16 +29,16 @@ jfx {
     mainClass = entryPoint
 
     // jfxJar
-    jfxMainAppJarName = "QAndroidFileHostParser.jar"
+    jfxMainAppJarName = 'QAndroidFileHostParser.jar'
     addPackagerJar = true
     copyAdditionalAppResourcesToJar = true
     skipCopyingDependencies = true
     useLibFolderContentForManifestClasspath = false
 
     // jfxNative
-    vendor = 'EXL'
+    vendor = "EXL's Group"
     appName 'QAndroidFileHostParser'
-    nativeReleaseVersion = "1.0"
+    nativeReleaseVersion = '1.0'
 }
 
 buildscript {
