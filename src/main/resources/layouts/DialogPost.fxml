@@ -10,8 +10,8 @@
       fx:controller="ru.exlmoto.qafhp.PostController">
     <HBox alignment="CENTER_LEFT" spacing="5.0">
         <Button mnemonicParsing="false" onAction="#buttonSendReq" text="Send"/>
-        <Button mnemonicParsing="false" onAction="#buttonClearReq" text="Clear Req"/>
-        <Button mnemonicParsing="false" onAction="#buttonClearAns" text="Clear Ans"/>
+        <Button mnemonicParsing="false" onAction="#buttonClearReq" text="Clear Req."/>
+        <Button mnemonicParsing="false" onAction="#buttonClearAns" text="Clear Ans."/>
         <Label text="Method:"/>
         <TextField fx:id="textFieldMethod" prefWidth="50.0" promptText="e. g. &quot;GET&quot;" text="POST"/>
         <Label text="Timeout:"/>
