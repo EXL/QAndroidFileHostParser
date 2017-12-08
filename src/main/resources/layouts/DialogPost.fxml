@@ -2,24 +2,34 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112"
-      fx:controller="ru.exlmoto.qafhp.PostController" spacing="5.0" fx:id="rootPost" stylesheets="@../css/hatching.css">
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPost" prefHeight="540.0" prefWidth="830.0" spacing="5.0"
+      stylesheets="@../css/hatching.css" xmlns="http://javafx.com/javafx/8.0.112"
+      fx:controller="ru.exlmoto.qafhp.PostController">
     <HBox alignment="CENTER_LEFT" spacing="5.0">
-        <Label text="Hint:"/>
         <Button mnemonicParsing="false" onAction="#buttonSendReq" text="Send"/>
         <Button mnemonicParsing="false" onAction="#buttonClearReq" text="Clear Req"/>
         <Button mnemonicParsing="false" onAction="#buttonClearAns" text="Clear Ans"/>
+        <Label text="Method:"/>
+        <TextField fx:id="textFieldMethod" prefWidth="50.0" promptText="e. g. &quot;GET&quot;" text="POST"/>
+        <Label text="Timeout:"/>
+        <Spinner fx:id="spinnerTimeout" editable="true" prefWidth="75.0">
+            <valueFactory>
+                <SpinnerValueFactory.IntegerSpinnerValueFactory max="10000" min="1"/>
+            </valueFactory>
+        </Spinner>
     </HBox>
-    <Label text="Your request:">
-        <font>
-            <Font name="System Bold"/>
-        </font>
-    </Label>
-    <TextArea fx:id="textAreaReq" prefHeight="200.0" prefWidth="200.0">
+    <HBox alignment="CENTER_LEFT" spacing="5.0">
+        <Label text="Your request:">
+            <font>
+                <Font name="System Bold"/>
+            </font>
+        </Label>
+        <Label text="Hint:"/>
+    </HBox>
+    <TextArea fx:id="textAreaReq" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <font>
             <Font name="Monospaced Regular" size="11.0"/>
         </font>
@@ -29,7 +39,7 @@
             <Font name="System Bold"/>
         </font>
     </Label>
-    <TextArea fx:id="textAreaAns" prefHeight="200.0" prefWidth="200.0">
+    <TextArea fx:id="textAreaAns" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <font>
             <Font name="Monospaced Regular" size="11.0"/>
         </font>

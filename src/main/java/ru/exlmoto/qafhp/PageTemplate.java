@@ -9,7 +9,7 @@ public class PageTemplate {
     public static int pageCount = 0;
     public static int pageStart = 1;
     public static int pageStop = 2;
-    public static int postDelay = 45;
+    public static int postDelay = 25;
     public static int conTimeout = 70;
     public static int pageCountAux = 0;
     public static int fidsAux = 0;
@@ -32,6 +32,7 @@ public class PageTemplate {
     public static String curlXreq = "XMLHttpRequest";
     public static String curlUa = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.97 Safari/537.36 Vivaldi/1.94.1008.34";
     public static String curlData = "submit=submit&action=getdownloadmirrors&fid=";
+    public static String curlReq = "curl 'https://androidfilehost.com/libs/otf/mirrors.otf.php' -H 'cookie: afh=bc06f77f53f9864b545bb42210a6a487; SPSI=7c2790ffcc4cfe8ad48d3f8abd1be634; sbtsck=jav; _gat=1; i_72623ev9=75; spcsrf=359fff32ae1a6f8e092f94ad27b2ed1c; PRLST=ha; UTGv2=h4400b6819a2ea4e4d511b62dd91403bdb96; _ga=GA1.2.946306473.1512399207; _gid=GA1.2.186282965.1512635741; adOtr=97c07fScf; _awl=2.52.3-44c2f8c04d96a54a70e33e790a314321-412d3539393742453442363342353145353139423131383231382d31-6763652d6575726f70652d7765737431' -H 'origin: https://androidfilehost.com' -H 'accept-encoding: gzip, deflate, br' -H 'accept-language: en-US,en;q=0.9,ru;q=0.8' -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.97 Safari/537.36 Vivaldi/1.94.1008.34' -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' -H 'x-mod-sbb-ctype: xhr' -H 'accept: */*' -H 'referer: https://androidfilehost.com/?fid=673791459329059783' -H 'authority: androidfilehost.com' -H 'x-requested-with: XMLHttpRequest' --data 'submit=submit&action=getdownloadmirrors&fid=673791459329059783' --compressed";
 }
 
 // curl 'https://androidfilehost.com/libs/otf/mirrors.otf.php'
