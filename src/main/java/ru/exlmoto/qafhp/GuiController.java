@@ -96,7 +96,7 @@ public class GuiController {
                 ToolController toolController = loader.getController();
                 toolController.setTextAreaFileOne(textAreaReportStatic.getText());
                 toolController.setScene(stage.getScene());
-                stage.setTitle("Texts and File Comparator");
+                stage.setTitle("Texts and File Comparator Tool");
                 stage.setMinHeight(640.0);
                 stage.setMinWidth(800.0);
             }
@@ -108,7 +108,7 @@ public class GuiController {
             }
             @Override
             public void setAdditionalParameters(FXMLLoader loader, Stage stage) {
-                stage.setTitle("Send Post/Get Tool");
+                stage.setTitle("Send Post/Get Requests Tool");
             }
         },
         About {
@@ -121,7 +121,7 @@ public class GuiController {
                 AboutController aboutController = loader.getController();
                 aboutController.setDialogStage(stage);
                 aboutController.setqAndroidFileHostParser(qAndroidFileHostParser);
-                stage.setTitle("About QAFHP");
+                stage.setTitle("About QAndroidFileHostParser");
                 stage.setResizable(false);
             }
         };
