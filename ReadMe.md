@@ -21,7 +21,7 @@ This utility can be used to process text files, reports and generate CSV-tables.
 
 ## Download
 
-You can download ready-to-run JavaFX-bundle packed with [7z file archiver](http://www.7-zip.org/) for MS Windows from the [releases](https://github.com/EXL/QAndroidFileHostParser/releases) section.
+You can download ready-to-run JavaFX-bundle packed with [7z file archiver](http://www.7-zip.org/) for MS Windows from the [releases](https://github.com/EXL/QAndroidFileHostParser/releases) section. Also you can grab small cross-platform fat (with all dependencies) JAR-package there.
 
 ## Build instructions
 
@@ -36,16 +36,23 @@ cd C:\Dev\Deploy\
 git clone https://github.com/EXL/QAndroidFileHostParser QAndroidFileHostParser
 ```
 
-* Build the fat (with all dependencies) JavaFX-bundle into deploy catalog with Gradle Build Tool;
+* Build the fat (with all dependencies) JAR-package into deploy catalog with Gradle Build Tool;
+
+```bat
+cd C:\Dev\Deploy\QAndroidFileHostParser\
+gradlew.bat jfxJar
+```
+
+* Or build the huge JavaFX-bundle;
 
 ```bat
 cd C:\Dev\Deploy\QAndroidFileHostParser\
 gradlew.bat jfxNative
 ```
 
-* Get cooked JavaFX-bundle from the `build\jfx\native\` directory.
+* Get cooked JAR-package from the `build\jfx\app\` and JavaFX-bundle from the `build\jfx\native\` directories.
 
-## Another branches in this repository
+## Another branches
 
 * Old utilities written with using Qt 5 framework: [qt5_old](https://github.com/EXL/QAndroidFileHostParser/tree/qt5_old).
 
