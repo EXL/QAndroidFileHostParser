@@ -6,159 +6,179 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
 
-<VBox fx:id="rootWidget" prefHeight="725.0" prefWidth="1030.0" stylesheets="@../css/hatching.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.exlmoto.qafhp.GuiController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="rootWidget" prefHeight="725.0" prefWidth="1030.0"
+      stylesheets="@../css/hatching.css" xmlns="http://javafx.com/javafx/8.0.112"
+      fx:controller="ru.exlmoto.qafhp.GuiController">
     <HBox fx:id="addressBar">
         <HBox alignment="CENTER_RIGHT" spacing="15.0" HBox.hgrow="ALWAYS" VBox.vgrow="NEVER">
             <Label text="Please Enter URL:" textFill="WHITE">
                 <font>
-                    <Font name="System Bold" />
+                    <Font name="System Bold"/>
                 </font>
             </Label>
-            <TextField fx:id="textFieldUrl" promptText="Please Enter Start URL Here" HBox.hgrow="ALWAYS" />
-            <Button fx:id="buttonStart" mnemonicParsing="false" onAction="#startWork" text="Start!" />
+            <TextField fx:id="textFieldUrl" promptText="Please Enter Start URL Here" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="buttonStart" mnemonicParsing="false" onAction="#startWork" text="Start!"/>
         </HBox>
         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
         </padding>
     </HBox>
-    <SplitPane fx:id="leftPane" dividerPositions="0.2" focusTraversable="true" stylesheets="@../css/hatching.css" VBox.vgrow="ALWAYS">
+    <SplitPane fx:id="leftPane" dividerPositions="0.2" focusTraversable="true" stylesheets="@../css/hatching.css"
+               VBox.vgrow="ALWAYS">
         <VBox maxWidth="185" minWidth="185">
             <AnchorPane prefHeight="50.0">
                 <Label text="Settings:" AnchorPane.topAnchor="0.0">
                     <font>
-                        <Font name="System Bold" />
+                        <Font name="System Bold"/>
                     </font>
                 </Label>
                 <GridPane alignment="CENTER_RIGHT" AnchorPane.topAnchor="25.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <Label text="Page Start:" GridPane.columnIndex="0" GridPane.rowIndex="0">
                         <font>
-                            <Font size="11.0" />
+                            <Font size="11.0"/>
                         </font>
                     </Label>
-                    <Spinner fx:id="spinnerPageStart" editable="true" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Spinner fx:id="spinnerPageStart" editable="true" prefWidth="75.0" GridPane.columnIndex="1"
+                             GridPane.rowIndex="0">
                         <valueFactory>
-                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="10000" min="1" />
+                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="10000" min="1"/>
                         </valueFactory>
                     </Spinner>
                     <Label text="Page Stop:" GridPane.columnIndex="0" GridPane.rowIndex="1">
                         <font>
-                            <Font size="11.0" />
+                            <Font size="11.0"/>
                         </font>
                     </Label>
-                    <Spinner fx:id="spinnerPageStop" editable="true" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Spinner fx:id="spinnerPageStop" editable="true" prefWidth="75.0" GridPane.columnIndex="1"
+                             GridPane.rowIndex="1">
                         <valueFactory>
-                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="10000" min="1" />
+                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="10000" min="1"/>
                         </valueFactory>
                     </Spinner>
                     <Label text="Items on Page:" GridPane.columnIndex="0" GridPane.rowIndex="2">
                         <font>
-                            <Font size="11.0" />
+                            <Font size="11.0"/>
                         </font>
                     </Label>
-                    <Spinner fx:id="spinnerPageItems" editable="true" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <Spinner fx:id="spinnerPageItems" editable="true" prefWidth="75.0" GridPane.columnIndex="1"
+                             GridPane.rowIndex="2">
                         <valueFactory>
-                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="1" />
+                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="1"/>
                         </valueFactory>
                     </Spinner>
                     <Label text="POST Delay:" GridPane.columnIndex="0" GridPane.rowIndex="3">
                         <font>
-                            <Font size="11.0" />
+                            <Font size="11.0"/>
                         </font>
                     </Label>
-                    <Spinner fx:id="spinnerPostDelay" editable="true" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <Spinner fx:id="spinnerPostDelay" editable="true" prefWidth="75.0" GridPane.columnIndex="1"
+                             GridPane.rowIndex="3">
                         <valueFactory>
-                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="1" />
+                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="1"/>
                         </valueFactory>
                     </Spinner>
                     <Label text="Con. Timeout:" GridPane.columnIndex="0" GridPane.rowIndex="4">
                         <font>
-                            <Font size="11.0" />
+                            <Font size="11.0"/>
                         </font>
                     </Label>
-                    <Spinner fx:id="spinnerConTimeOut" editable="true" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <Spinner fx:id="spinnerConTimeOut" editable="true" prefWidth="75.0" GridPane.columnIndex="1"
+                             GridPane.rowIndex="4">
                         <valueFactory>
-                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="1" />
+                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="1"/>
                         </valueFactory>
                     </Spinner>
-                    <CheckBox fx:id="checkBoxDisableWeb" mnemonicParsing="false" onAction="#disableWebView" selected="true" text="WebView Off" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                    <CheckBox fx:id="checkBoxDisableWeb" mnemonicParsing="false" onAction="#disableWebView"
+                              selected="true" text="WebView Off" GridPane.columnIndex="0" GridPane.rowIndex="5">
                         <font>
-                            <Font size="10.0" />
+                            <Font size="10.0"/>
                         </font>
                     </CheckBox>
-                    <CheckBox fx:id="checkBoxMD5" mnemonicParsing="false" onAction="#disableMD5" selected="true" text="Additional" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                    <CheckBox fx:id="checkBoxMD5" mnemonicParsing="false" onAction="#disableMD5" selected="true"
+                              text="Additional" GridPane.columnIndex="1" GridPane.rowIndex="5">
                         <font>
-                            <Font size="10.0" />
+                            <Font size="10.0"/>
                         </font>
                     </CheckBox>
                     <Label text="UA:" GridPane.columnIndex="0" GridPane.rowIndex="6">
                         <font>
-                            <Font size="11.0" />
+                            <Font size="11.0"/>
                         </font>
                     </Label>
-                    <TextField fx:id="textFieldUa" maxWidth="75.0" promptText="UA Str" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                    <TextField fx:id="textFieldUa" maxWidth="75.0" promptText="UA Str" GridPane.columnIndex="1"
+                               GridPane.rowIndex="6">
                         <font>
-                            <Font name="Monospaced Regular" size="11.0" />
+                            <Font name="Monospaced Regular" size="11.0"/>
                         </font>
                     </TextField>
-                    <Button fx:id="buttonTool" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false" onAction="#toolWork" text="Com. Tool..." GridPane.columnIndex="0" GridPane.rowIndex="8" />
-                    <Button fx:id="buttonPost" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#postWork" text="Req. Tool..." GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                    <Button fx:id="buttonSave" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false" onAction="#saveWork" text="Save..." GridPane.columnIndex="0" GridPane.rowIndex="7" />
-                    <Button fx:id="buttonClear" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#clearWork" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                    <Button fx:id="buttonAbout" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false" onAction="#aboutWork" text="About..." GridPane.columnIndex="0" GridPane.rowIndex="9" />
+                    <Button fx:id="buttonTool" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false"
+                            onAction="#toolWork" text="Com. Tool..." GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+                    <Button fx:id="buttonPost" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false"
+                            onAction="#postWork" text="Req. Tool..." GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+                    <Button fx:id="buttonSave" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false"
+                            onAction="#saveWork" text="Save..." GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+                    <Button fx:id="buttonClear" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false"
+                            onAction="#clearWork" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                    <Button fx:id="buttonAbout" maxWidth="85.0" minWidth="85.0" mnemonicParsing="false"
+                            onAction="#aboutWork" text="About..." GridPane.columnIndex="0" GridPane.rowIndex="9"/>
                 </GridPane>
-                <ProgressBar fx:id="progressBar" prefWidth="176.0" progress="0.0" AnchorPane.topAnchor="366.0" GridPane.columnIndex="1" />
+                <ProgressBar fx:id="progressBar" prefWidth="176.0" progress="0.0" AnchorPane.topAnchor="366.0"
+                             GridPane.columnIndex="1"/>
                 <Label text="Output log:" AnchorPane.topAnchor="395.0">
                     <font>
-                        <Font name="System Bold" />
+                        <Font name="System Bold"/>
                     </font>
                 </Label>
-                <TextArea fx:id="textAreaLog" editable="false" prefHeight="223.0" prefWidth="176.0" AnchorPane.topAnchor="412.0">
+                <TextArea fx:id="textAreaLog" editable="false" prefHeight="223.0" prefWidth="176.0"
+                          AnchorPane.topAnchor="412.0">
                     <font>
-                        <Font name="Monospaced Regular" size="11.0" />
+                        <Font name="Monospaced Regular" size="11.0"/>
                     </font>
                 </TextArea>
             </AnchorPane>
             <padding>
-                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
             </padding>
         </VBox>
-        <SplitPane fx:id="rightPane" dividerPositions="0.65" focusTraversable="true" orientation="VERTICAL" stylesheets="@../css/hatching.css">
-            <WebView fx:id="webView" maxWidth="817.0" minWidth="817.0" />
+        <SplitPane fx:id="rightPane" dividerPositions="0.65" focusTraversable="true" orientation="VERTICAL"
+                   stylesheets="@../css/hatching.css">
+            <WebView fx:id="webView" maxWidth="817.0" minWidth="817.0"/>
             <VBox spacing="5.0">
                 <Label text="Output report:">
                     <font>
-                        <Font name="System Bold" />
+                        <Font name="System Bold"/>
                     </font>
                 </Label>
-                <TextArea fx:id="textAreaReport" editable="false" maxWidth="802.0" minHeight="223.0" VBox.vgrow="ALWAYS">
+                <TextArea fx:id="textAreaReport" editable="false" maxWidth="802.0" minHeight="223.0"
+                          VBox.vgrow="ALWAYS">
                     <font>
-                        <Font name="Monospaced Regular" size="12.0" />
+                        <Font name="Monospaced Regular" size="12.0"/>
                     </font>
                 </TextArea>
                 <padding>
-                    <Insets bottom="5.0" left="7.0" right="5.0" top="2.0" />
+                    <Insets bottom="5.0" left="7.0" right="5.0" top="2.0"/>
                 </padding>
             </VBox>
         </SplitPane>
     </SplitPane>
     <padding>
-        <Insets bottom="2.0" left="5.0" right="5.0" top="5.0" />
+        <Insets bottom="2.0" left="5.0" right="5.0" top="5.0"/>
     </padding>
 </VBox>
