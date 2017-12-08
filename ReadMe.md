@@ -50,7 +50,7 @@ cd C:\Dev\Deploy\QAndroidFileHostParser\
 gradlew.bat jfxNative
 ```
 
-* Get cooked JAR-package from the `build\jfx\app\` and JavaFX-bundle from the `build\jfx\native\` directories.
+* Get cooked JAR-package from the `build\jfx\app\` or JavaFX-bundle from the `build\jfx\native\` directories.
 
 ## Another branches
 
