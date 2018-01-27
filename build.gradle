@@ -9,6 +9,7 @@ def entryPoint = 'ru.exlmoto.qafhp.QAndroidFileHostParser'
 
 repositories {
     jcenter()
+    google()
 }
 
 dependencies {
