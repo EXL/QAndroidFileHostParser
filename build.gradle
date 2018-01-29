@@ -49,5 +49,6 @@ buildscript {
 
     repositories {
         jcenter()
+        google()
     }
 }
