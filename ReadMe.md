@@ -27,7 +27,7 @@ You can download ready-to-run JavaFX-bundle packed with [7z file archiver](http:
 
 For example, MS Windows:
 
-* Install the latest [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html);
+* Install the latest [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html), tested with JDK 8;
 
 * Clone repository into deploy directory;
 
