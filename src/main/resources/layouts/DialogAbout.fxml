@@ -19,7 +19,7 @@
                 <Font size="18.0"/>
             </font>
         </Label>
-        <Label text="v1.0">
+        <Label text="v1.0 | 15-FEB-2018">
             <font>
                 <Font size="14.0"/>
             </font>
@@ -28,7 +28,7 @@
         <Label/>
         <Label text="Skeleton utility for" textAlignment="CENTER"/>
         <Label text="parsing various websites." textAlignment="CENTER"/>
-        <Label text="Written especially for BOXA." textAlignment="CENTER"/>
+        <Label text="Written especially for Boxa." textAlignment="CENTER"/>
         <Label/>
         <Label text="© EXL, 2017" textAlignment="CENTER">
             <font>
