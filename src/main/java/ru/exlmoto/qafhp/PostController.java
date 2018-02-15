@@ -112,7 +112,13 @@ public class PostController {
         for (int i = 1; i < linksList.size(); i += 2) {
             sb.append(linksList.get(i)).append("\n");
         }
-        textAreaAns.setText(sb.toString());
+        answer = sb.toString().trim();
+        if (!answer.isEmpty()) {
+            textAreaAns.setText(answer);
+            labelStatusBar.setText("Done!");
+        } else {
+            labelStatusBar.setText("Error: answer doesn't contains direct links.");
+        }
     }
 
     @FXML
