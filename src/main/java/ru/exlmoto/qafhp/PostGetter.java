@@ -121,6 +121,7 @@ public class PostGetter {
         } catch (Exception e) {
             tryCount++;
             guiController.toLog("Try №" + String.valueOf(tryCount) + ": " + e.toString());
+            Thread.sleep(PageTemplate.postDelay * 100);
             return sendPost(fid, cookie, num);
         }
     }
