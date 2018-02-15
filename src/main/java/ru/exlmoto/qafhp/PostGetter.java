@@ -21,6 +21,8 @@ public class PostGetter {
     private List<String> cookies;
     private PageWalker pageWalker;
 
+    private int tryCount = 0;
+
     private ExecutorService exec = Executors.newSingleThreadExecutor(r -> {
         Thread t = new Thread(r);
         t.setDaemon(true);
@@ -68,6 +70,10 @@ public class PostGetter {
 
     // HTTP POST request
     private boolean sendPost(String fid, String cookie, int num) throws Exception {
+        if (tryCount >= 3) {
+            tryCount = 0;
+            return false;
+        }
         URL obj = new URL(PageTemplate.curlUrl);
         try {
             HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
@@ -110,10 +116,12 @@ public class PostGetter {
                 directLinks.add(jsonArray.getJSONObject(i).getString("url"));
             }
             pageWalker.getFlashesArray().get(num).setDirectLinks(directLinks);
+            tryCount = 0;
             return true;
         } catch (Exception e) {
-            guiController.toLog(e.toString());
-            return false;
+            tryCount++;
+            guiController.toLog("Try №" + String.valueOf(tryCount) + ": " + e.toString());
+            return sendPost(fid, cookie, num);
         }
     }
 
