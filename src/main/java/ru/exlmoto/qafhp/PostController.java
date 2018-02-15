@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
 /**
- * Created by exlmo on 08.12.2017.
+ * Created by exl on 08-DEC-2017.
  */
 
 public class PostController {
