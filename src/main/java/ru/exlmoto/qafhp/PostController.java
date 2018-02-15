@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import javax.net.ssl.HttpsURLConnection;
+
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -84,6 +85,34 @@ public class PostController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void buttonLinksAns() {
+        String answer = textAreaAns.getText().trim();
+        if (answer.isEmpty()) {
+            labelStatusBar.setText("Error: answer is empty.");
+            return;
+        }
+        if (!answer.contains("http")) {
+            labelStatusBar.setText("Error: answer doesn't contains links.");
+            return;
+        }
+        // 1. Delete backslashes from the string
+        answer = answer.replaceAll("\\\\", "");
+        // 2. Pick only links. See https://stackoverflow.com/a/163398 and https://stackoverflow.com/a/6020436
+        String regexp = "\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+        List<String> linksList = new ArrayList<>();
+        Matcher m = Pattern.compile(regexp).matcher(answer);
+        while (m.find()) {
+            linksList.add(m.group());
+        }
+        // 3. Take only odd strings
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i < linksList.size(); i += 2) {
+            sb.append(linksList.get(i)).append("\n");
+        }
+        textAreaAns.setText(sb.toString());
     }
 
     @FXML
